@@ -1,5 +1,4 @@
 """Example Streamlit chat UI that exposes a Feedback button and link to LangSmith traces."""
-from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
 import streamlit as st
@@ -13,21 +12,25 @@ from langsmith import Client
 client = Client()
 
 st.set_page_config(
-    page_title="LangSmith Feedback",
+    page_title="Chat LangSmith",
     page_icon="🦜",
     layout="wide",
 )
-
-"# Chat🦜🔗"
+"# Chat🦜🛠️"
 # Initialize State
 if "messages" not in st.session_state:
     print("Initializing message history")
     st.session_state["messages"] = []
+if "trace_link" not in st.session_state:
+    st.session_state["trace_link"] = None
+st.sidebar.markdown(
+"""
+# Menu
+"""
+)
 if st.sidebar.button("Clear message history"):
     print("Clearing message history")
     st.session_state.messages = []
-if "executor" not in st.session_state:
-    st.session_state.executor = ThreadPoolExecutor(max_workers=1)
 
 
 # Create Chain
@@ -55,6 +58,7 @@ llm = ChatOpenAI(temperature=0.7)
 chain = ingress | prompt | llm
 
 
+# Display chat messages from history on app rerun
 def _get_openai_type(msg):
     if msg.type == "human":
         return "user"
@@ -64,30 +68,33 @@ def _get_openai_type(msg):
         return msg.role
     return msg.type
 
-
-# Display chat messages from history on app rerun
 for msg in st.session_state.messages:
-    with st.chat_message(_get_openai_type(msg)):
+    streamlit_type = _get_openai_type(msg)
+    avatar = "🦜" if streamlit_type == "assistant" else None
+    with st.chat_message(streamlit_type, avatar=avatar):
         st.markdown(msg.content)
     # Re-hydrate memory on app rerun
     memory.chat_memory.add_message(msg)
 
 
 def send_feedback(run_id, score):
-    st.session_state.executor.submit(
-        client.create_feedback, run_id, "user_score", score=score
-    )
+    client.create_feedback(run_id, "user_score", score=score)
 
+run_collector = RunCollectorCallbackHandler()
+runnable_config = RunnableConfig(
+    callbacks=[run_collector],
+    tags=["Streamlit Chat"],
+)
+if st.session_state.trace_link:
+    st.sidebar.markdown(
+                f'<a href="{st.session_state.trace_link}" target="_blank"><button>Latest Trace: 🛠️</button></a>',
+                unsafe_allow_html=True,
+            )
 
 if prompt := st.chat_input(placeholder="Ask me a question!"):
     st.chat_message("user").write(prompt)
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant", avatar="🦜"):
         message_placeholder = st.empty()
-        run_collector = RunCollectorCallbackHandler()
-        runnable_config = RunnableConfig(
-            callbacks=[run_collector],
-            tags=["Streamlit Chat"],
-        )
         full_response = ""
         for chunk in chain.stream({"input": prompt}, config=runnable_config):
             full_response += chunk.content
@@ -108,9 +115,10 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
 
         with col2:
             st.button("👎", on_click=send_feedback, args=(run.id, 0))
-        url = client.read_run(run_id).url
         with col3:
+            url = client.read_run(run.id).url
+            st.session_state.trace_link = url
             st.markdown(
-                f'<a href="{url}" target="_blank"><button>🔍</button></a>',
+                f'<a href="{url}" target="_blank"><button>🛠️</button></a>',
                 unsafe_allow_html=True,
             )
