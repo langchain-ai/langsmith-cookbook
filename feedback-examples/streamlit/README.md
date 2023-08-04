@@ -184,7 +184,7 @@ Below are some 'tactics' used in this example that you could reuse in other situ
 
 3. **Accessing URLs from saved runs:** The client also retrieves URLs for saved runs. It allows users to inspect their interactions, providing a direct link to LangSmith traces.
 
-4. **LangChain Expression Language:** This example uses [LCEL](https://python.langchain.com/docs/guides/expression_language/) to create the chain, which makes it more explicit what's going on under the hood.
+4. **LangChain Expression Language:** This example uses LangChain's [expression language](https://python.langchain.com/docs/guides/expression_language/) to create the chain, which makes it more explicit what's going on under the hood.
 
 ## Conclusion
 The LangSmith Streamlit Chat UI example provides a straightforward approach to crafting a chat interface abundant with features. If you aim to develop conversational AI applications with real-time feedback and traceability, the techniques and implementations in this guide are tailored for you. Feel free to adapt the code to suit your specific needs.
