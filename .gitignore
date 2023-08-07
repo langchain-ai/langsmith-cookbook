@@ -1,0 +1,6 @@
+__pycache__
+.DS_Store
+.chroma
+.ipynb_checkpoints
+.ipynb
+.venv
