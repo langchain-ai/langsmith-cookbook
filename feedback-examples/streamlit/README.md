@@ -173,7 +173,7 @@ If you have clicked on one of the 👍/👎 buttons, you can click on the "feedb
 
 ![View Feedback](img/chat_feedback.png)
 
-This wil
+
 ## Reusable Tactics
 
 Below are some 'tactics' used in this example that you could reuse in other situations:
