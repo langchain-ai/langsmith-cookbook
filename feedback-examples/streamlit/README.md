@@ -54,7 +54,11 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = []
 ```
 
-Then you can define the core logic of the chat model. In this example, we are using LangChain's [expression language](https://python.langchain.com/docs/guides/expression_language/) to cleanly model the data flow from input query to prompt to model. It's defined below:
+Then you can define the core logic of the chat model. This example lets you select between two equivalent chains: an LLMChain, and a chain built with LangChain's [expression language](https://python.langchain.com/docs/guides/expression_language/).
+
+#### Option 1: Expression Language Chain
+
+The chain built using the LangChain Expression Language can be found in [expression_chain.py](expression_chain.py). It looks like the following:
 
 ```python
 memory = ConversationBufferMemory(return_messages=True)
@@ -80,6 +84,34 @@ prompt = ChatPromptTemplate.from_messages(
 llm = ChatOpenAI(temperature=0.7)
 chain = ingress | prompt | llm
 ```
+
+The expression language lets you compose different `Runnable` objects in a transparent way and provides sync/async, batch, and streaming methods that work end-to-end by default.
+
+
+#### Optional 2: LLMChain
+
+The second option is to use LangChain's core workhorse, the [LLMChain](https://api.python.langchain.com/en/latest/chains/langchain.chains.llm.LLMChain.html#langchain.chains.llm.LLMChain).
+The chain is defined in [vanilla_chain.py](vanilla_chain.py) and looks like the following code block:
+
+```python
+memory = ConversationBufferMemory(return_messages=True, memory_key="chat_history")
+prompt = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            "You are a funky parrot pal. You are not an AI. You are a parrot."
+            " You love poetry, reading, funk music, friendship, and squawking!"
+            " It's currently {time}.",
+        ),
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("human", "{input}"),
+    ]
+).partial(time=lambda: str(datetime.now()))
+llm = ChatOpenAI(temperature=0.7)
+chain = LLMChain(prompt=prompt, llm=llm, memory=memory)
+```
+
+#### Streamlit State
 
 Once you've defined the chat model, including it's conversational memory, we define another code block to manage the streamlit session state:
 
@@ -154,16 +186,22 @@ with col1:
 with col2:
     st.button("👎", on_click=send_feedback, args=(run.id, 0))
 with col3:
-    url = client.read_run(run.id).url
+    # Requires langsmith >= 0.0.19
+    url = client.share_run(run.id)
+    # Or if you just want to use this internally
+    # without sharing
+    # url = client.read_run(run.id).url
+    st.session_state.trace_link = url
     st.markdown(
         f'<a href="{url}" target="_blank"><button>🛠️</button></a>',
         unsafe_allow_html=True,
     )
+
 ```
 
 The `run_collector` is a callback handler that we included in the `runnable_config` above. It captures all the runs any time the chain is invoked. We select the first `root` run in the tree to associate feedback to. If the user clicks the 👍/👎 buttons, feedback will be logged to the run!
 
-We also fetch the URI using the client and include a "🛠️" button where you can click and view the traced run. **Note** this will link to the private run. You would have to "share" the run for an end user to view the trace if that is what you wanted.
+We also fetch the URI using the client and include a "🛠️" button where you can click and view the traced run. **Note** this will share every trace in this app! This is useful to demo your unique agent design but likely isn't what you want for an end-user facing application.
 
 Clicking on the "🛠️" link will take you to the corresponding LangSmith trace:
 
@@ -184,7 +222,8 @@ Below are some 'tactics' used in this example that you could reuse in other situ
 
 3. **Accessing URLs from saved runs:** The client also retrieves URLs for saved runs. It allows users to inspect their interactions, providing a direct link to LangSmith traces.
 
-4. **LangChain Expression Language:** This example uses LangChain's [expression language](https://python.langchain.com/docs/guides/expression_language/) to create the chain, which makes it more explicit what's going on under the hood.
+4. **LangChain Expression Language:** This example optionally uses LangChain's [expression language](https://python.langchain.com/docs/guides/expression_language/) to create the chain and provide streaming support by default. It also gives more visibility in the resulting traces.
 
 ## Conclusion
+
 The LangSmith Streamlit Chat UI example provides a straightforward approach to crafting a chat interface abundant with features. If you aim to develop conversational AI applications with real-time feedback and traceability, the techniques and implementations in this guide are tailored for you. Feel free to adapt the code to suit your specific needs.

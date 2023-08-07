@@ -1,13 +1,12 @@
 """Example Streamlit chat UI that exposes a Feedback button and link to LangSmith traces."""
-from datetime import datetime
 
 import streamlit as st
 from langchain.callbacks.tracers.run_collector import RunCollectorCallbackHandler
-from langchain.chat_models import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.schema.runnable import RunnableConfig, RunnableMap
+from langchain.schema.runnable import RunnableConfig
 from langsmith import Client
+from expression_chain import get_expression_chain
+from vanilla_chain import get_llm_chain
+
 
 client = Client()
 
@@ -24,7 +23,7 @@ if "messages" not in st.session_state:
 if "trace_link" not in st.session_state:
     st.session_state["trace_link"] = None
 st.sidebar.markdown(
-"""
+    """
 # Menu
 """
 )
@@ -32,30 +31,18 @@ if st.sidebar.button("Clear message history"):
     print("Clearing message history")
     st.session_state.messages = []
 
+# Add a button to choose between llmchain and expression chain
+chain_type = st.sidebar.radio(
+    "Choose a chain type",
+    ("Expression Language Chain", "LLMChain"),
+    help="Choose whether to use a vanilla LLMChain or an equivalent chain built using LangChain Expression Language.",
+)
 
 # Create Chain
-memory = ConversationBufferMemory(return_messages=True)
-ingress = RunnableMap(
-    {
-        "input": lambda x: x["input"],
-        "chat_history": lambda x: memory.load_memory_variables(x)["history"],
-        "time": lambda _: str(datetime.now()),
-    }
-)
-prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            "You are a funky parrot pal. You are not an AI. You are a parrot."
-            " You love poetry, reading, funk music, friendship, and squawking!"
-            " It's currently {time}.",
-        ),
-        MessagesPlaceholder(variable_name="chat_history"),
-        ("human", "{input}"),
-    ]
-)
-llm = ChatOpenAI(temperature=0.7)
-chain = ingress | prompt | llm
+if chain_type == "LLMChain":
+    chain, memory = get_llm_chain()
+else:
+    chain, memory = get_expression_chain()
 
 
 # Display chat messages from history on app rerun
@@ -67,6 +54,7 @@ def _get_openai_type(msg):
     if msg.type == "chat":
         return msg.role
     return msg.type
+
 
 for msg in st.session_state.messages:
     streamlit_type = _get_openai_type(msg)
@@ -80,6 +68,7 @@ for msg in st.session_state.messages:
 def send_feedback(run_id, score):
     client.create_feedback(run_id, "user_score", score=score)
 
+
 run_collector = RunCollectorCallbackHandler()
 runnable_config = RunnableConfig(
     callbacks=[run_collector],
@@ -87,18 +76,24 @@ runnable_config = RunnableConfig(
 )
 if st.session_state.trace_link:
     st.sidebar.markdown(
-                f'<a href="{st.session_state.trace_link}" target="_blank"><button>Latest Trace: 🛠️</button></a>',
-                unsafe_allow_html=True,
-            )
+        f'<a href="{st.session_state.trace_link}" target="_blank"><button>Latest Trace: 🛠️</button></a>',
+        unsafe_allow_html=True,
+    )
 
 if prompt := st.chat_input(placeholder="Ask me a question!"):
     st.chat_message("user").write(prompt)
     with st.chat_message("assistant", avatar="🦜"):
         message_placeholder = st.empty()
         full_response = ""
-        for chunk in chain.stream({"input": prompt}, config=runnable_config):
-            full_response += chunk.content
-            message_placeholder.markdown(full_response + "▌")
+        if chain_type == "LLMChain":
+            message_placeholder.markdown("thinking...")
+            full_response = chain.invoke({"input": prompt}, config=runnable_config)[
+                "text"
+            ]
+        else:
+            for chunk in chain.stream({"input": prompt}, config=runnable_config):
+                full_response += chunk.content
+                message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
         memory.save_context({"input": prompt}, {"output": full_response})
         st.session_state.messages = memory.buffer
@@ -116,7 +111,11 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
         with col2:
             st.button("👎", on_click=send_feedback, args=(run.id, 0))
         with col3:
-            url = client.read_run(run.id).url
+            # Requires langsmith >= 0.0.19
+            url = client.share_run(run.id)
+            # Or if you just want to use this internally
+            # without sharing
+            # url = client.read_run(run.id).url
             st.session_state.trace_link = url
             st.markdown(
                 f'<a href="{url}" target="_blank"><button>🛠️</button></a>',
