@@ -14,6 +14,3 @@ The following examples show ways to capture and use [feedback](https://docs.smit
 - The [Streamlit Chat App](./feedback-examples/streamlit/README.md) contains a minimal example of a Chat application that captures user feedback and shares traces of the chat application.
     - The [vanilla_chain.py](./feedback-examples/streamlit/vanilla_chain.py) contains an LLMChain that powers the chat application
     - The [expression_chain.py](./feedback-examples/streamlit/expression_chain.py) contains an equivalent chat chain defined exclusively with [LangChain expressions](https://python.langchain.com/docs/guides/expression_language/).
-
-
-There is also a brief tutorial on tracing LLM apps to LangSmith without LangChain that can be found in [Tracing Without Langchain](./tracing-examples/tracing_without_langchain.ipynb) guide.
