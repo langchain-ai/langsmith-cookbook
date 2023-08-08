@@ -10,18 +10,7 @@ In making this app, you will get to use:
 - LangSmith client to send user feedback and display trace links
 - Streamlit runtime and UI components
 
-In particular, you will save user feedback as simple 👍/👎 scores attributed to traced runs, then we will walk through how we can see it in the LangSmith UI. Feedback can benefit LLM applications by providing signal for few-shot examples, model fine-tuning, evaluations, personalized user experiences, and improved application observability. The distilled code for this is as follows:
-
-```python
-run_collector = RunCollectorCallbackHandler()
-runnable_config = RunnableConfig(
-    callbacks=[run_collector],
-    tags=["Streamlit Chat"],
-)
-full_response = chain.invoke({"input": prompt}, config=runnable_config)["text"]
-client.create_feedback(run_collector.traced_runs[0], "user_score", score=score)
-```
-
+In particular, you will save user feedback as simple 👍/👎 scores attributed to traced runs, then we will walk through how we can see it in the LangSmith UI. Feedback can benefit LLM applications by providing signal for few-shot examples, model fine-tuning, evaluations, personalized user experiences, and improved application observability. 
 
 Now without further ado, let's get started!
 
@@ -65,30 +54,33 @@ Execute the following command:
 streamlit run main.py
 ```
 
-It should spin up the chat app on your localhost. Feel free to chat, rate the runs, and view the linked traces using the appropriate buttons! Once you've traced some interactions, and provided feedback, you can try clicking on the "🛠️" link. This will take you to a corresponding LangSmith trace:
+It should spin up the chat app on your localhost. Feel free to chat, rate the runs, and view the linked traces using the appropriate buttons! Once you've traced some interactions and provided feedback, you can try navigating to the `streamlit-demo` project (or whichever `LANGCHAIN_PROJECT` environment variable you have configured for this application), to see all the traces for this project.
 
+The aggregate feedback is displayed at the top of the screen, alongside the median and 99th percentile run latencies. In this case, 86% of the runs that received feedback were given a "thumbs up."
+
+![Aggregate Feedback](img/average_feedback.png)
+
+You can click one of the auto-populated filters to exclusively view runs that received a positive or negative score, or you can apply other filters based on latency, the number of tokens consumed, or other parameters. 
+
+Below, you can see we've filtered to only see runs that were given a "thumbs up" by the user.
+
+![Positive User Feedback](img/user_feedback_one.png)
+
+Click one of the runs to see its full trace. This is useful for visualizing the data flow through the chain.
 
 [![LangSmith](img/langsmith.png)](https://smith.langchain.com/public/1b571b29-1bcf-406b-9d67-19a48d808b44/r)
 
 
-If you have rated the run by clicking one of the 👍/👎 buttons, the user feedback will be stored in the "feedback" tab:
+If you provided feedback to the selected run using one of the 👍/👎 buttons in the chat app, the "user feedback" will be visible in the "feedback" tab.
 
 [![View Feedback](img/chat_feedback.png)](https://smith.langchain.com/public/1b571b29-1bcf-406b-9d67-19a48d808b44/r?tab=1)
 
-If you navigate back to the `streamlit-demo` project (or whatever LANGCHAIN_PROJECT you have configured for this application), you will see all the traces for this project. The aggregate feedback is displayed at the top of the screen, alongside the median and 99th percentile latencies. In this case, 86% of the runs that received a rating were given a "thumbs up."
 
-![Aggregate Feedback](img/average_feedback.png)
-
-You can click one of the auto-populated filters to see only runs that received a positive or negative score, or you can apply other filters based on latency, the number of tokens consumed, or other parameters. Below is an example filtering to see only runs that were given a "thumbs up" by the user.
-
-![Positive User Feedback](img/user_feedback_one.png)
-
-You can add each example to a dataset if you wish to use for evals, fine-tuning, or few-shot examples:
+You can add the run as an example to a dataset if you wish to use for evals, fine-tuning, or few-shot examples:
 
 ![Add to Dataset](img/add_to_dataset.png)
 
-You can modify the example outputs before saving to represent the ideal ground truth. This is especially useful if you are filtering by "thumbs down" examples and want to save "corrections" in a dataset.
-
+Before saving, feel free to modify the example outputs. This way you can ensure the dataset contains the "ideal" ground truth. This is especially useful if you are filtering by "thumbs down" examples and want to save "corrections" in a dataset.
 
 ## Code Walkthrough
 
