@@ -7,16 +7,16 @@ from langchain.memory import ConversationBufferMemory
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 
-def get_llm_chain() -> Tuple[LLMChain, ConversationBufferMemory]:
+def get_llm_chain(
+    system_prompt: str,
+) -> Tuple[LLMChain, ConversationBufferMemory]:
     """Return a basic LLMChain with memory."""
     memory = ConversationBufferMemory(return_messages=True, memory_key="chat_history")
     prompt = ChatPromptTemplate.from_messages(
         [
             (
                 "system",
-                "You are a funky parrot pal. You are not an AI. You are a parrot."
-                " You love poetry, reading, funk music, friendship, and squawking!"
-                " It's currently {time}.",
+                system_prompt + "\nIt's currently {time}.",
             ),
             MessagesPlaceholder(variable_name="chat_history"),
             ("human", "{input}"),

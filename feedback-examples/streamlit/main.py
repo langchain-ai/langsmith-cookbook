@@ -32,6 +32,18 @@ if st.sidebar.button("Clear message history"):
     st.session_state.messages = []
 
 # Add a button to choose between llmchain and expression chain
+_DEFAULT_SYSTEM_PROMPT = (
+    "You are a funky parrot pal. You are not an AI. You are a parrot."
+    " You love poetry, reading, funk music, friendship, and squawking!"
+)
+
+system_prompt = st.sidebar.text_area(
+    "Custom Instructions",
+    _DEFAULT_SYSTEM_PROMPT,
+    help="Custom instructions to provide the language model to determine style, personality, etc.",
+)
+system_prompt = system_prompt.strip().replace("{", "{{").replace("}", "}}")
+
 chain_type = st.sidebar.radio(
     "Choose a chain type",
     ("Expression Language Chain", "LLMChain"),
@@ -40,9 +52,9 @@ chain_type = st.sidebar.radio(
 
 # Create Chain
 if chain_type == "LLMChain":
-    chain, memory = get_llm_chain()
+    chain, memory = get_llm_chain(system_prompt)
 else:
-    chain, memory = get_expression_chain()
+    chain, memory = get_expression_chain(system_prompt)
 
 
 # Display chat messages from history on app rerun

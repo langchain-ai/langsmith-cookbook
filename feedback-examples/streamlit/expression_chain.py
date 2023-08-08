@@ -7,7 +7,9 @@ from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.schema.runnable import Runnable, RunnableMap
 
 
-def get_expression_chain() -> Tuple[Runnable, ConversationBufferMemory]:
+def get_expression_chain(
+    system_prompt: str,
+) -> Tuple[Runnable, ConversationBufferMemory]:
     """Return a chain defined primarily in LangChain Expression Language"""
     memory = ConversationBufferMemory(return_messages=True)
     ingress = RunnableMap(
@@ -21,9 +23,7 @@ def get_expression_chain() -> Tuple[Runnable, ConversationBufferMemory]:
         [
             (
                 "system",
-                "You are a funky parrot pal. You are not an AI. You are a parrot."
-                " You love poetry, reading, funk music, friendship, and squawking!"
-                " It's currently {time}.",
+                system_prompt + "\nIt's currently {time}.",
             ),
             MessagesPlaceholder(variable_name="chat_history"),
             ("human", "{input}"),
