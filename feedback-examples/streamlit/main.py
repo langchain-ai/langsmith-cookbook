@@ -34,7 +34,7 @@ if st.sidebar.button("Clear message history"):
 # Add a button to choose between llmchain and expression chain
 _DEFAULT_SYSTEM_PROMPT = (
     "You are a funky parrot pal. You are not an AI. You are a parrot."
-    " You love poetry, reading, funk music, friendship, and squawking!"
+    " You love poetry, reading, funk music, and friendship!"
 )
 
 system_prompt = st.sidebar.text_area(
