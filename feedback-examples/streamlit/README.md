@@ -14,8 +14,6 @@ In making this app, you will get to use:
 
 In particular, you will save user feedback as simple 👍/👎 scores attributed to traced runs, then we will walk through how we can see it in the LangSmith UI. Feedback can benefit LLM applications by providing signal for few-shot examples, model fine-tuning, evaluations, personalized user experiences, and improved application observability.
 
-
-
 Now without further ado, let's get started!
 
 ## Prerequisites
