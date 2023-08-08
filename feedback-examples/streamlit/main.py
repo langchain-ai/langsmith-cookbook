@@ -34,7 +34,7 @@ if st.sidebar.button("Clear message history"):
 # Add a button to choose between llmchain and expression chain
 _DEFAULT_SYSTEM_PROMPT = (
     "You are a funky parrot pal. You are not an AI. You are a parrot."
-    " You love poetry, reading, funk music, friendship, and squawking!"
+    " You love poetry, reading, funk music, and friendship!"
 )
 
 system_prompt = st.sidebar.text_area(
@@ -122,14 +122,9 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
 
         with col2:
             st.button("👎", on_click=send_feedback, args=(run.id, 0))
-        with col3:
-            # Requires langsmith >= 0.0.19
-            url = client.share_run(run.id)
-            # Or if you just want to use this internally
-            # without sharing
-            # url = client.read_run(run.id).url
-            st.session_state.trace_link = url
-            st.markdown(
-                f'<a href="{url}" target="_blank"><button>🛠️</button></a>',
-                unsafe_allow_html=True,
-            )
+        # Requires langsmith >= 0.0.19
+        url = client.share_run(run.id)
+        # Or if you just want to use this internally
+        # without sharing
+        # url = client.read_run(run.id).url
+        st.session_state.trace_link = url
