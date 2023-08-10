@@ -17,7 +17,7 @@ The following walkthroughs show ways to capture and use [feedback](https://docs.
 ## Testing & Evaluation
 
 The following walkthroughs demonstrate ways to evaluate common application scenarios.
-- The [Checking for Hallucinations in a Q&A System](./testing-examples/qa-system.ipynb) notebook walks through setting up an example retrieval-augmented Q&A pipeline, preparing it for evaluation, and making a custom evaluator to check for hallucinations in the generated output.
+- The [Q&A System Correctness](./testing-examples/qa-system.ipynb) notebook walks through setting up an example retrieval-augmented Q&A pipeline, preparing it for evaluation, and making a custom evaluator to check for hallucinations in the generated output.
 
 ## Tracing your code
 
