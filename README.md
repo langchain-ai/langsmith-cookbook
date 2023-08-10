@@ -17,7 +17,7 @@ The following walkthroughs show ways to capture and use [feedback](https://docs.
 ## Testing & Evaluation
 
 The following walkthroughs demonstrate ways to evaluate common application scenarios.
-- The [Q&A System Correctness](./testing-examples/qa-system.ipynb) notebook walks through setting up an example retrieval-augmented Q&A pipeline, preparing it for evaluation, and making a custom evaluator to check for hallucinations in the generated output.
+- The [Q&A System Correctness](./testing-examples/qa-correctness.ipynb) notebook walks through creating a dataset for a retrieval-augmented Q&A pipeline, evaluating the responses for correctness, and using LangSmith to iterate and improve.
 
 ## Tracing your code
 
