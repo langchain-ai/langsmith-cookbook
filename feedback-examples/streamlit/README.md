@@ -205,50 +205,33 @@ The logic for rendering the chat input and streaming the output to the app looks
 ```python
 if prompt := st.chat_input(placeholder="Ask me a question!"):
     st.chat_message("user").write(prompt)
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant", avatar="🦜"):
         message_placeholder = st.empty()
         full_response = ""
         for chunk in chain.stream({"input": prompt}, config=runnable_config):
             full_response += chunk.content
             message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
         memory.save_context({"input": prompt}, {"output": full_response})
-        st.session_state.messages = memory.buffer
 ```
 
 This renders a `chat_input` container, and when the user sends an input, it's converted to a "user" chat message. Then an "assistant" message is created, and tokens are streamed in by updating a full response and rendering it to markdown with a "cursor" icon to simulate typing.
 
-Once the response completes, the values are saved to memory, and the streamlit messages state is updated so the conversation can be continued on the next loop.
+Once the response completes, the values are saved to memory, which updates the streamlit message state so the conversation can be continued on the next loop.
 
 Finally, you can create feedback for the response directly in the app using the following code:
 
 ```python
-run = run_collector.traced_runs[0]
-run_collector.traced_runs = []
-col_blank, col_text, col1, col2, col3 = st.columns([10, 2, 1, 1, 1])
-with col_text:
-    st.text("Feedback:")
-
-with col1:
-    st.button("👍", on_click=send_feedback, args=(run.id, 1))
-
-with col2:
-    st.button("👎", on_click=send_feedback, args=(run.id, 0))
-with col3:
-    # Requires langsmith >= 0.0.19
-    url = client.share_run(run.id)
-    # Or if you just want to use this internally
-    # without sharing
-    # url = client.read_run(run.id).url
-    st.session_state.trace_link = url
-    st.markdown(
-        f'<a href="{url}" target="_blank"><button>🛠️</button></a>',
-        unsafe_allow_html=True,
+if st.session_state.get("run_id"):
+    feedback = streamlit_feedback(
+        feedback_type="thumbs",
+        key=f"feedback_{st.session_state.run_id}",
     )
-
+    if feedback:
+        scores = {"👍": 1, "👎": 0}
+        client.create_feedback(
+            st.session_state.run_id, "user_score", score=scores[feedback["score"]]
+        )
 ```
-
-The `run_collector` is a callback handler that we included in the `runnable_config` above. It captures all the runs any time the chain is invoked. We select the first `root` run in the tree to associate feedback to. If the user clicks the 👍/👎 buttons, feedback will be logged to the run!
 
 ## Reusable Tactics
 
