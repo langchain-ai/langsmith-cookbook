@@ -1,6 +1,7 @@
 """Example Streamlit chat UI that exposes a Feedback button and link to LangSmith traces."""
 
 import streamlit as st
+from streamlit_feedback import streamlit_feedback
 from langchain.callbacks.tracers.run_collector import RunCollectorCallbackHandler
 from langchain.schema.runnable import RunnableConfig
 from langsmith import Client
@@ -13,15 +14,16 @@ client = Client()
 st.set_page_config(
     page_title="Chat LangSmith",
     page_icon="🦜",
-    layout="wide",
 )
 "# Chat🦜🛠️"
 # Initialize State
 if "messages" not in st.session_state:
     print("Initializing message history")
-    st.session_state["messages"] = []
+    st.session_state.messages = []
 if "trace_link" not in st.session_state:
-    st.session_state["trace_link"] = None
+    st.session_state.trace_link = None
+if "run_id" not in st.session_state:
+    st.session_state.run_id = None
 st.sidebar.markdown(
     """
 # Menu
@@ -30,6 +32,8 @@ st.sidebar.markdown(
 if st.sidebar.button("Clear message history"):
     print("Clearing message history")
     st.session_state.messages = []
+    st.session_state.trace_link = None
+    st.session_state.run_id = None
 
 # Add a button to choose between llmchain and expression chain
 _DEFAULT_SYSTEM_PROMPT = (
@@ -58,6 +62,8 @@ else:
 
 
 # Display chat messages from history on app rerun
+# NOTE: This won't be necessary for Streamlit 1.26+, you can just pass the type directly
+# https://github.com/streamlit/streamlit/pull/7094
 def _get_openai_type(msg):
     if msg.type == "human":
         return "user"
@@ -75,11 +81,6 @@ for msg in st.session_state.messages:
         st.markdown(msg.content)
     # Re-hydrate memory on app rerun
     memory.chat_memory.add_message(msg)
-
-
-def send_feedback(run_id, score):
-    client.create_feedback(run_id, "user_score", score=score)
-
 
 run_collector = RunCollectorCallbackHandler()
 runnable_config = RunnableConfig(
@@ -113,18 +114,19 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
         # reset the list for next interaction.
         run = run_collector.traced_runs[0]
         run_collector.traced_runs = []
-        col_blank, col_text, col1, col2, col3 = st.columns([10, 2, 1, 1, 1])
-        with col_text:
-            st.text("Feedback:")
-
-        with col1:
-            st.button("👍", on_click=send_feedback, args=(run.id, 1))
-
-        with col2:
-            st.button("👎", on_click=send_feedback, args=(run.id, 0))
+        st.session_state.run_id = run.id
         # Requires langsmith >= 0.0.19
         url = client.share_run(run.id)
         # Or if you just want to use this internally
         # without sharing
         # url = client.read_run(run.id).url
         st.session_state.trace_link = url
+
+if st.session_state.get("run_id"):
+    feedback = streamlit_feedback(
+        feedback_type="thumbs",
+        key=f"feedback_{st.session_state.run_id}",
+    )
+    if feedback:
+        scores = {"👍": 1, "👎": 0}
+        client.create_feedback(st.session_state.run_id, "user_score", score=scores[feedback["score"]])
