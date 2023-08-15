@@ -1,21 +1,19 @@
 from datetime import datetime
-from typing import Tuple
 
 from langchain.chat_models import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.schema.runnable import Runnable, RunnableMap
+from langchain.memory import ConversationBufferMemory
 
 
 def get_expression_chain(
-    system_prompt: str,
-) -> Tuple[Runnable, ConversationBufferMemory]:
+    system_prompt: str, memory: ConversationBufferMemory
+) -> Runnable:
     """Return a chain defined primarily in LangChain Expression Language"""
-    memory = ConversationBufferMemory(return_messages=True)
     ingress = RunnableMap(
         {
             "input": lambda x: x["input"],
-            "chat_history": lambda x: memory.load_memory_variables(x)["history"],
+            "chat_history": lambda x: memory.load_memory_variables(x)["chat_history"],
             "time": lambda _: str(datetime.now()),
         }
     )
@@ -31,7 +29,7 @@ def get_expression_chain(
     )
     llm = ChatOpenAI(temperature=0.7)
     chain = ingress | prompt | llm
-    return chain, memory
+    return chain
 
 
 if __name__ == "__main__":

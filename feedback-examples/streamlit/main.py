@@ -1,63 +1,69 @@
 """Example Streamlit chat UI that exposes a Feedback button and link to LangSmith traces."""
 
 import streamlit as st
+from expression_chain import get_expression_chain
 from langchain.callbacks.tracers.run_collector import RunCollectorCallbackHandler
+from langchain.memory import StreamlitChatMessageHistory, ConversationBufferMemory
 from langchain.schema.runnable import RunnableConfig
 from langsmith import Client
-from expression_chain import get_expression_chain
+from streamlit_feedback import streamlit_feedback
 from vanilla_chain import get_llm_chain
-
 
 client = Client()
 
 st.set_page_config(
     page_title="Chat LangSmith",
     page_icon="🦜",
-    layout="wide",
 )
 "# Chat🦜🛠️"
 # Initialize State
-if "messages" not in st.session_state:
-    print("Initializing message history")
-    st.session_state["messages"] = []
 if "trace_link" not in st.session_state:
-    st.session_state["trace_link"] = None
+    st.session_state.trace_link = None
+if "run_id" not in st.session_state:
+    st.session_state.run_id = None
 st.sidebar.markdown(
     """
 # Menu
 """
 )
-if st.sidebar.button("Clear message history"):
-    print("Clearing message history")
-    st.session_state.messages = []
 
 # Add a button to choose between llmchain and expression chain
 _DEFAULT_SYSTEM_PROMPT = (
     "You are a funky parrot pal. You are not an AI. You are a parrot."
     " You love poetry, reading, funk music, and friendship!"
 )
-
 system_prompt = st.sidebar.text_area(
     "Custom Instructions",
     _DEFAULT_SYSTEM_PROMPT,
     help="Custom instructions to provide the language model to determine style, personality, etc.",
 )
 system_prompt = system_prompt.strip().replace("{", "{{").replace("}", "}}")
-
 chain_type = st.sidebar.radio(
     "Choose a chain type",
     ("Expression Language Chain", "LLMChain"),
     help="Choose whether to use a vanilla LLMChain or an equivalent chain built using LangChain Expression Language.",
 )
-
+memory = ConversationBufferMemory(
+    chat_memory=StreamlitChatMessageHistory(key="langchain_messages"),
+    return_messages=True,
+    memory_key="chat_history",
+)
 # Create Chain
 if chain_type == "LLMChain":
-    chain, memory = get_llm_chain(system_prompt)
+    chain = get_llm_chain(system_prompt, memory)
 else:
-    chain, memory = get_expression_chain(system_prompt)
+    chain = get_expression_chain(system_prompt, memory)
+
+if st.sidebar.button("Clear message history"):
+    print("Clearing message history")
+    memory.clear()
+    st.session_state.trace_link = None
+    st.session_state.run_id = None
 
 
 # Display chat messages from history on app rerun
+# NOTE: This won't be necessary for Streamlit 1.26+, you can just pass the type directly
+# https://github.com/streamlit/streamlit/pull/7094
 def _get_openai_type(msg):
     if msg.type == "human":
         return "user"
@@ -68,18 +74,11 @@ def _get_openai_type(msg):
     return msg.type
 
 
-for msg in st.session_state.messages:
+for msg in st.session_state.langchain_messages:
     streamlit_type = _get_openai_type(msg)
     avatar = "🦜" if streamlit_type == "assistant" else None
     with st.chat_message(streamlit_type, avatar=avatar):
         st.markdown(msg.content)
-    # Re-hydrate memory on app rerun
-    memory.chat_memory.add_message(msg)
-
-
-def send_feedback(run_id, score):
-    client.create_feedback(run_id, "user_score", score=score)
-
 
 run_collector = RunCollectorCallbackHandler()
 runnable_config = RunnableConfig(
@@ -106,25 +105,27 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
             for chunk in chain.stream({"input": prompt}, config=runnable_config):
                 full_response += chunk.content
                 message_placeholder.markdown(full_response + "▌")
+            memory.save_context({"input": prompt}, {"output": full_response})
         message_placeholder.markdown(full_response)
-        memory.save_context({"input": prompt}, {"output": full_response})
-        st.session_state.messages = memory.buffer
         # The run collector will store all the runs in order. We'll just take the root and then
         # reset the list for next interaction.
         run = run_collector.traced_runs[0]
         run_collector.traced_runs = []
-        col_blank, col_text, col1, col2, col3 = st.columns([10, 2, 1, 1, 1])
-        with col_text:
-            st.text("Feedback:")
-
-        with col1:
-            st.button("👍", on_click=send_feedback, args=(run.id, 1))
-
-        with col2:
-            st.button("👎", on_click=send_feedback, args=(run.id, 0))
+        st.session_state.run_id = run.id
         # Requires langsmith >= 0.0.19
         url = client.share_run(run.id)
         # Or if you just want to use this internally
         # without sharing
         # url = client.read_run(run.id).url
         st.session_state.trace_link = url
+
+if st.session_state.get("run_id"):
+    feedback = streamlit_feedback(
+        feedback_type="thumbs",
+        key=f"feedback_{st.session_state.run_id}",
+    )
+    if feedback:
+        scores = {"👍": 1, "👎": 0}
+        client.create_feedback(
+            st.session_state.run_id, "user_score", score=scores[feedback["score"]]
+        )
