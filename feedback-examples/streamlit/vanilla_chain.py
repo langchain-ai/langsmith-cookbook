@@ -3,10 +3,10 @@ from langchain import LLMChain
 
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.memory import StreamlitChatMessageHistory
+from langchain.memory import ConversationBufferMemory
 
 
-def get_llm_chain(system_prompt: str, memory: StreamlitChatMessageHistory) -> LLMChain:
+def get_llm_chain(system_prompt: str, memory: ConversationBufferMemory) -> LLMChain:
     """Return a basic LLMChain with memory."""
     prompt = ChatPromptTemplate.from_messages(
         [

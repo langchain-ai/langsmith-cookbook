@@ -3,7 +3,7 @@
 import streamlit as st
 from expression_chain import get_expression_chain
 from langchain.callbacks.tracers.run_collector import RunCollectorCallbackHandler
-from langchain.memory import StreamlitChatMessageHistory
+from langchain.memory import StreamlitChatMessageHistory, ConversationBufferMemory
 from langchain.schema.runnable import RunnableConfig
 from langsmith import Client
 from streamlit_feedback import streamlit_feedback
@@ -43,7 +43,11 @@ chain_type = st.sidebar.radio(
     ("Expression Language Chain", "LLMChain"),
     help="Choose whether to use a vanilla LLMChain or an equivalent chain built using LangChain Expression Language.",
 )
-memory = StreamlitChatMessageHistory(key="chat_history")
+memory = ConversationBufferMemory(
+    chat_memory=StreamlitChatMessageHistory(key="langchain_messages"),
+    return_messages=True,
+    memory_key="chat_history",
+)
 # Create Chain
 if chain_type == "LLMChain":
     chain = get_llm_chain(system_prompt, memory)
@@ -70,7 +74,7 @@ def _get_openai_type(msg):
     return msg.type
 
 
-for msg in st.session_state.chat_history:
+for msg in st.session_state.langchain_messages:
     streamlit_type = _get_openai_type(msg)
     avatar = "🦜" if streamlit_type == "assistant" else None
     with st.chat_message(streamlit_type, avatar=avatar):
@@ -92,7 +96,6 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
     with st.chat_message("assistant", avatar="🦜"):
         message_placeholder = st.empty()
         full_response = ""
-        memory.add_user_message(prompt)
         if chain_type == "LLMChain":
             message_placeholder.markdown("thinking...")
             full_response = chain.invoke({"input": prompt}, config=runnable_config)[
@@ -102,8 +105,8 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
             for chunk in chain.stream({"input": prompt}, config=runnable_config):
                 full_response += chunk.content
                 message_placeholder.markdown(full_response + "▌")
+            memory.save_context({"input": prompt}, {"output": full_response})
         message_placeholder.markdown(full_response)
-        memory.add_ai_message(full_response)
         # The run collector will store all the runs in order. We'll just take the root and then
         # reset the list for next interaction.
         run = run_collector.traced_runs[0]

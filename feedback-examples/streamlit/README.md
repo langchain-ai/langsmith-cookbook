@@ -86,12 +86,18 @@ Before saving, feel free to modify the example outputs. This way you can ensure 
 
 The app consists of a main script managed by the `streamlit` event loop. Below are some key code snippets of what you've run.
 
-After importing the required modules, you initialize the streamlit session state with a "messages" key to maintain the chat history between turns.
+After importing the required modules, you initialize the streamlit session state with a trace link and run ID, and with a "langchain_messages" key, which is in itialized within the `StreamlitChatMessageHistory`.
 
 ```python
-if "messages" not in st.session_state:
-    print("Initializing message history")
-    st.session_state["messages"] = []
+if "trace_link" not in st.session_state:
+    st.session_state.trace_link = None
+if "run_id" not in st.session_state:
+    st.session_state.run_id = None
+memory = ConversationBufferMemory(
+    chat_memory=StreamlitChatMessageHistory(key="langchain_messages"),
+    return_messages=True, # Used to use message formats with the chat model
+    memory_key="chat_history",
+)
 ```
 
 Then you define the core logic of the chat model. This example lets you select between two equivalent chains: an LLMChain, and a chain built with LangChain's [expression language](https://python.langchain.com/docs/guides/expression_language/).
@@ -101,11 +107,15 @@ Then you define the core logic of the chat model. This example lets you select b
 The chain built using the LangChain Expression Language can be found in [expression_chain.py](expression_chain.py). It looks like the following:
 
 ```python
-memory = ConversationBufferMemory(return_messages=True)
+memory = ConversationBufferMemory(
+    chat_memory=StreamlitChatMessageHistory(key="langchain_messages"),
+    return_messages=True,
+    memory_key="chat_history",
+)
 ingress = RunnableMap(
     {
         "input": lambda x: x["input"],
-        "chat_history": lambda x: memory.load_memory_variables(x)["history"],
+        "chat_history": lambda x: memory.load_memory_variables(x)["chat_history"],
         "time": lambda _: str(datetime.now()),
     }
 )
