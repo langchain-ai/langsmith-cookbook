@@ -1,17 +1,13 @@
 from datetime import datetime
-from typing import Tuple
 from langchain import LLMChain
 
 from langchain.chat_models import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.memory import StreamlitChatMessageHistory
 
 
-def get_llm_chain(
-    system_prompt: str,
-) -> Tuple[LLMChain, ConversationBufferMemory]:
+def get_llm_chain(system_prompt: str, memory: StreamlitChatMessageHistory) -> LLMChain:
     """Return a basic LLMChain with memory."""
-    memory = ConversationBufferMemory(return_messages=True, memory_key="chat_history")
     prompt = ChatPromptTemplate.from_messages(
         [
             (
@@ -24,7 +20,7 @@ def get_llm_chain(
     ).partial(time=lambda: str(datetime.now()))
     llm = ChatOpenAI(temperature=0.7)
     chain = LLMChain(prompt=prompt, llm=llm, memory=memory)
-    return chain, memory
+    return chain
 
 
 if __name__ == "__main__":
