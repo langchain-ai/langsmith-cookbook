@@ -231,7 +231,48 @@ if st.session_state.get("run_id"):
         client.create_feedback(
             st.session_state.run_id, "user_score", score=scores[feedback["score"]]
         )
+        st.session_state.feedback = {"feedback_id": str(feedback.id), "score": score}
 ```
+
+To add additional comments or corrections via forms, we add the following code blocks:
+
+```python
+# Prompt for more information, if feedback was submitted
+if st.session_state.get("feedback"):
+    feedback = st.session_state.get("feedback")
+    feedback_id = feedback["feedback_id"]
+    score = feedback["score"]
+    if score == 0:
+        # Add text input with a correction box
+        correction = st.text_input(
+            label="What would the correct or preferred response have been?",
+            key=f"correction_{feedback_id}",
+        )
+        if correction:
+            st.session_state.feedback_update = {
+                "correction": {"desired": correction},
+                "feedback_id": feedback_id,
+            }
+    if score == 1:
+        comment = st.text_input(
+            label="Anything else you'd like to add about this response?",
+            key=f"comment_{feedback_id}",
+        )
+        if comment:
+            st.session_state.feedback_update = {
+                "comment": comment,
+                "feedback_id": feedback_id,
+            }
+# Update the feedback if additional information was provided
+if st.session_state.get("feedback_update"):
+    feedback_update = st.session_state.get("feedback_update")
+    feedback_id = feedback_update.pop("feedback_id")
+    client.update_feedback(feedback_id, **feedback_update)
+    # Clear the comments
+    _reset_feedback()
+```
+
+They use the streamlit session state to track the state of the feedback dialog and make sure the original feedback is still logged immediately whether or not the user wants to add additional commentary.
 
 ## Reusable Tactics
 
@@ -239,7 +280,7 @@ Below are some 'tactics' used in this example that you could reuse in other situ
 
 1. **Using the Run Collector:** One way to fetch the run ID is by using the `RunCollectorCallbackHandler`, which stores all run objects in a simple python list. The collected run IDs are used to associate logged feedback and for accessing the trace URLs.
 
-2. **Logging feedback with LangSmith client:** The LangSmith client is used to create feedback for each run. A simple form is thumbs up/down, but it also supports other `value`'s, `comment`'s, `correction`'s, and other input. This way, users and annotators alike can share explicit feedback on a run.
+2. **Logging feedback with LangSmith client:** The LangSmith client is used to create and update feedback for each run. A simple form is thumbs up/down, but it also supports other `value`'s, `comment`'s, `correction`'s, and other input. This way, users and annotators alike can share explicit feedback on a run.
 
 3. **Accessing URLs from saved runs:** The client also retrieves URLs for saved runs. It allows users to inspect their interactions, providing a direct link to LangSmith traces.
 
