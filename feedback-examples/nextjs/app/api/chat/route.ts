@@ -27,8 +27,6 @@ Current conversation:
 User: {input}
 AI:`;
 
-const langsmithClient = new Client();
-
 /**
  * This handler initializes and calls a simple chain with a prompt,
  * chat model, and output parser. See the docs for more information:
