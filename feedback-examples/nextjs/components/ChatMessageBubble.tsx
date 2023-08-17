@@ -10,31 +10,38 @@ import { Feedback } from 'langsmith';
 
 export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?: string }) {
   const { role, content, runId, traceUrl } = props.message;
+
   const colorClassName =
     role === "human" ? "bg-sky-600" : "bg-slate-50 text-black";
   const alignmentClassName =
     role === "human" ? "mr-auto" : "ml-auto";
   const prefix = role === "human" ? "🧑" : props.aiEmoji;
+
   const [isLoading, setIsLoading] = useState(false);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [comment, setComment] = useState("");
   const [showCommentForm, setShowCommentForm] = useState(false);
+
   async function handleScoreButtonPress(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, score: number) {
     e.preventDefault();
     setComment("");
     await sendFeedback(score);
   }
+
   async function handleCommentSubmission(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(feedback);
     const score = typeof feedback?.score === "number" ? feedback.score : 0;
     await sendFeedback(score);
   }
+
   async function sendFeedback(score: number) {
     if (isLoading) {
       return;
     }
+
     setIsLoading(true);
+
     const response = await fetch("api/feedback", {
       method: feedback?.id ? "PUT" : "POST",
       body: JSON.stringify({
@@ -44,8 +51,9 @@ export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?:
         comment,
       })
     });
+
     const json = await response.json();
-    console.log(feedback?.id, showCommentForm)
+
     if (json.error) {
       toast(json.error, {
         theme: "dark"
@@ -61,9 +69,11 @@ export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?:
     } else {
       setShowCommentForm(true);
     }
+
     if (json.feedback) {
       setFeedback(json.feedback);
     }
+
     setIsLoading(false);
   }
   return (

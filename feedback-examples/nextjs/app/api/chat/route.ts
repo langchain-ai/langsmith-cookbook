@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ChatWindowMessage } from "@/schema/ChatWindowMessage";
 
-import { Client } from "langsmith";
-
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { BytesOutputParser } from "langchain/schema/output_parser";
 import { PromptTemplate } from "langchain/prompts";
@@ -58,7 +56,7 @@ export async function POST(req: NextRequest) {
     });
 
     /**
-     * This output parser parses output into the correct format.
+     * This output parser converts streaming output chunks into the correct format.
      */
     const outputParser = new BytesOutputParser();
 
@@ -75,7 +73,7 @@ export async function POST(req: NextRequest) {
      */
     let chainRunId;
     const stream: ReadableStream = await new Promise((resolve) => {
-      const stream = chain.stream(
+      const chainStream = chain.stream(
         {
           chat_history: formattedPreviousMessages.join("\n"),
           input: currentMessageContent,
@@ -85,7 +83,7 @@ export async function POST(req: NextRequest) {
             {
               handleChainStart(_llm, _prompts, runId) {
                 chainRunId = runId;
-                resolve(stream);
+                resolve(chainStream);
               },
             },
           ],
