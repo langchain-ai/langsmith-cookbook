@@ -14,6 +14,7 @@ The following walkthroughs show ways to capture and use [feedback](https://docs.
     - The [vanilla_chain.py](./feedback-examples/streamlit/vanilla_chain.py) contains an LLMChain that powers the chat application.
     - The [expression_chain.py](./feedback-examples/streamlit/expression_chain.py) contains an equivalent chat chain defined exclusively with [LangChain expressions](https://python.langchain.com/docs/guides/expression_language/). 
 - The [Next.js Chat App](./feedback-examples/nextjs/README.md) contains a TypeScript tracing and user feedback example.
+    - You can [check out a deployed demo version here](https://langsmith-cookbook.vercel.app/).
 
 ## Testing & Evaluation
 
