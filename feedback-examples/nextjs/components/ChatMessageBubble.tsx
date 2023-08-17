@@ -46,7 +46,6 @@ export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?:
     const json = await response.json();
     if (json.feedback) {
       setFeedback(json.feedback);
-      console.log(json.feedback);
     }
     setIsLoading(false);
     if (json.error) {
@@ -55,8 +54,9 @@ export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?:
       });
       return;
     } else {
-      toast("Response recorded!", {
-        theme: "dark"
+      toast("Response recorded! Go to https://smith.langchain.com and check it out in under your run's \"Feedback\" pane.", {
+        theme: "dark",
+        autoClose: 3000,
       });
     }
   }

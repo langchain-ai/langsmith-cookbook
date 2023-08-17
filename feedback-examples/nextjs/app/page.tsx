@@ -24,7 +24,7 @@ export default function Home() {
         <li className="text-l">
           ⚒️
           <span className="ml-2">
-            You'll want to ensure you have{" "}
+            You&apos;ll want to ensure you have{" "}
             <a href="https://docs.smith.langchain.com" target="_blank">
               LangSmith
             </a>{" "}
@@ -79,6 +79,7 @@ export default function Home() {
       titleText="Wi-LLM-iam Shakespeare"
       placeholder="I'm an LLM pretending to be William Shakespeare! Ask me anything!"
       emptyStateComponent={InfoCard}
+      showTraceUrls={false}
     ></ChatWindow>
   );
 }

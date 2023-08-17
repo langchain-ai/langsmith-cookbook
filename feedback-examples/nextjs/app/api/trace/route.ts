@@ -8,6 +8,8 @@ const langsmithClient = new Client();
 
 /**
  * This handler retrieves a LangSmith trace URL for the given run.
+ * It isn't used by default, but if you'd like to turn it on, set
+ * "showTraceUrls" to true in app/page.tsx.
  */
 export async function GET(req: NextRequest) {
   try {
