@@ -27,19 +27,25 @@ export function ChatWindow(props: {
 
   async function sendMessage(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     if (messageContainerRef.current) {
       messageContainerRef.current.classList.add("grow");
     }
+
     if (!messages.length) {
       await new Promise(resolve => setTimeout(resolve, 300));
     }
+
     if (isLoading) {
       return;
     }
+
     const newMessages = [...messages, { role: "human" as const, content: input }];
+
     setMessages(newMessages)
     setIsLoading(true);
     setInput("");
+
     const response = await fetch(endpoint, {
       method: "POST",
       body: JSON.stringify({
@@ -54,23 +60,33 @@ export function ChatWindow(props: {
       setIsLoading(false);
       return;
     }
-    
+
     const runId = response.headers.get("x-langsmith-run-id") ?? undefined;
     const textDecoder = new TextDecoder();
     const reader = response.body.getReader();
+
     let chunk = await reader.read();
-    const aiResponseMessage: ChatWindowMessage = {content: textDecoder.decode(chunk.value), role: "ai" as const, runId};
+
+    const aiResponseMessage: ChatWindowMessage = {
+      content: textDecoder.decode(chunk.value),
+      role: "ai" as const,
+      runId,
+    };
+
     setMessages([...newMessages, aiResponseMessage]);
+
     while (!chunk.done) {
       chunk = await reader.read();
       aiResponseMessage.content += textDecoder.decode(chunk.value);
       setMessages([...newMessages, aiResponseMessage]);
     }
+
     if (showTraceUrls) {
-      const traceUrlResponse = await fetch(`api/trace?run_id=${runId}`); 
+      const traceUrlResponse = await fetch(`api/trace?run_id=${runId}`);
       const traceUrlJson = await traceUrlResponse.json();
-      aiResponseMessage.traceUrl = traceUrlJson.url; 
+      aiResponseMessage.traceUrl = traceUrlJson.url;
     }
+
     setIsLoading(false);
   }
 
