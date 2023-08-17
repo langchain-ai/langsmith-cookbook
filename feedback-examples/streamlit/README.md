@@ -16,7 +16,7 @@ Now without further ado, let's get started!
 
 ## Prerequisites
 
-To trace your runs and log feedback, you'll need to configure your environment to connec to [LangSmith](https://smith.langchain.com/). To do so, define the following environment variables:
+To trace your runs and log feedback, you'll need to configure your environment to connect to [LangSmith](https://smith.langchain.com/). To do so, define the following environment variables:
 
 ```bash
 export LANGCHAIN_TRACING_V2=true

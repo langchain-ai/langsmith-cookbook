@@ -7,6 +7,7 @@ from langchain.memory import StreamlitChatMessageHistory, ConversationBufferMemo
 from langchain.schema.runnable import RunnableConfig
 from langsmith import Client
 from streamlit_feedback import streamlit_feedback
+from langchain.callbacks.tracers.langchain import wait_for_all_tracers
 from vanilla_chain import get_llm_chain
 
 client = Client()
@@ -119,6 +120,7 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
         run = run_collector.traced_runs[0]
         run_collector.traced_runs = []
         st.session_state.run_id = run.id
+        wait_for_all_tracers()
         # Requires langsmith >= 0.0.19
         url = client.share_run(run.id)
         # Or if you just want to use this internally
