@@ -163,7 +163,8 @@ After a feedback session is created, the message opens a comment input to allow 
 ### Feedback Endpoint
 
 The feedback endpoint is actually two routes - one for creating new feedback sessions, and the other for updating existing ones.
-Both are simple wrappers over LangSmith SDK calls:
+Both are simple wrappers over LangSmith SDK calls. When the user first clicks the 👍/👎 button, feedback
+is recorded with the following code. 
 
 ```typescript
 const body = await req.json();
@@ -181,6 +182,35 @@ const feedback = await langsmithClient.createFeedback(runId, "user_score", {
 
 return NextResponse.json({ feedback }, { status: 200 });
 ```
+
+Then if they add a comment, the feedback is updated with by calling `updateFeedback`.
+We we pass the feedback ID this time from the chat frontend to the update route through the request body.
+
+```typescript
+const body = await req.json();
+const feedbackId = body.id;
+const score = body.score;
+if (!feedbackId) {
+    return NextResponse.json(
+    { error: "You must provide a feedback id" },
+    { status: 400 },
+    );
+}
+let correction;
+let comment;
+if (score === 1) {
+    comment = body.comment;
+} else {
+    correction = { desired: body.comment };
+}
+const feedback = await langsmithClient.updateFeedback(feedbackId, {
+    score,
+    comment,
+    correction,
+});
+```
+
+Once this is called, the run's feedback will contain the user score and comment!
 
 ## Learn More
 
