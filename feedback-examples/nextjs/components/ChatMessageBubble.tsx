@@ -18,6 +18,7 @@ export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?:
   const [isLoading, setIsLoading] = useState(false);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [comment, setComment] = useState("");
+  const [showCommentForm, setShowCommentForm] = useState(false);
   async function handleScoreButtonPress(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, score: number) {
     e.preventDefault();
     setComment("");
@@ -27,7 +28,7 @@ export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?:
     e.preventDefault();
     console.log(feedback);
     const score = typeof feedback?.score === "number" ? feedback.score : 0;
-    sendFeedback(score);
+    await sendFeedback(score);
   }
   async function sendFeedback(score: number) {
     if (isLoading) {
@@ -44,21 +45,26 @@ export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?:
       })
     });
     const json = await response.json();
-    if (json.feedback) {
-      setFeedback(json.feedback);
-    }
-    setIsLoading(false);
+    console.log(feedback?.id, showCommentForm)
     if (json.error) {
       toast(json.error, {
         theme: "dark"
       });
       return;
-    } else {
+    } else if (feedback?.id && comment) {
       toast("Response recorded! Go to https://smith.langchain.com and check it out in under your run's \"Feedback\" pane.", {
         theme: "dark",
         autoClose: 3000,
       });
+      setComment("");
+      setShowCommentForm(false);
+    } else {
+      setShowCommentForm(true);
     }
+    if (json.feedback) {
+      setFeedback(json.feedback);
+    }
+    setIsLoading(false);
   }
   return (
     <div
@@ -85,7 +91,7 @@ export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?:
           👎
         </button>
       </div>
-      <div className={`${feedback ? "" : "hidden"} min-w-[480px]`}>
+      <div className={`${(feedback && showCommentForm) ? "" : "hidden"} min-w-[480px]`}>
         <form onSubmit={handleCommentSubmission} className="relative">
           <input
               className="mr-8 p-4 rounded w-full border mt-2"

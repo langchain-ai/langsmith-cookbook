@@ -8,6 +8,8 @@ This template demonstrates how to use LangSmith tracing and feedback collection 
 
 Specifically, you'll be able to save user feedback as simple 👍/👎 scores attributed to traced runs, which you can then view in the LangSmith UI. Feedback can benefit LLM applications by providing signal for few-shot examples, model fine-tuning, evaluations, personalized user experiences, and improved application observability.
 
+You can try out a live version of this repo here: https://langsmith-cookbook.vercel.app/
+
 ## Setup
 
 After cloning this repo, copy the `.env.example` file into a new `.env.local` file and populate the following environment variables:
