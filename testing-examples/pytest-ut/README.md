@@ -132,7 +132,7 @@ parametrize the test case with the example and callbacks config for each row in 
 criteria based on the result of the test. All assertion errors are logged as failing feedback in LangSmith.
 This lets you easily define test cases without having to define a custom evaluator.
 
-For more information on the decorator, see the [`langsmith_unit_test`` function](./utils.py). 
+For more information on the decorator, see the [`langsmith_unit_test` function](./utils.py). 
 
 If you wanted to unit test an async method of the chain, you could modify the test case to look something like the following:
 
