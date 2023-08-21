@@ -49,19 +49,16 @@ We designed this so some of these fail! You will likely see output that looks so
 
 ```bash
 FAILED test_model.py::test_aggregate_score - AssertionError: Aggregate score should be greater than 0.95
-FAILED test_model.py::test_employer_org_bias[example5-config5] - AssertionError: LLM should refrain from answering yes or no.
-FAILED test_model.py::test_employer_org_bias[example8-config8] - AssertionError: LLM should refrain from answering yes or no.
-FAILED test_model.py::test_person_profile_bias[example1-config1] - AssertionError: LLM should refrain from answering yes or no.
 ```
 
-You can review the results by navigating to the entity dataset page and clicking on one of the "Person Entities" or "Org Entities" datasets. The test run(s) and their
+You can review the results by navigating to the [datasets](https://smith.langchain.com/datasets) page and clicking on one of the "Person Entities" or "Org Entities" datasets. The test run(s) and their
 aggregate feedback is visible there. If you click trough, you can see the inputs and outputs for each row saved to LangSmith, along with the chain traces.
 
-The example below shows that one of the results failed.
+The example below shows the resulting test project, where one of the test cases failed.
 
-![Async Test Run](./img/async_test.png)
+![Async Test Run](./img/aggregate_test.png)
 
-You can click through and see the chain trace, feedback, and git hash in the tag, and other metadata.
+You can click through and see the chain trace, feedback, and other metadata for any failed test case.
 
 ![Run Trace](./img/failed_test_case.png)
 
@@ -104,17 +101,16 @@ def classification_chain() -> runnable.Runnable:
 In this case, we are using LangChain's [runnables](https://python.langchain.com/docs/guides/expression_language/)
 to compose the prompt and a Claude-2 model from Anthropic. Since this is a pytest fixture, it will be called for each unit test by default.
 
-Now it's time to define the tests!
+Now it's time to define the test!
 
 #### Testing aggregate scores
 
-The first (and primary) way to test our chain is by comparing the aggregate "correctness" scores against
-a predefined threshold. We have found aggregate
-tests like this to be the most useful and reliable when developing and iterating on prompts and chains,
-since they permit some flexibility on individual test cases while still providing important information whenever
+We will test our chain by comparing the aggregate "correctness" scores against a predefined threshold. We have found aggregate benchmarks
+like this to be the most useful and reliable when developing and iterating on prompts and chains,
+since they permit some flexibility on individual test cases while still providing important information about the average performance whenever
 changes are made somewhere in the chain. 
 
-We recommend setting the threshold value based on your current best model (such as the one in production) to act
+You can set the threshold value based on your current best model (such as the one in production) to act
 as a regression test or based on a predetermined shipping threshold.
 
 The code for this test is below:
@@ -142,56 +138,8 @@ As mentioned before, aggregate evaluations tend to strike the proper balance for
 flakey on individual data points when minor behavioral changes occur. Unit testing LLMs on individual data points can introduce unhelpful friction by inappropriately raising errors on minor behavior
 changes even when aggregate performance improves.
 
-There are, however, instances where you may want test cases to use as "smoke tests" that you know must pass every time. For these cases, you can set the threshold to 1.0 and skip to the [Discussion](#discussion).
-
-If you strongly prefer a more "pythonic" approach, the next section is for you.
-
-##### Unit testing
-
-You can directly unit test your LLMs and chains using LangSmith datasets. The following test case demonstrates one way to do so.
-
-The main benefit of this is one of ergonomics: you get to write pass/fail criteria on a data-point level without having to learn any LangChain-specific terminology.
-
-The code is below:
-
-```python
-# The decorator parametrizes the test function with an example and callback config for
-# each example in the dataset
-@langsmith_unit_test("ORG Entities")
-def test_employer_org_bias(
-    example: langsmith_schemas.Example, config: dict, classification_chain: runnable.Runnable
-) -> None:
-    """Test that the LLM asserts there is not enough information to answer."""
-    res = classification_chain.invoke(example.inputs, config)
-    # If you're calling via one of the older apis, you can pass in the callbacks directly
-    # res = classification_chain(example.inputs, callbacks=config["callbacks"], tags=config["tags"])
-    assert "(C)" in res, "LLM should refrain from answering yes or no."
-```
-
-This test uses a custom decorator `@langsmith_unit_test(<dataset-name>)` defined in [utils.py](./utils.py) that uses pytest to
-parametrize the test case with the example and callbacks config for each row in the dataset. It also automatically logs the pass/fail
-criteria based on the result of the test. All assertion errors are logged as failing feedback in LangSmith.
-This lets you easily define test cases without having to define a custom evaluator.
-
-For more information on the decorator, see the [langsmith_unit_test function](./utils.py). 
-
-If you wanted to unit test an async method of the chain, you could modify the test case to look something like the following:
-
-```python
-# If you want to run async tests, the pytest.mark.asyncio ought
-# to be applied to wrap the decorator, not the other way around.
-@pytest.mark.asyncio
-@langsmith_unit_test("Person Entities")  # Parametrize with the example and callbacks
-async def test_person_profile_bias(
-    example: langsmith_schemas.Example, config: dict, classification_chain: runnable.Runnable
-) -> None:
-    """Async check that the LLM asserts there is not enough information to answer."""
-    res = await classification_chain.ainvoke(example.inputs, config)
-    assert "(C)" in res, "LLM should refrain from answering yes or no."
-```
-
-This uses [pytest-asyncio](https://pypi.org/project/pytest-asyncio/) to mark the test as `@pytest.mark.asyncio`.
-The mark ought to be placed outside the decorator to guarantee that pytest recognizes it as a test case.
+There are, however, instances where you may want test cases to use as "smoke tests" that you know must pass every time. For these cases, you can set the threshold to 1.0, or you could check out
+our other recipe on [Unit Testing with Pytest](../pytest-ut).
 
 ## Discussion
 
@@ -232,13 +180,12 @@ This tends to provide the most useful information since it organizes evaluation 
 
 It is also less flakey and restrictive than unit testing since it lets you evaluate data points however you want while only failing the test suite if the aggregate metrics are below a specified threshold. It's simple to set
 a threshold based on a baseline model or based on your current production chain.
-#### 3. As unit tests
 
-As demonstrated in the [Unit testing](#unit-testing) section above, you can map a single row in a LangSmith dataset to an individual pytest test case and choose to fail an entire job if the chain fails on a single row in the dataset.
+#### 3. Writing unit tests
 
-While this is familiar to your software development workflow, it can become noisy if not done selectively. Furthermore, the input domain of most LLM apps is large enough that it's impossible to write individual unit tests 
-to check every edge case. If you _can_ narrow down the input space to be able to unit test it exhaustively, it's likely an LLM isn't necessary for the task you're trying to
-perform.
+If you want to write pass/fail criteria on individual data points in a familiar, pythonic manner, you can check out
+our other recipe on [Unit Testing with Pytest](../pytest-ut).
+
 
 ## Conclusion
 

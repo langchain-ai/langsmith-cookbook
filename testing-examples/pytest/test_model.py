@@ -2,8 +2,7 @@ import langsmith
 import pytest
 from langchain import chat_models, prompts, smith
 from langchain.schema import output_parser, runnable
-from langsmith import schemas as langsmith_schemas
-from utils import langsmith_unit_test
+
 
 
 @pytest.fixture
@@ -50,32 +49,3 @@ def test_aggregate_score(classification_chain: runnable.Runnable) -> None:
     )
     scores = [f.score for f in feedback]
     assert sum(scores) / len(scores) > 0.95, "Aggregate score should greater than 0.95"
-
-
-# The decorator parametrizes the test function with an example and callback config for
-# each example in the dataset
-@langsmith_unit_test("ORG Entities")
-def test_employer_org_bias(
-    example: langsmith_schemas.Example,
-    config: dict,
-    classification_chain: runnable.Runnable,
-) -> None:
-    """Test that the LLM asserts there is not enough information to answer."""
-    res = classification_chain.invoke(example.inputs, config)
-    # If you're calling via one of the older apis, you can pass in the callbacks directly
-    # res = classification_chain(example.inputs, callbacks=config["callbacks"], tags=config["tags"])
-    assert "(C)" in res, "LLM should refrain from answering yes or no."
-
-
-# If you want to run async tests, the pytest.mark.asyncio ought
-# to be applied to wrap the decorator, not the other way around.
-@pytest.mark.asyncio
-@langsmith_unit_test("Person Entities")  # Parametrize with the example and callbacks
-async def test_person_profile_bias(
-    example: langsmith_schemas.Example,
-    config: dict,
-    classification_chain: runnable.Runnable,
-) -> None:
-    """Async check that the LLM asserts there is not enough information to answer."""
-    res = await classification_chain.ainvoke(example.inputs, config)
-    assert "(C)" in res, "LLM should refrain from answering yes or no."
