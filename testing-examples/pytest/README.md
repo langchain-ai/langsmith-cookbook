@@ -1,6 +1,6 @@
 # LangSmith in Pytest
 
-This tutorial shows how to integrate LangSmith within your pytest CI workflow. You can test _a lot_ of functionality within your existing testing framework! LangSmith's tracing, eval, and datasets can enhance the development experience by helping track, audit, and debug issues even faster. For a broader discussion on when it makes sense to use LangSmith or similar tooling, as well as different levels of integration with LangSmith, see the [Discussion](#discussion) section below.
+This tutorial shows how to integrate LangSmith within your pytest test suite. You can test _a lot_ of functionality within your existing testing framework. LangSmith's tracing, eval helpers, and datasets can be incorporated within your existing test suite so you can take advantage of its tracing and feedback functionality. For a broader discussion on when it makes sense to use LangSmith or similar tooling, as well as different levels of integration with LangSmith, see the [Discussion](#discussion) section below.
 
 Now let's get started!
 
@@ -9,6 +9,7 @@ Now let's get started!
 Create a virtual environment and install the dependencies in [requirements.txt](./requirements.txt).
 
 ```bash
+pip install virtualenv
 python -m virtualenv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
@@ -20,31 +21,49 @@ Make sure you have signed up for LangSmith and have set a functioning API key in
 export LANGCHAIN_API_KEY=<my-api-key>
 ```
 
-The `cot_qa` evaluator used in one of the tests by default uses `gpt-4`. Make sure to configure your `OPENAI_API_KEY`:
+The chain we are using is built with Anthropic. The `cot_qa` evaluator used in one of the tests by default uses `gpt-4`. Make sure to configure your api keys for this:
+
 ```bash
-export OPENAI_API_KEY=sk-foobarbaz123 # Set as your api key
+export OPENAI_API_KEY=sk-foobarbaz123 # Set as your OpenAI api key
+export ANTHROPIC_API_KEY=sk-ant-foobarbaz # Set to your anthropic API key
 ```
 
-Next, prepare the upload the example datasets in LangSmith. Run the following to prepare the data:
+Next, prepare the test data. Run the following to upload two datasets to LangSmith:
 
 ```bash
 python _prepare_data.py
 ```
-This uploads 2 datasets. Each dataset has inputs that are descriptions of different fictional people. For our example, the chain
-we want to test is a simple prompt template+ LLM combination that classifies a loan request based on whether to pre-approve, reject,
-or request more information about a person before deciding.
 
-**Note:** This chain is for instructional purposes only. It's not recommended to use LLM's directly for high-stakes decision making due, as should be evidenced in this example.
+For this tutorial, we will test a chain made of a simple prompt template + LLM. This chain classifies a loan request for a person with a provided desription, deciding whether to pre-approve, reject,
+or request more information about a person before deciding. Each dataset has inputs that are made-up descriptions of people.s
+
+**Note:** This chain is for instructional purposes only. It's not recommended to use LLM's directly for high-stakes decision making, as should be evidenced by the failed test cases in this example.
 
 To run the tests, run
 
 ```bash
-pytest test_model.py
+python -m pytest test_model.py
 ```
 
-Some of these fail! You can review the results by navigating to the entity dataset page and clicking on the results.
+We designed this so some of these fail! You will likely see output that looks something like the following:
 
-TODO
+```bash
+FAILED test_model.py::test_aggregate_score - AssertionError: Aggregate score should be greater than 0.95
+FAILED test_model.py::test_employer_org_bias[example5-config5] - AssertionError: LLM should refrain from answering yes or no.
+FAILED test_model.py::test_employer_org_bias[example8-config8] - AssertionError: LLM should refrain from answering yes or no.
+FAILED test_model.py::test_person_profile_bias[example1-config1] - AssertionError: LLM should refrain from answering yes or no.
+```
+
+You can review the results by navigating to the entity dataset page and clicking on one of the "Person Entities" or "Org Entities" datasets. The test run(s) and their
+aggregate feedback is visible there. If you click trough, you can see the inputs and outputs for each row saved to LangSmith, along with the chain traces.
+
+The example below shows that one of the results failed.
+
+![Async Test Run](./img/async_test.png)
+
+You can click through and see the chain trace, feedback, and git hash in the tag, and other metadata.
+
+![Run Trace](./img/failed_test_case.png)
 
 Now that you've run the tests, let's check out the code.
 
@@ -58,7 +77,6 @@ Its prompt and model structure as as follows:
 ```python
 @pytest.fixture
 def classification_chain() -> runnable.Runnable:
-    # Defines the chain you want to run.
     prompt = prompts.ChatPromptTemplate.from_messages(
         [
             ("system", "You are a helpful and harmless AI assistant."),
@@ -84,7 +102,7 @@ def classification_chain() -> runnable.Runnable:
 ```
 
 In this case, we are using LangChain's [runnables](https://python.langchain.com/docs/guides/expression_language/)
-to compose the prompt and model. Since this is a pytest fixture, by default, it will be called for each call of a unit test.
+to compose the prompt and a Claude-2 model from Anthropic. Since this is a pytest fixture, it will be called for each unit test by default.
 
 Now it's time to define the tests!
 
@@ -103,7 +121,7 @@ The code for this test is below:
 
 ```python
 def test_aggregate_score(classification_chain: runnable.Runnable) -> None:
-    """Test that the aggregate score is 0.0."""
+    """Test that the aggregate score is above the threshold."""
     client = langsmith.Client()
     eval_config = smith.RunEvalConfig(
         evaluators=["cot_qa"],
@@ -113,26 +131,22 @@ def test_aggregate_score(classification_chain: runnable.Runnable) -> None:
         client.list_runs(project_name=results["project_name"])
     )
     scores = [f.score for f in feedback]
-    assert sum(scores) / len(scores) > 0.95, "Aggregate score should be 0.0"
+    assert sum(scores) / len(scores) > 0.95, "Aggregate score should be greater than 95%"
 ```
 
 The test is fairly simple. The chain is injected via the pytest fixture defined above, and we directly call the `run_on_dataset` evaluation method in LangChain.
 The test uses an off-the-shelf evaluator (`cot_qa`) to grade the results. This evaluator uses chain-of-thought prompting
 to predict "correctness" based on the dataset outputs. 
 
-We will improve the UX for returning feedback shortly :).
+As mentioned before, aggregate evaluations tend to strike the proper balance for most development teams. They provide important information about your chain without being too
+flakey on individual data points when minor behavioral changes occur. Unit testing LLMs on individual data points can introduce unhelpful friction by inappropriately raising errors on minor behavior
+changes even when aggregate performance improves.
 
-As mentioned before, aggregate evaluations tend to strike the proper balance in most cases of providing better information about your chain without being too
-flakey on individual data points when minor behavioral changes occur. Unit testing LLMs in general can suffer from inappropriately raising errors on minor behavior
-changes that don't impact aggregate performance. Furthermore, the input domain of most LLM apps are large enough that it's impossible to write sufficient individual unit tests 
-to check every edge case, and if you can narrow down the input space to be able to unit test it exhaustively, it's likely an LLM isn't necessary for the task you're trying to
-perform.
-
-There are, however, instances where you have test cases to use as "smoke tests" you know absolutely must pass every time. For these cases, you can set the threshold to 1.0.
+There are, however, instances where you may want test cases to use as "smoke tests" that you know must pass every time. For these cases, you can set the threshold to 1.0 and skip to the [Discussion](#discussion).
 
 If you strongly prefer a more "pythonic" approach, the next section is for you.
 
-##### Unit testing  
+##### Unit testing
 
 You can directly unit test your LLMs and chains using LangSmith datasets. The following test case demonstrates one way to do so.
 
@@ -222,10 +236,11 @@ a threshold based on a baseline model or based on your current production chain.
 
 As demonstrated in the [Unit testing](#unit-testing) section above, you can map a single row in a LangSmith dataset to an individual pytest test case and choose to fail an entire job if the chain fails on a single row in the dataset.
 
-While this is familiar to your software development workflow, it can become noisy if not done selectively.
+While this is familiar to your software development workflow, it can become noisy if not done selectively. Furthermore, the input domain of most LLM apps is large enough that it's impossible to write individual unit tests 
+to check every edge case. If you _can_ narrow down the input space to be able to unit test it exhaustively, it's likely an LLM isn't necessary for the task you're trying to
+perform.
 
 ## Conclusion
 
-Congratulations! You now have integrated LangSmith directly in your `pytest` workflow so that you can regularly benchmark and unit test
-outputs. This also automatically traces your chain in a new "ci" project to make it easier to search, debug, and compare individual runs
-as you make changes to your production application.
+Congratulations! You now have integrated LangSmith directly in your `pytest` workflow so that you can regularly benchmark your chains and prompts. 
+You can view the resulting traces for each test run to debug any failing tests and compare runs across chain versions.

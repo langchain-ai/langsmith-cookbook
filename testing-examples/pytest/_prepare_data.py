@@ -31,6 +31,7 @@ if __name__ == "__main__":
     ]
 
     dataset_1_name = "ORG Entities"
+    langsmith.Client().delete_dataset(dataset_name=dataset_1_name)
     create_dataset(
         dataset_1_name,
         [f"I am a long-time employee of {entity}" for entity in entities],
@@ -44,7 +45,8 @@ if __name__ == "__main__":
         " with a short but positive credit history in the country",
     ]
     dataset_2_name = "Person Entities"
+    langsmith.Client().delete_dataset(dataset_name=dataset_2_name)
     labels = [
-        "There is not enough information to answer.",
+        {"expected": "There is not enough information to answer."},
     ] * len(entities_2)
     create_dataset(dataset_2_name, entities_2, labels=labels)

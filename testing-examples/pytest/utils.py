@@ -55,7 +55,9 @@ def langsmith_unit_test(
     ]
 
     def decorator(test_func: Callable):
-        async def _run_test(
+        # TODO: Consolidate setup/teardown code
+        @pytest.mark.parametrize("example,config", params)
+        def wrapper(
             request: Any,
             example: schemas.Example,
             config: dict,
@@ -92,8 +94,6 @@ def langsmith_unit_test(
                         **fixture_values,
                         **kwargs,
                     )
-                    if asyncio.iscoroutine(res):
-                        await res
                 if run_collector_.traced_runs:
                     run = run_collector_.traced_runs[0]
                     tracer.wait_for_futures()
@@ -119,22 +119,6 @@ def langsmith_unit_test(
                 raise e
 
         @pytest.mark.parametrize("example,config", params)
-        def wrapper(
-            request: Any,
-            example: schemas.Example,
-            config: dict,
-            *args: Any,
-            **kwargs: Any,
-        ):
-            return _run_test(
-                request=request,
-                example=example,
-                config=config,
-                *args,
-                **kwargs,
-            )
-
-        @pytest.mark.parametrize("example,config", params)
         async def awrapper(
             request: Any,
             example: schemas.Example,
@@ -142,19 +126,64 @@ def langsmith_unit_test(
             *args: Any,
             **kwargs: Any,
         ):
-            return await _run_test(
-                request=request,
-                example=example,
-                config=config,
-                *args,
-                **kwargs,
-            )
+            func_name: str = test_func.__name__
+            description = test_func.__doc__
+            # TODO: Just specify a run ID once pr lands for LCEL
+            run_collector_: run_collector.RunCollectorCallbackHandler = config[
+                "callbacks"
+            ][1]
+            tracer: tracers.LangChainTracer = config["callbacks"][0]
+            if project_name is None:
+                tracer.project_name = f"{func_name}-{_GITHASH}-{_INVOCATION_UID}"
+
+            # Get any other non-langsmith fixtures for the unit test
+            func_arg_names = test_func.__code__.co_varnames[
+                : test_func.__code__.co_argcount
+            ]
+            fixture_values = {
+                name: request.getfixturevalue(name)
+                for name in func_arg_names
+                if name not in ("example", "config")
+            }
+            try:
+                # For any langchain/traceable code (e.g., evaluator) that isn't
+                # passed the config, we will trace them to the 'evaluators' project
+                with manager.tracing_v2_enabled(project_name="evaluators"):
+                    await test_func(
+                        *args,
+                        example=example,
+                        config=config,
+                        **fixture_values,
+                        **kwargs,
+                    )
+                if run_collector_.traced_runs:
+                    run = run_collector_.traced_runs[0]
+                    tracer.wait_for_futures()
+                    client_.create_feedback(
+                        run_id=run.id,
+                        key=func_name,
+                        score=True,
+                        value="Pass",
+                        comment=description,
+                    )
+            except Exception as e:
+                if run_collector_.traced_runs:
+                    run = run_collector_.traced_runs[0]
+                    tracer.wait_for_futures()
+                    client_.create_feedback(
+                        run_id=run.id,
+                        key=func_name,
+                        score=False,
+                        value="Fail",
+                        comment=f"Failed with error {e}\n{description}",
+                    )
+
+                raise e
 
         if asyncio.iscoroutinefunction(test_func):
             wrapper_function = awrapper
         else:
             wrapper_function = wrapper
-
         return wrapper_function
 
     return decorator
