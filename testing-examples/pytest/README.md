@@ -45,7 +45,7 @@ To run the tests, run
 python -m pytest test_model.py
 ```
 
-We designed this so some of these fail! You will likely see output that looks something like the following:
+We designed this dataset to fail! You will likely see output that looks something like the following:
 
 ```bash
 FAILED test_model.py::test_aggregate_score - AssertionError: Aggregate score should be greater than 0.95
