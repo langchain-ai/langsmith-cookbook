@@ -2651,9 +2651,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"langchain@npm:^0.0.131":
-  version: 0.0.131
-  resolution: "langchain@npm:0.0.131"
+"langchain@npm:^0.0.134":
+  version: 0.0.134
+  resolution: "langchain@npm:0.0.134"
   dependencies:
     "@anthropic-ai/sdk": ^0.5.7
     ansi-styles: ^5.0.0
@@ -2665,7 +2665,7 @@ __metadata:
     js-tiktoken: ^1.0.7
     js-yaml: ^4.1.0
     jsonpointer: ^5.0.1
-    langsmith: ~0.0.16
+    langsmith: ~0.0.26
     ml-distance: ^4.0.0
     object-hash: ^3.0.0
     openai: ^3.3.0
@@ -2703,6 +2703,8 @@ __metadata:
     "@planetscale/database": ^1.8.0
     "@qdrant/js-client-rest": ^1.2.0
     "@raycast/api": ^1.55.2
+    "@smithy/eventstream-codec": ^2.0.5
+    "@smithy/util-utf8": ^2.0.0
     "@supabase/postgrest-js": ^1.1.1
     "@supabase/supabase-js": ^2.10.0
     "@tensorflow-models/universal-sentence-encoder": "*"
@@ -2727,6 +2729,7 @@ __metadata:
     ignore: ^5.2.0
     ioredis: ^5.3.2
     jsdom: "*"
+    langchainhub: ~0.0.3
     mammoth: "*"
     mongodb: ^5.2.0
     mysql2: ^3.3.3
@@ -2802,6 +2805,10 @@ __metadata:
       optional: true
     "@raycast/api":
       optional: true
+    "@smithy/eventstream-codec":
+      optional: true
+    "@smithy/util-utf8":
+      optional: true
     "@supabase/postgrest-js":
       optional: true
     "@supabase/supabase-js":
@@ -2850,6 +2857,8 @@ __metadata:
       optional: true
     jsdom:
       optional: true
+    langchainhub:
+      optional: true
     mammoth:
       optional: true
     mongodb:
@@ -2894,11 +2903,11 @@ __metadata:
       optional: true
     youtubei.js:
       optional: true
-  checksum: 106e798e365508f7b958bf11ebb71e644007c75868a685fa4ff81902134583cb8d065f444ef347b3ed336624f51690217c5af2e2475f884a8ecff9aa99660c6a
+  checksum: 3f5e9e2ed096791ea70f68950998cce8ef8df667b987a00601eb37c16cb9bc812cf9a7bbf144064ea9de150e0bf7298791d21f5ef402f39b0d59420815bd77b4
   languageName: node
   linkType: hard
 
-"langsmith@npm:^0.0.23, langsmith@npm:~0.0.16":
+"langsmith@npm:^0.0.23":
   version: 0.0.23
   resolution: "langsmith@npm:0.0.23"
   dependencies:
@@ -2910,6 +2919,21 @@ __metadata:
   bin:
     langsmith: dist/cli/main.cjs
   checksum: b2402c957f4c1ab5e051a48176fc2ada846ab84a69f72875fc3a17602df1e97a521e5a5bcd2bdf57fb5cbd003c73a93ed234cf382ff1e0abfebefe22b5818698
+  languageName: node
+  linkType: hard
+
+"langsmith@npm:~0.0.26":
+  version: 0.0.26
+  resolution: "langsmith@npm:0.0.26"
+  dependencies:
+    "@types/uuid": ^9.0.1
+    commander: ^10.0.1
+    p-queue: ^6.6.2
+    p-retry: 4
+    uuid: ^9.0.0
+  bin:
+    langsmith: dist/cli/main.cjs
+  checksum: 5b155ae09e6c0b09bdef25a2af93728bf994944d7a487a3943b69a0aa74a51ee3758cf145acebae1b2687b363aa8cf5fd99e147588fb1b4152ecb0e69ba62baf
   languageName: node
   linkType: hard
 
@@ -3348,7 +3372,7 @@ __metadata:
     autoprefixer: 10.4.15
     eslint: 8.47.0
     eslint-config-next: 13.4.16
-    langchain: ^0.0.131
+    langchain: ^0.0.134
     langsmith: ^0.0.23
     next: 13.4.16
     postcss: 8.4.28

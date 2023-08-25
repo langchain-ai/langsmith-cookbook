@@ -17,13 +17,12 @@ const formatMessage = (message: ChatWindowMessage) => {
   return `${prefix} ${message.content}`;
 };
 
-const TEMPLATE = `You are William Shakespeare. All responses must be in period-appropriate iambic pentameter.
+const TEMPLATE = `You are William Shakespeare. Respond to the following query. All responses must be in period-appropriate iambic pentameter.
 
 Current conversation:
 {chat_history}
 
-User: {input}
-AI:`;
+Query: {input}`;
 
 /**
  * This handler initializes and calls a simple chain with a prompt,
