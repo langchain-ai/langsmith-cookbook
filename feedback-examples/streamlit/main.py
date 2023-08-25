@@ -1,16 +1,21 @@
 """Streamlit chat UI that exposes a Feedback button and link to LangSmith traces."""
 
+import uuid
+
 import streamlit as st
 from expression_chain import get_expression_chain
+from langchain.callbacks.tracers.langchain import wait_for_all_tracers
 from langchain.callbacks.tracers.run_collector import RunCollectorCallbackHandler
-from langchain.memory import StreamlitChatMessageHistory, ConversationBufferMemory
+from langchain.memory import ConversationBufferMemory, StreamlitChatMessageHistory
 from langchain.schema.runnable import RunnableConfig
 from langsmith import Client
 from streamlit_feedback import streamlit_feedback
-from langchain.callbacks.tracers.langchain import wait_for_all_tracers
 from vanilla_chain import get_llm_chain
 
 client = Client()
+
+if "session_id" not in st.session_state:
+    st.session_state.session_id = uuid.uuid4()
 
 st.set_page_config(
     page_title="Chat LangSmith",
@@ -73,6 +78,9 @@ run_collector = RunCollectorCallbackHandler()
 runnable_config = RunnableConfig(
     callbacks=[run_collector],
     tags=["Streamlit Chat"],
+    metadata={
+        "session_id": str(st.session_state.session_id),
+    },
 )
 if st.session_state.trace_link:
     st.sidebar.markdown(
