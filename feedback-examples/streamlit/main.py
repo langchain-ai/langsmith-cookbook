@@ -1,4 +1,4 @@
-"""Example Streamlit chat UI that exposes a Feedback button and link to LangSmith traces."""
+"""Streamlit chat UI that exposes a Feedback button and link to LangSmith traces."""
 
 import streamlit as st
 from expression_chain import get_expression_chain
@@ -36,13 +36,15 @@ _DEFAULT_SYSTEM_PROMPT = (
 system_prompt = st.sidebar.text_area(
     "Custom Instructions",
     _DEFAULT_SYSTEM_PROMPT,
-    help="Custom instructions to provide the language model to determine style, personality, etc.",
+    help="Custom instructions to provide the language model"
+    " to determine style, personality, etc.",
 )
 system_prompt = system_prompt.strip().replace("{", "{{").replace("}", "}}")
 chain_type = st.sidebar.radio(
     "Choose a chain type",
     ("Expression Language Chain", "LLMChain"),
-    help="Choose whether to use a vanilla LLMChain or an equivalent chain built using LangChain Expression Language.",
+    help="Choose whether to use a vanilla LLMChain or an equivalent"
+    " chain built using LangChain Expression Language.",
 )
 memory = ConversationBufferMemory(
     chat_memory=StreamlitChatMessageHistory(key="langchain_messages"),
@@ -62,23 +64,9 @@ if st.sidebar.button("Clear message history"):
     st.session_state.run_id = None
 
 
-# Display chat messages from history on app rerun
-# NOTE: This won't be necessary for Streamlit 1.26+, you can just pass the type directly
-# https://github.com/streamlit/streamlit/pull/7094
-def _get_openai_type(msg):
-    if msg.type == "human":
-        return "user"
-    if msg.type == "ai":
-        return "assistant"
-    if msg.type == "chat":
-        return msg.role
-    return msg.type
-
-
 for msg in st.session_state.langchain_messages:
-    streamlit_type = _get_openai_type(msg)
-    avatar = "🦜" if streamlit_type == "assistant" else None
-    with st.chat_message(streamlit_type, avatar=avatar):
+    avatar = "🦜" if msg.type == "ai" else None
+    with st.chat_message(msg.type, avatar=avatar):
         st.markdown(msg.content)
 
 run_collector = RunCollectorCallbackHandler()
@@ -98,29 +86,53 @@ def _reset_feedback():
     st.session_state.feedback = None
 
 
-if prompt := st.chat_input(placeholder="Ask me a question!"):
+def _save_interruption():
+    "Save the partial response when the user interrupts."
+    if st.session_state.get("full_response") and st.session_state.get("prompt"):
+        memory.save_context(
+            {"input": st.session_state["prompt"]},
+            {"output": st.session_state["full_response"]},
+        )
+        st.session_state["full_response"] = ""
+        st.session_state["prompt"] = ""
+
+
+if prompt := st.chat_input(
+    placeholder="Ask me a question!", on_submit=_save_interruption
+):
     st.chat_message("user").write(prompt)
     _reset_feedback()
     with st.chat_message("assistant", avatar="🦜"):
         message_placeholder = st.empty()
-        full_response = ""
+        st.session_state["full_response"] = ""
+        st.session_state["prompt"] = prompt
         if chain_type == "LLMChain":
             message_placeholder.markdown("thinking...")
-            full_response = chain.invoke({"input": prompt}, config=runnable_config)[
-                "text"
-            ]
+            st.session_state["full_response"] = chain.invoke(
+                {"input": prompt}, config=runnable_config
+            )["text"]
         else:
             for chunk in chain.stream({"input": prompt}, config=runnable_config):
-                full_response += chunk.content
-                message_placeholder.markdown(full_response + "▌")
-            memory.save_context({"input": prompt}, {"output": full_response})
-        message_placeholder.markdown(full_response)
-        # The run collector will store all the runs in order. We'll just take the root and then
+                st.session_state["full_response"] = (
+                    st.session_state.get("full_response", "") + chunk.content
+                )
+                message_placeholder.markdown(st.session_state["full_response"] + "▌")
+            memory.save_context(
+                {"input": prompt}, {"output": st.session_state["full_response"]}
+            )
+        message_placeholder.markdown(st.session_state["full_response"])
+        st.session_state["full_response"] = ""
+        st.session_state["prompt"] = ""
+        # The run collector will store all the runs in order.
+        # We'll just take the root and then
         # reset the list for next interaction.
         run = run_collector.traced_runs[0]
         run_collector.traced_runs = []
         st.session_state.run_id = run.id
-        wait_for_all_tracers()
+        try:
+            wait_for_all_tracers()
+        except:
+            pass
         # Requires langsmith >= 0.0.19
         url = client.share_run(run.id)
         # Or if you just want to use this internally
@@ -137,7 +149,9 @@ if st.session_state.get("run_id"):
     scores = {"👍": 1, "👎": 0}
     if feedback:
         score = scores[feedback["score"]]
-        feedback = client.create_feedback(st.session_state.run_id, "user_score", score=score)
+        feedback = client.create_feedback(
+            st.session_state.run_id, "user_score", score=score
+        )
         st.session_state.feedback = {"feedback_id": str(feedback.id), "score": score}
 
 # Prompt for more information, if feedback was submitted

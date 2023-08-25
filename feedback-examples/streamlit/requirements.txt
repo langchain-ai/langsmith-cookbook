@@ -1,5 +1,5 @@
 langchain>=0.0.247
-streamlit>=1.25
+streamlit>=1.26
 langsmith>=0.0.23
 openai
 tiktoken
