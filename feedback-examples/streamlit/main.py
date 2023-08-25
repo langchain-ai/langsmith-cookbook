@@ -137,7 +137,7 @@ if st.session_state.get("run_id"):
     scores = {"👍": 1, "👎": 0}
     if feedback:
         score = scores[feedback["score"]]
-        feedback = client.create_feedback(st.session_state.run_id, "user_score")
+        feedback = client.create_feedback(st.session_state.run_id, "user_score", score=score)
         st.session_state.feedback = {"feedback_id": str(feedback.id), "score": score}
 
 # Prompt for more information, if feedback was submitted
