@@ -1,0 +1,1968 @@
+
+sid.pocketmail — 08/22/2023 4:09 AM
+@kapa.ai how should I integrate vector database for storing conversations
+Thread
+how should I integrate vector database for storing conversations
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+sid.pocketmail — 08/22/2023 4:23 AM
+@kapa.ai how should I integrate pinecone with my conversational chatbot to store chat hostory
+Thread
+how should I integrate pinecone with my conversational chatbot to store chat hostory
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+sid.pocketmail — 08/22/2023 4:37 AM
+how should I integrate pinecone with my langchain to store chat history
+sid.pocketmail — 08/22/2023 4:38 AM
+@kapa.ai how should I integrate pinecone with my langchain to store chat history
+Thread
+how should I integrate pinecone with my langchain to store chat history
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+Afkie — 08/22/2023 4:50 AM
+@kapa.ai When using Vector Store, should I split populating and retrieving from the vector store into two workflows?
+Thread
+When using Vector Store, should I split populating and retrieving from the vector store in
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+HH — 08/22/2023 4:59 AM
+@kapa.ai which loader should i use in langchain for long texts
+Thread
+which loader should i use in langchain for long texts
+8 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+Cesar-M-Diaz — 08/22/2023 5:04 AM
+@kapa.ai how can I create a custom ChatConversationalAgentOutputParser ? im trying to create a custom parser function that allows me to have json code snippets inside my response. this is the code that Im trying to implement: let jsonOutput = text.trim();
+        if (jsonOutput.includes("
+json")) {
+            const tempString = jsonOutput.split("
+json")[1].trimStart();
+            if (tempString.includes("Final Answer")) {
+                jsonOutput = tempString
+                const lastIndex = jsonOutput.lastIndexOf("
+");
+                if (lastIndex !== -1) {
+                    jsonOutput = jsonOutput.slice(0, lastIndex).trimEnd();
+                }
+            }
+        }
+        else if (jsonOutput.includes("
+")) {
+            const firstIndex = jsonOutput.indexOf("
+");
+            jsonOutput = jsonOutput.slice(firstIndex + 3).trimStart();
+            const lastIndex = jsonOutput.lastIndexOf("
+");
+            if (lastIndex !== -1) {
+                jsonOutput = jsonOutput.slice(0, lastIndex).trimEnd();
+            }
+        }
+Thread
+how can I create a custom ChatConversationalAgentOutputParser ? im trying to create a cust
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+nishjeev — 08/22/2023 5:13 AM
+@kapa.ai How do I create an empty LLMChain() object?
+Thread
+How do I create an empty LLMChain() object?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+nyx-12 — 08/22/2023 5:46 AM
+@kapa.ai  I get this error while trying to establish a connection to pinecone data base.
+
+/usr/local/lib/python3.10/dist-packages/pinecone/core/client/rest.py in request(self, method, url, query_params, headers, body, post_params, _preload_content, _request_timeout)
+    228                 raise ServiceException(http_resp=r)
+    229 
+--> 230             raise ApiException(http_resp=r)
+    231 
+    232         return r
+
+ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'content-type': 'application/json', 'date': 'Tue, 22 Aug 2023 12:44:44 GMT', 'x-envoy-upstream-service-time': '2', 'content-length': '115', 'server': 'envoy'})
+HTTP response body: {"code":3,"message":"metadata size is 66616 bytes, which exceeds the limit of 40960 bytes per vector","details":[]}
+Thread
+I get this error while trying to establish a connection to pinecone data base./usr/local
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+Max — 08/22/2023 5:52 AM
+@kapa.ai is there a method called chain which takes callbacks in the python sdk?
+Thread
+is there a method called chain which takes callbacks in the python sdk?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+Caldera — 08/22/2023 6:06 AM
+@kapa.ai How do I calculate the number of tokens in each document loaded by a text splitter?
+Thread
+How do I calculate the number of tokens in each document loaded by a text splitter?
+8 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+Luca Mannini — 08/22/2023 6:32 AM
+@kapa.ai how do I initialize an asynchronous agent in python? I used initialize_agent() until now
+Thread
+how do I initialize an asynchronous agent in python? I used initialize_agent() until now
+11 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+Caldera — 08/22/2023 6:42 AM
+@kapa.ai How do I retrieve one entry from a Chroma db?
+Thread
+How do I retrieve one entry from a Chroma db?
+11 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+dagmar — 08/22/2023 6:51 AM
+@kapa.ai  what colors does RunManager support?
+Thread
+what colors does RunManager support?
+4 Messages ›
+dagmar
+6d ago
+amitbasuri — 08/22/2023 7:04 AM
+@kapa.ai How do I use DynamoDBChatMessageHistory such that I can create new session_id from onld one and old messages are slso persisted against new sessionid
+Thread
+How do I use DynamoDBChatMessageHistory such that I can create new session_id from onld on
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+Swae — 08/22/2023 7:22 AM
+@kapa.ai explain LLM agents and give 3 very importants features they have
+Thread
+explain LLM agents and give 3 very importants features they have
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+kle — 08/22/2023 7:31 AM
+@kapa.ai I'd like to run a chai on several documents asyncronously
+Thread
+I'd like to run a chai on several documents asyncronously
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+kle — 08/22/2023 7:31 AM
+@kapa.ai how can i run a chain on several documents asyncronously in python?
+Thread
+how can i run a chain on several documents asyncronously in python?
+11 Messages ›
+BOT
+kapa.ai
+6d ago
+schochl — 08/22/2023 7:52 AM
+@kapa.ai How can I change the model of my VectorstoreIndexCreator? Here is my code:
+@tool
+def search_ACT4E_book(query: str) -> str:
+    """Searches the ACT4E book for the query."""
+    
+    # Document loader
+    loader = PyPDFLoader("src/ACT4E-public.pdf")
+    pages = loader.load_and_split()
+
+    # Index that wraps above steps
+    index = VectorstoreIndexCreator().from_loaders([loader])
+
+    # Question-answering
+    result = index.query(query)
+    print(result)
+    return f"{result}"
+Thread
+How can I change the model of my VectorstoreIndexCreator? Here is my code:```python@tool
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+amitbasuri — 08/22/2023 8:18 AM
+@kapa.ai langchain code to ingest confluence content to chromadb
+Thread
+langchain code to ingest confluence content to chromadb
+16 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+masa8 — 08/22/2023 8:32 AM
+How to add handler for logging with callback_manager to Agent? @kapa.ai
+Thread
+How to add handler for logging with callback_manager to Agent?
+21 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+HH — 08/22/2023 8:40 AM
+@kapa.ai what is the purpose of metadata in a langchain document
+Thread
+what is the purpose of metadata in a langchain document
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+amitbasuri — 08/22/2023 8:46 AM
+@kapa.ai 
+
+Traceback (most recent call last):
+  File "/Users/a.basuri/work/hero-ai/data/confluence.py", line 7, in <module>
+    documents = loader.load(space_key="GLOBAL", include_attachments=True, limit=50)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/document_loaders/confluence.py", line 263, in load
+    docs += self.process_pages(
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/document_loaders/confluence.py", line 414, in process_pages
+    doc = self.process_page(
+
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/pytesseract/pytesseract.py", line 277, in run_and_get_output
+    with save(image) as (temp_name, input_filename):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 117, in enter
+    return next(self.gen)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/pytesseract/pytesseract.py", line 197, in save
+    image, extension = prepare(image)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/pytesseract/pytesseract.py", line 178, in prepare
+    raise TypeError('Unsupported image format/type')
+TypeError: Unsupported image format/type
+
+
+documents = loader.load(space_key="GLOBAL", include_attachments=True, limit=50)
+Thread
+Traceback (most recent call last): File "/Users/a.basuri/work/hero-ai/data/confluence.py
+22 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+amitbasuri — 08/22/2023 9:22 AM
+@kapa.ai documents = loader.load(space_key="GLOBAL", include_attachments=True, page_ids=['335315216'], max_pages=10)
+print(documents)
+Split the loaded content into chunks
+text_splitter = CharacterTextSplitter(chunk_size=400, chunk_overlap=100)
+docs = text_splitter.split_documents(documents)
+embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+
+modify to use openai embedding function and write code to upload data to local filebased chromadb
+Thread
+documents = loader.load(space_key="GLOBAL", include_attachments=True, page_ids=['335315216
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+sourya4 — 08/22/2023 9:28 AM
+@kapa.ai do agents support llm with fallback yet? I am interested in OpenAIFunctionsAgent to use AzureOpenAI with OpenAI as fallback.
+Thread
+do agents support llm with fallback yet? I am interested in OpenAIFunctionsAgent to use Az
+8 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+nhiennguyen — 08/22/2023 9:31 AM
+@kapa.ai how can i use llama-index in langchain
+Thread
+how can i use llama-index in langchain
+9 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+sourya4 — 08/22/2023 9:32 AM
+@kapa.ai Has anyone had any success in implementing an agent that uses a Chain-of-Thought style prompt and OpenAI Function Calling feature? Would love some inputs on achieving this.
+Thread
+Has anyone had any success in implementing an agent that uses a Chain-of-Thought style pro
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+amitbasuri — 08/22/2023 9:41 AM
+@kapa.ai Instead of local chromadb use hosted client
+
+Load it into Chroma and persist to a local directory
+db = Chroma.from_documents(docs, embeddings, persist_directory="./chroma_db")
+db.persist()
+Thread
+Instead of local chromadb use hosted client# Load it into Chroma and persist to a local
+15 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+jmac — 08/22/2023 10:08 AM
+@kapa.ai if I want to use tools in an external file, how should I do to pass the inputs ?
+Thread
+if I want to use tools in an external file, how should I do to pass the inputs ?
+9 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+EricW — 08/22/2023 10:46 AM
+@kapa.ai if I have HTML content as a python string do I need to write it to a file before loading it via the BSHTMLLoader loader?
+Thread
+if I have HTML content as a python string do I need to write it to a file before loading i
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+EricW — 08/22/2023 10:53 AM
+@kapa.ai how can I apply a text splitter to a document?
+Thread
+how can I apply a text splitter to a document?
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+amitbasuri — 08/22/2023 11:00 AM
+@kapa.ai for filename in os.listdir(directory_path):
+    if os.path.isfile(os.path.join(directory_path, filename)):
+        loader = BSHTMLLoader(os.path.join(directory_path, filename))
+        document = loader.load()
+        document[0].metadata = decode_url_from_filename(document[0].metadata["source"])
+
+        # Split the loaded content into chunks
+        text_splitter = CharacterTextSplitter(chunk_size=400, chunk_overlap=100)
+        docs = text_splitter.split_documents(document)
+        db = Chroma.from_documents(docs, embeddings, persist_directory="./chroma_db")
+        db.persist()
+
+Traceback (most recent call last):
+  File "/Users/a.basuri/work/hero-ai/data/public.py", line 36, in <module>
+    docs = text_splitter.split_documents(document)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/text_splitter.py", line 151, in split_documents
+    return self.create_documents(texts, metadatas=metadatas)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/text_splitter.py", line 141, in create_documents
+    new_doc = Document(page_content=chunk, metadata=metadata)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/load/serializable.py", line 74, in init
+    super().init(**kwargs)
+  File "pydantic/main.py", line 341, in pydantic.main.BaseModel.init
+pydantic.error_wrappers.ValidationError: 1 validation error for Document
+metadata
+  value is not a valid dict (type=type_error.dict)
+Thread
+for filename in os.listdir(directory_path): if os.path.isfile(os.path.join(directory_p
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+rushi — 08/22/2023 11:14 AM
+def closed_banks(day_of_week):
+     days of the week to closed banks
+    closed_days = {
+        "Monday": [],
+        "Tuesday": ["HDFC", "IDFC"],
+        "Wednesday": [],
+        "Thursday": [],
+        "Friday": [],
+        "Saturday": [],
+        "Sunday": ["IDBI"]
+    }
+
+
+    day_of_week = day_of_week.capitalize()
+
+    if day_of_week in closed_days:
+        return closed_days[day_of_week]
+    else:
+        return []
+
+day = "Tuesday"
+closed_banks_list = closed_banks(day)
+
+if closed_banks_list:
+    print("The following banks are closed on", day + ":")
+    for bank in closed_banks_list:
+        print(bank)
+else:
+    print("No banks are closed on", day + ".")
+How I use this in langchain
+EricW — 08/22/2023 11:15 AM
+@kapa.ai how can I apply a transform chain as a list of documents
+Thread
+how can I apply a transform chain as a list of documents
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+amitbasuri — 08/22/2023 11:28 AM
+@kapa.ai RetrievalQA vs ConversationChain , who to conversation on top of RetrievalQA
+Thread
+RetrievalQA vs ConversationChain , who to conversation on top of RetrievalQA
+16 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+vintro — 08/22/2023 11:30 AM
+@kapa.ai how do i add documents to a supabase vector store?
+Thread
+how do i add documents to a supabase vector store?
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+Yehonatan Yosefi — 08/22/2023 11:51 AM
+@kapa.ai how do i perform a similarity search using js and pinecone
+Thread
+how do i perform a similarity search using js and pinecone
+12 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+amitbasuri — 08/22/2023 11:59 AM
+@kapa.ai def vector_store_retriever():
+    embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+    vectorstore = Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
+    return vectorstore.as_retriever()
+
+
+vector_store_retriever = vector_store_retriever()
+
+
+def qa(session_id, chat_model):
+    return ConversationalRetrievalChain.from_llm(llm=chat_model,
+                                                 retriever=vector_store_retriever,
+                                                 memory=chat_memory(session_id))
+
+
+Traceback (most recent call last):
+
+  File "/Users/a.basuri/work/hero-ai/app/utils.py", line 69, in <module>
+    vector_store_retriever = vector_store_retriever()
+  File "/Users/a.basuri/work/hero-ai/app/utils.py", line 65, in vector_store_retriever
+    vectorstore = Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/vectorstores/chroma.py", line 120, in init
+    self._client = chromadb.Client(_client_settings)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/chromadb/init.py", line 140, in Client
+    system = System(settings)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/chromadb/config.py", line 168, in init
+    raise RuntimeError(
+RuntimeError: Chroma is running in http-only client mode, and can only be run with 'chromadb.api.fastapi.FastAPI' as the chroma_api_impl.             see https://docs.trychroma.com/usage-guide?lang=py#using-the-python-http-only-client for more information.
+(venv) (base) GJCFL94G70:hero-ai a.basuri$
+🧪 Usage Guide | Chroma
+Select a language
+Thread
+def vector_store_retriever(): embeddings = SentenceTransformerEmbeddings(model_name="a
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+amitbasuri — 08/22/2023 12:17 PM
+@kapa.ai import os
+from langchain.document_loaders import ConfluenceLoader
+
+loader = ConfluenceLoader(
+    url="https://confluence.deliveryhero.com/",
+    token=os.getenv("CONFLUENCE_TOKEN")
+)
+
+documents = loader.load(space_key="GLOBAL", include_attachments=True, max_pages=10)
+
+how do I persist documents , so that I can process them later
+Thread
+import osfrom langchain.document_loaders import ConfluenceLoaderloader = ConfluenceLoad
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+Yehonatan Yosefi — 08/22/2023 1:02 PM
+@kapa.ai I'm trying to perform a similarity search without an llm, why does this code not work?
+const client = new PineconeClient();
+await client.init({
+    apiKey: process.env.PINECONE_API_KEY,
+    environment: process.env.PINECONE_ENVIRONMENT,
+});
+const clientIndex = client.Index(process.env.PINECONE_INDEX);
+const vectorStore = await PineconeStore.fromExistingIndex(new OpenAIEmbeddings(), {
+    pineconeIndex: clientIndex,
+});
+
+// Perform a similarity search
+const query = "Your search query"; // Replace with your search query
+const numResults = 1; // Replace with the number of results you want
+const results = await vectorStore.similaritySearch(query, numResults);
+console.log(results);
+Thread
+I'm trying to perform a similarity search without an llm, why does this code not work?con
+12 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+alex_gee_white — 08/22/2023 1:26 PM
+@kapa.ai How do you return the best of x number of results using the ChatOpenAI module?
+Thread
+How do you return the best of x number of results using the ChatOpenAI module?
+12 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+6d ago
+bruh56 — 08/22/2023 2:35 PM
+@kapa.ai 
+
+What exactly is the session id supposed to do within the firestore memory?:
+
+// Initialize Firestore Memory
+    const memory = new BufferMemory({
+        chatHistory: new FirestoreChatMessageHistory({
+          collectionName: "user_chats",
+          sessionId: ${sessionId},
+          userId: ${userId},
+          config: { projectId: "your-project-id" },
+        }),
+      });
+Thread
+What exactly is the session id supposed to do within the firestore memory?:// Initialize
+27 Messages ›
+BOT
+kapa.ai
+5d ago
+HH — 08/22/2023 3:13 PM
+@kapa.ai what is the purpose of separator in splitter
+Thread
+what is the purpose of separator in splitter
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+italojs — 08/22/2023 4:15 PM
+@kapa.ai how can I use a prompt template in APIChain ?
+Thread
+how can I use a prompt template in APIChain ?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/22/2023 5:20 PM
+@kapa.ai 
+loader = ConfluenceLoader(
+    url="https://confluence.deliveryhero.com/",
+    token=os.getenv("CONFLUENCE_TOKEN")
+)
+documents = loader.load(space_key="GLOBAL", include_attachments=True, page_ids=[page_id], max_pages=0)
+
+if max_pages is 0 and I wan to include attachements will it work
+Thread
+loader = ConfluenceLoader( url="https://confluence.deliveryhero.com", token=os.get
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+yarbo — 08/22/2023 5:46 PM
+@kapa.ai - how do I pass other pip packages into my agent?
+
+agent = create_csv_agent(llm=llm,
+                         path=csv_paths,
+                         tools=tools, # Pass tools here
+                         verbose=True,
+                         agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+                         default_imports=["import pandas as pd"],
+                         number_of_head_rows=int(CSV_ROWS_FOR_CONTEXT))
+Thread
+- how do I pass other pip packages into my agent?```agent = create_csv_agent(llm=llm,
+4 Messages ›
+yarbo
+5d ago
+PayAttention — 08/22/2023 6:04 PM
+@kapa.ai what module should i use for image to text extract?
+Thread
+what module should i use for image to text extract?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+sid.pocketmail — 08/22/2023 6:44 PM
+@kapa.ai how should I use ConversationalRetrievalQAChain to store chat history in pinecone
+Thread
+how should I use ConversationalRetrievalQAChain to store chat history in pinecone
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+yarbo — 08/22/2023 7:14 PM
+@kapa.ai - how do I do a vector search and pass the relevant documents into my create_csv_agent function? I have some existing code:
+
+embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
+pinecone.init(
+    api_key=PINECONE_API_KEY,  # find at app.pinecone.io
+    environment=PINECONE_API_ENV  # next to api key in console
+)
+model_name = "gpt-4"
+chain_type = "stuff"
+k = 5
+llm = ChatOpenAI(
+    openai_api_key=OPENAI_API_KEY,
+    model_name=model_name
+)
+chain = load_qa_chain(llm, chain_type=chain_type)
+docsearch = Pinecone.from_existing_index(
+    index_name=index_name,
+    embedding=embeddings
+)
+query = "What is the vulnerability index?"
+docs = docsearch.similarity_search(
+    query,
+    include_metadata=True,
+    k=k
+)
+chain.run(
+    input_documents=docs,
+    question=query
+)
+
+
+How do I do something similar using the create_csv_agent? Here is my code:
+agent = create_csv_agent(llm=llm,
+                         path=csv_paths,
+                         tools=tools, # Pass tools here
+                         verbose=True,
+                         agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+                         default_imports=["import pandas as pd"],
+                         number_of_head_rows=int(CSV_ROWS_FOR_CONTEXT))
+Thread
+- how do I do a vector search and pass the relevant documents into my create_csv_agent fun
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Memlin — 08/22/2023 11:03 PM
+@kapa.ai Can I have a system and user prompt setup for qaChainOptions custom template in ConversationalRetrievalQAChain?
+Thread
+Can I have a system and user prompt setup for qaChainOptions custom template in Conversati
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+修恩 — 08/22/2023 11:35 PM
+@kapa.ai When I was using RetrievalQA.from_chain_type,I set OpenAI's max_tokens to -1,then It shows error "
+ValueError: max_tokens set to -1 not supported for multiple inputs.". How to fix it?
+Thread
+When I was using RetrievalQA.from_chain_type,I set OpenAI's max_tokens to -1,then It shows
+15 Messages ›
+There are no recent messages in this thread.
+5d ago
+The Heffa — 08/22/2023 11:36 PM
+@kapa.ai does the langchain websearchretriever work with search tools other than googlesearch
+Thread
+does the langchain websearchretriever work with search tools other than googlesearch
+11 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+3d ago
+nhiennguyen — 08/22/2023 11:46 PM
+@kapa.ai can I use StuffDocumentsChain with many variables?
+Thread
+can I use StuffDocumentsChain with many variables?
+10 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Stefano — 08/23/2023 1:26 AM
+@kapa.ai Is there possible to limit a tool input to particular keys described in the prompt? 
+For example, if I described in the prompt two lists: 
+list1 = [KEYA, KEYB, KEYC]
+list2 = [KEY1, KEY2, KEY3]
+can I force the agent to call a tool only with element in list1?
+
+Thank you.
+Thread
+Is there possible to limit a tool input to particular keys described in the prompt? For e
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+iamnazzty — 08/23/2023 1:50 AM
+@kapa.ai  How to add conversation history to createOpenAPIChain() in Langchain JS.
+Thread
+How to add conversation history to createOpenAPIChain() in Langchain JS.
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+iamnazzty — 08/23/2023 2:01 AM
+@kapa.ai How do I use createOpenAPIChain() with a conversational agent with chat history? I want my agent to answer user queries using GPT-4 just like ChatGPT but as soon as it detects the intent to call any endpoint defined in the multiple OpenAPI specs provided to it, it executes createOpenAPIChain() to call the endpoint and get a result back.
+Thread
+How do I use createOpenAPIChain() with a conversational agent with chat history? I want my
+8 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 2:02 AM
+@kapa.ai text_splitter = CharacterTextSplitter(chunk_size=400, chunk_overlap=100)
+docs = text_splitter.split_documents(documents)
+Created a chunk of size 2651, which is longer than the specified 400
+Created a chunk of size 3962, which is longer than the specified 400
+Created a chunk of size 592, which is longer than the specified 400
+Created a chunk of size 1569, which is longer than the specified 400
+Created a chunk of size 532, which is longer than the specified 400
+Thread
+text_splitter = CharacterTextSplitter(chunk_size=400, chunk_overlap=100)docs = text_split
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+satish — 08/23/2023 2:09 AM
+@kapa.ai  , how to load data into chroma using sentence transformerce embeddings and NLTK text splitter
+Thread
+, how to load data into chroma using sentence transformerce embeddings and NLTK text split
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 2:15 AM
+@kapa.ai write chromdb code to insert docs running on a EC@ adress with public ip address
+
+text_splitter = CharacterTextSplitter(chunk_size=400, chunk_overlap=100)
+docs = text_splitter.split_documents(documents)
+print(f"Length of split docs: {len(docs)}")
+
+embeddings = OpenAIEmbeddings()
+Thread
+write chromdb code to insert docs running on a EC@ adress with public ip addresstext_spl
+13 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 2:29 AM
+@kapa.ai Length of split docs: 21442
+Traceback (most recent call last):
+  File "/Users/a.basuri/work/hero-ai/data/confluence_pickle_read.py", line 51, in <module>
+    db.from_documents(docs, embeddings)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/vectorstores/chroma.py", line 603, in from_documents
+    return cls.from_texts(
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/vectorstores/chroma.py", line 558, in from_texts
+    chroma_collection = cls(
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/vectorstores/chroma.py", line 120, in init
+    self._client = chromadb.Client(_client_settings)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/chromadb/init.py", line 140, in Client
+    system = System(settings)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/chromadb/config.py", line 168, in init
+    raise RuntimeError(
+RuntimeError: Chroma is running in http-only client mode, and can only be run with 'chromadb.api.fastapi.FastAPI' as the chroma_api_impl.             see https://docs.trychroma.com/usage-guide?lang=py#using-the-python-http-only-client for more information.
+
+
+chroma_settings = Settings(
+    chroma_api_impl="chromadb.api.fastapi.FastAPI",
+    chroma_server_host=host,
+    chroma_server_http_port=80,
+    allow_reset=True
+)
+db = Chroma(collection_name=collection_name, client_settings=chroma_settings)
+db.from_documents(docs, embeddings)
+🧪 Usage Guide | Chroma
+Select a language
+Thread
+Length of split docs: 21442Traceback (most recent call last): File "/Users/a.basuri/wor
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 2:56 AM
+@kapa.ai write code to get random chroma documents from a collection.
+
+Existing code
+db = Chroma(collection_name=collection_name, client_settings=chroma_settings)
+Thread
+write code to get random chroma documents from a collection.Existing codedb = Chroma(co
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+dappercapx — 08/23/2023 2:59 AM
+@kapa.ai is ConversationChain deprecated?
+Thread
+is ConversationChain deprecated?
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+amitbasuri — 08/23/2023 3:07 AM
+@kapa.ai [2023-08-23 12:06:30,628] ERROR in app: Exception on /chat [POST]
+Traceback (most recent call last):
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/a.basuri/work/hero-ai/app/chat_views/routes.py", line 55, in chat
+    result = qa(session_id, chat_model, input_text)
+  File "/Users/a.basuri/work/hero-ai/app/utils.py", line 94, in qa
+    result = chain({"question": query, "chat_history": []})
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/chains/base.py", line 260, in call
+    final_outputs: Dict[str, Any] = self.prep_outputs(
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/chains/base.py", line 354, in prep_outputs
+    self.memory.save_context(inputs, outputs)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/memory/chat_memory.py", line 36, in save_context
+    input_str, output_str = self._get_input_output(inputs, outputs)
+  File "/Users/a.basuri/work/hero-ai/venv/lib/python3.9/site-packages/langchain/memory/chat_memory.py", line 28, in _get_input_output
+    raise ValueError(f"One output key expected, got {outputs.keys()}")
+ValueError: One output key expected, got dict_keys(['answer', 'source_documents'])
+127.0.0.1 - - [23/Aug/2023 12:06:30] "POST /chat HTTP/1.1" 500 -
+Thread
+[2023-08-23 12:06:30,628] ERROR in app: Exception on /chat [POST]Traceback (most recent c
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Laurence — 08/23/2023 3:20 AM
+@kapa.ai Show me refinement summarisation with a token count logged after the response is recieved
+Thread
+Show me refinement summarisation with a token count logged after the response is recieved
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+rubensmau — 08/23/2023 4:04 AM
+@kapa.ai  how to search for  a question in the internet and send the results to a LLM
+Thread
+how to search for a question in the internet and send the results to a LLM
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+iamnazzty — 08/23/2023 4:15 AM
+@kapa.ai How do I pass the output of a sequential chain to another chain?
+Thread
+How do I pass the output of a sequential chain to another chain?
+11 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+zylon — 08/23/2023 4:23 AM
+@kapa.ai Explain excatly initialize_tools() in this piece of code
+class DocumentAnalyzer:
+    def init(self, documents):
+        self.tools = []
+        self.files = documents
+
+        self.initialize_tools()
+Thread
+Explain excatly initialize_tools() in this piece of codeclass DocumentAnalyzer: def _
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+ASHINI ━ NO PLΛNET B🐝 — 08/23/2023 4:27 AM
+@kapa.ai how can i use the DuckDuckGo Search Results wrapper to deliver a response from multiple websites?
+Thread
+how can i use the DuckDuckGo Search Results wrapper to deliver a response from multiple we
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 4:28 AM
+@kapa.ai 
+
+def qa(session_id, chat_model, query):
+    chain = ConversationalRetrievalChain.from_llm(llm=chat_model,
+                                                  retriever=vector_store_retriever,
+                                                  memory=chat_memory(session_id),
+                                                  return_source_documents=True)
+
+    result = chain({"question": query, "chat_history": []})
+    return result
+
+"This model's maximum context length is 4097 tokens. However, your messages resulted in 4873 tokens. Please reduce the length of the messages."
+
+How to reduce context
+Thread
+def qa(session_id, chat_model, query): chain = ConversationalRetrievalChain.from_llm(l
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 4:33 AM
+@kapa.ai get chunk size of a langchian document
+Thread
+get chunk size of a langchian document
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 4:39 AM
+@kapa.ai add debug mode to     chain = ConversationalRetrievalChain.from_llm(llm=chat_model,
+                                                  retriever=vector_store_retriever,
+                                                  memory=chat_memory(session_id),
+                                                  return_source_documents=True)
+Thread
+add debug mode to chain = ConversationalRetrievalChain.from_llm(llm=chat_model,
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+muntasir2000 — 08/23/2023 4:42 AM
+@kapa.ai how can I take input from the user within a callback's approve function?
+Thread
+how can I take input from the user within a callback's approve function?
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Memlin — 08/23/2023 4:58 AM
+@kapa.ai Using DynamoDBChatMessageHistory to store the chat history to DynamoDB. It is not storing the timestamp. Is there a way?
+Thread
+Using DynamoDBChatMessageHistory to store the chat history to DynamoDB. It is not storing
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+HH — 08/23/2023 5:23 AM
+@kapa.ai would chunk overlap improves the accuracy on similarity search
+Thread
+would chunk overlap improves the accuracy on similarity search
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+HH — 08/23/2023 5:25 AM
+@kapa.ai how should key values in memory be stored in vector store?
+Thread
+how should key values in memory be stored in vector store?
+19 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+anakin87 — 08/23/2023 5:34 AM
+@kapa.ai how can I truncate input documents that I put in the prompt?
+Thread
+how can I truncate input documents that I put in the prompt?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Caldera — 08/23/2023 5:53 AM
+@kapa.ai I have a FAISS document as a string, how do I exrtact the metadata and page_content?
+Thread
+I have a FAISS document as a string, how do I exrtact the metadata and page_content?
+6 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Caldera — 08/23/2023 5:55 AM
+@kapa.ai I  have a FAISS document as a string, how do I exrtact the metadata and page_content?
+Thread
+I have a FAISS document as a string, how do I exrtact the metadata and page_content?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Nirmal — 08/23/2023 5:56 AM
+@kapa.ai how can i use map-rerank with conversational retreival chain ?
+Thread
+how can i use map-rerank with conversational retreival chain ?
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Nirmal — 08/23/2023 6:00 AM
+@kapa.ai save openai embeddings in chroma for a list of documents but one document at a time and remove embedding for a particular document from chroma
+Thread
+save openai embeddings in chroma for a list of documents but one document at a time and re
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+masquot — 08/23/2023 6:01 AM
+@kapa.ai how do i read from pinecone using RetrievalQA?
+Thread
+how do i read from pinecone using RetrievalQA?
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 6:05 AM
+@kapa.ai add custom promt to 
+def qa(session_id, chat_model, query):
+    chain = ConversationalRetrievalChain.from_llm(llm=chat_model,
+                                                  retriever=vector_store_retriever,
+                                                  memory=chat_memory(session_id),
+                                                  return_source_documents=True)
+
+    result = chain({"question": query, "chat_history": []})
+    return result
+Thread
+add custom promt to def qa(session_id, chat_model, query): chain = ConversationalRetr
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 6:36 AM
+@kapa.ai def qa(session_id, chat_model, query):
+    chain = ConversationalRetrievalChain.from_llm(llm=chat_model,
+                                                  retriever=vector_store_retriever,
+                                                  condense_question_prompt=CONDENSE_QUESTION_PROMPT,
+                                                  memory=chat_memory(session_id),
+                                                  return_source_documents=True,
+                                                  )
+    history = message_history(session_id).messages
+    result = chain({"question": query, "chat_history": history})
+    return result
+
+this queries for context when not required and returns quries when not used , how to fix it
+Thread
+def qa(session_id, chat_model, query): chain = ConversationalRetrievalChain.from_llm(l
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 6:37 AM
+@kapa.ai def qa(session_id, chat_model, query):
+    chain = ConversationalRetrievalChain.from_llm(llm=chat_model,
+                                                  retriever=vector_store_retriever,
+                                                  condense_question_prompt=CONDENSE_QUESTION_PROMPT,
+                                                  memory=chat_memory(session_id),
+                                                  return_source_documents=True,
+                                                  )
+    history = message_history(session_id).messages
+    result = chain({"question": query, "chat_history": history})
+    return result
+
+convert this to self qa conversational retirever chain
+Thread
+def qa(session_id, chat_model, query): chain = ConversationalRetrievalChain.from_llm(l
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Caldera — 08/23/2023 6:42 AM
+@kapa.ai Using RetrievalQAWithSourcesChain(), how can I limit the search documents to only certain metadata?
+Thread
+Using RetrievalQAWithSourcesChain(), how can I limit the search documents to only certain
+11 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+danilotrix — 08/23/2023 6:51 AM
+@kapa.ai epsilla vectordb does not exists in the library
+Thread
+epsilla vectordb does not exists in the library
+12 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+Auxon — 08/23/2023 7:00 AM
+@kapa.ai How do I use VectorStore.as_retriever() with StuffDocumentsChain to query only a specific collection?
+Thread
+How do I use VectorStore.as_retriever() with StuffDocumentsChain to query only a specific
+23 Messages ›
+BOT
+kapa.ai
+5d ago
+Caldera — 08/23/2023 7:25 AM
+@kapa.ai How do I filter a as_retriever() call for a FAISS database?
+Thread
+How do I filter a as_retriever() call for a FAISS database?
+15 Messages ›
+There are no recent messages in this thread.
+4d ago
+Auxon — 08/23/2023 7:28 AM
+@kapa.ai Can I use the search_kwargs property of a retriever to only query a specific collection in Chroma?
+Thread
+Can I use the search_kwargs property of a retriever to only query a specific collection in
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+an11 — 08/23/2023 8:21 AM
+@kapa.ai  How to set up a prompt to avoid answer out of the context in the ConversationalRetrievalChain
+Thread
+How to set up a prompt to avoid answer out of the context in the ConversationalRetrievalCh
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+banzy — 08/23/2023 8:27 AM
+@kapa.ai  using the pdf loader I will like to use the relattive folder in the app instead of my local disk folder:
+export default async function handler(req, res) {
+  if (req.method === "GET") {
+    console.log("Uploading book");
+    // Enter your code here
+    /** STEP ONE: LOAD DOCUMENT */
+    // const bookPath = "/Users/shawnesquivel/GitHub/yt-script-generator/data/document_loaders/naval-ravikant-book.pdf";
+      const bookPath = '/Vector.pdf';
+    const loader = new PDFLoader(bookPath);
+
+    const docs = await loader.load();
+
+    if (docs.length === 0) {
+      console.log("No documents found.");
+      return;
+    }
+
+    const splitter = new CharacterTextSplitter({
+      separator: " ",
+      chunkSize: 250,
+      chunkOverlap: 10,
+    });
+Caldera — 08/23/2023 8:29 AM
+@kapa.ai How do I filter a FAISS database based on some metadata?
+Thread
+How do I filter a FAISS database based on some metadata?
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+kle — 08/23/2023 8:46 AM
+@kapa.ai in a map reduce chain using gp4 how can I specify roles for the input message in python?
+Thread
+in a map reduce chain using gp4 how can I specify roles for the input message in python?
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+kyle — 08/23/2023 9:42 AM
+@kapa.ai how do i add a system prompt in initialize_agent() where agent = AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION
+This is how i'm doing it with just the CHAT agent
+    agent_kwargs = {
+        'extra_prompt_messages': [MessagesPlaceholder(variable_name='memory')],
+        'system_message_prefix': SYSTEM_MESSAGE_PREFIX,
+        'format_instructions': FORMAT_INSTRUCTIONS,
+        'system_message_suffix': SYSTEM_MESSAGE_SUFFIX,
+        'human_message': HUMAN_MESSAGE
+    }
+
+    memory = ConversationBufferMemory(
+        memory_key='memory',
+        return_messages=True,
+        llm=llm,
+        max_token_limit=2000
+    )
+
+    agent = initialize_agent(
+        tools,
+        llm,
+        agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION,
+        verbose=True,
+        max_iterations=CATALOG_GEN_QUERY_MAX_ITERATIONS,
+        agent_kwargs=agent_kwargs,
+        memory=memory
+    )
+Thread
+how do i add a system prompt in `initialize_agent()` where `agent = AgentType.STRUCTURED_C
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+PeanutStar9 — 08/23/2023 10:24 AM
+@kapa.ai how to run textgen llm as chat language model
+Thread
+how to run textgen llm as chat language model
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+kyle — 08/23/2023 10:28 AM
+@kapa.ai how can i have an agent's tool accept a list as in put? This is what I pass into the tool:
+{
+"action": "determine_join_relationship",
+"action_input": ["payment", "customer", "payment_id", "customer_id"]
+}
+
+Here is the error:
+File c:\Users\kylec\Documents\git\app-mono-repo\backend\venv\lib\site-packages\langchain\tools\base.py:296, in BaseTool.run(self, tool_input, verbose, start_color, color, callbacks, tags, metadata, **kwargs)
+    283 def run(
+    284     self,
+    285     tool_input: Union[str, Dict],
+   (...)
+    293     **kwargs: Any,
+    294 ) -> Any:
+    295     """Run the tool."""
+--> 296     parsed_input = self._parse_input(tool_input)
+    297     if not self.verbose and verbose is not None:
+    298         verbose_ = verbose
+
+File c:\Users\kylec\Documents\git\app-mono-repo\backend\venv\lib\site-packages\langchain\tools\base.py:236, in BaseTool._parse_input(self, tool_input)
+    234 else:
+    235     if input_args is not None:
+--> 236         result = input_args.parse_obj(tool_input)
+    237         return {k: v for k, v in result.dict().items() if k in tool_input}
+    238 return tool_input
+
+File c:\Users\kylec\Documents\git\app-mono-repo\backend\venv\lib\site-packages\pydantic\main.py:525, in pydantic.main.BaseModel.parse_obj()
+
+ValidationError: 1 validation error for DetermineJoinRelationshipInput
+__root__
+  DetermineJoinRelationshipInput expected dict not list (type=type_error)
+Thread
+how can i have an agent's tool accept a list as in put? This is what I pass into the tool:
+20 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+HH — 08/23/2023 11:45 AM
+@kapa.ai what is the purpose of vector store's namespace?
+Thread
+what is the purpose of vector store's namespace?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+bruh56 — 08/23/2023 11:59 AM
+@kapa.ai 
+
+error:
+ TypeError: ConversationalRetrievalQAChain.fromLLM is not a constructor
+    at C:\Users\14693\Desktop\tzigo-learn\backend\api\routes\chat\chat.js:194:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+relevant pieces of code:
+
+const memory = new BufferMemory({
+        memoryKey: 'chat_history',
+        chatHistory: new FirestoreChatMessageHistory({
+            collectionName: "user_chats",
+            sessionId: "lc-example",
+            userId: ${userId},
+            config: firebaseConfig
+        }),
+    });
+
+const llm = new ChatOpenAI({ openAIApiKey: "...", modelName: "gpt-4" });
+        const chain = new ConversationalRetrievalQAChain.fromLLM(
+            llm, 
+            vectorStore.asRetriever(),
+            {
+            memory: memory,
+            inputKey: "question", // The key for the input to the chain
+            outputKey: "text", // The key for the final conversational output of the chain 
+            returnSourceDocuments: true, 
+            //combineDocumentsChain: loadQAChain(llm),
+            verbose: true 
+            });
+Thread
+error: TypeError: ConversationalRetrievalQAChain.fromLLM is not a constructor at C:\U
+24 Messages ›
+BOT
+kapa.ai
+2d ago
+Avo-k — 08/23/2023 12:03 PM
+@kapa.ai write an agent with vector stored memory using this code
+
+embeddings = HuggingFaceEmbeddings(model_name="thenlper/gte-base")
+qdrant = Qdrant.from_texts(
+    texts=["some text"],
+    embedding=embeddings,
+    path="data/LTM/",
+    collection_name="LTM",
+)
+Thread
+write an agent with vector stored memory using this codeembeddings = HuggingFaceEmbeddin
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+italojs — 08/23/2023 12:24 PM
+@kapa.ai how can I modify the prompt using callbacks?
+Thread
+how can I modify the prompt using callbacks?
+5 Messages ›
+italojs
+5d ago
+Hairy Barry — 08/23/2023 12:55 PM
+@kapa.ai I'm using a pandas dataframe agent. But it seems the dataframe agent is only analyzing the first few rows for my queries. How can I make the dataframe agent account for every row when I query?
+Thread
+I'm using a pandas dataframe agent. But it seems the dataframe agent is only analyzing the
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+amitbasuri — 08/23/2023 1:20 PM
+@kapa.ai ConversationBufferMemory vs ConversationSummaryBufferMemory
+Thread
+ConversationBufferMemory vs ConversationSummaryBufferMemory
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+5d ago
+MastaBlasta — 08/23/2023 2:56 PM
+@kapa.ai Using document loaders how does lagchain deal with images in text?
+Thread
+Using document loaders how does lagchain deal with images in text?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Vikram — 08/23/2023 3:19 PM
+@kapa.ai  , I wish to generate 10 responses from langchain and store them in an array . How can I do this?
+Thread
+, I wish to generate 10 responses from langchain and store them in an array . How can I do
+23 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Avo-k — 08/23/2023 3:20 PM
+@kapa.ai how do i install langchain_experimental ?
+Thread
+how do i install langchain_experimental ?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Avo-k — 08/23/2023 3:46 PM
+@kapa.ai in python, create an empty qdrant document store stored locally at "data/memory"
+Thread
+in python, create an empty qdrant document store stored locally at "data/memory"
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+ethan.dev — 08/23/2023 6:51 PM
+@kapa.ai write me code that accepts a js file and py file then splits it into chunks, returning an array of objects where one key is the filename and the other is the chunk
+Thread
+write me code that accepts a js file and py file then splits it into chunks, returning an
+8 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+emil_s — 08/23/2023 8:14 PM
+@kapa.ai how do I get started with python?
+Thread
+how do I get started with python?
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Favaio — 08/23/2023 9:58 PM
+@kapa.ai why does langchain's logo have a parrot and a chain?
+Thread
+why does langchain's logo have a parrot and a chain?
+15 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+3d ago
+Kiloine/ExAvenger — 08/23/2023 10:02 PM
+@kapa.ai  Can you give an example on how to handle  SQLquery that has multiple prompt templates
+Thread
+Can you give an example on how to handle SQLquery that has multiple prompt templates
+21 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+dappercapx — 08/23/2023 11:49 PM
+@kapa.ai how does LangChain Expression Language work? be as detailed as possible.
+Thread
+how does LangChain Expression Language work? be as detailed as possible.
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Caldera — 08/24/2023 12:07 AM
+@kapa.ai How do I check how many documents there are in a FAISS database?
+Thread
+How do I check how many documents there are in a FAISS database?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Manu Francis — 08/24/2023 12:08 AM
+@kapa.ai  How to generate docker image of Hugging Face model and run locally? 
+sid.pocketmail — 08/24/2023 12:43 AM
+@kapa.ai how to store infinite chat sessions using langchain?
+Thread
+how to store infinite chat sessions using langchain?
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Caldera — 08/24/2023 1:01 AM
+@kapa.ai How do I set the number of documents to return in RetrievalQAWithSourcesChain()?
+Thread
+How do I set the number of documents to return in RetrievalQAWithSourcesChain()?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Caldera — 08/24/2023 1:02 AM
+@kapa.ai How do I set the number of sources to retrieve when using RetrievalQAWithSourcesChain()
+Thread
+How do I set the number of sources to retrieve when using RetrievalQAWithSourcesChain()
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Caldera — 08/24/2023 1:18 AM
+@kapa.ai Calling a chain() how can I track the costs and token usage?
+Thread
+Calling a chain() how can I track the costs and token usage?
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Vikram — 08/24/2023 1:49 AM
+@kapa.ai , how to utilise prompt template to act as well known writer known for his captivating captions which takes input from a set of sentences array
+Thread
+, how to utilise prompt template to act as well known writer known for his captivating cap
+25 Messages ›
+BOT
+kapa.ai
+4d ago
+Proxima — 08/24/2023 2:19 AM
+@kapa.ai how can you add custom input to the template?
+Thread
+how can you add custom input to the template?
+12 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+schblondie — 08/24/2023 2:47 AM
+@kapa.ai When using the githubloader recursively and than using redis vectorstore, how do i efficiently store the file contents without running into token limits, so i can reference their content in later LLM prompts? 
+Thread
+When using the githubloader recursively and than using redis vectorstore, how do i efficie
+9 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Quentin — 08/24/2023 4:30 AM
+@kapa.ai est ce possible d'utiliser une memory pour la conversation et une autre memory qui sert uniquement pour un agent ?
+Thread
+est ce possible d'utiliser une memory pour la conversation et une autre memory qui sert un
+8 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+thelastbaron — 08/24/2023 4:57 AM
+@kapa.ai Does LangChain have support for creating a session-specific python sandbox where packages can be installed by the LLM if needed?
+Thread
+Does LangChain have support for creating a session-specific python sandbox where packages
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+efmanu — 08/24/2023 5:42 AM
+@kapa.ai How to generate docker image of Hugging Face model and run locally?
+Thread
+How to generate docker image of Hugging Face model and run locally?
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+fringo — 08/24/2023 6:09 AM
+@kapa.ai  I want to use LongContextReorder in ConversationalRetrievalChain, how can i do that?
+Thread
+I want to use LongContextReorder in ConversationalRetrievalChain, how can i do that?
+23 Messages ›
+BOT
+kapa.ai
+4d ago
+Fups — 08/24/2023 6:09 AM
+Hi Kappa, I want to add a RCI criotique chain to this code, how would I do it "calculations = read_file("/Users/frederikhandberg/Desktop/MarkPlus/prompt.txt")
+
+
+prompt = PromptTemplate(template=calculations, input_variables=["mathquestion", "markscheme"])
+
+llm_chain = LLMChain(prompt=prompt, llm=llm)
+
+output =llm_chain.run({"mathquestion": mathquestion, "markscheme": markscheme})
+
+print (output)
+
+def RegularExpressionExtract():
+    # Regular expressions to match Text, Calculations, and Python code within each step
+    step_pattern = r'[#Step \d+]\s[#T](.?)[/#T]\s[#C](.?)[/#C]\s[#Py](.?)[/#Py]\s*[/#Step \d+]'
+
+    # Extracting the components using re.findall
+    steps = re.findall(step_pattern, output, re.DOTALL)
+
+    # Separate the components into individual lists
+    texts, calculations, python_codes = [], [], []
+    for step in steps:
+        texts.append(step[0].strip())
+        calculations.append(step[1].strip())
+        python_codes.append(step[2].strip())
+
+    print("Texts:", texts)
+    print("Calculations:", calculations)
+    print("Python Codes:", python_codes)
+
+    # Execute each Python code snippet and save the outputs
+    step_outputs = []  # Store the results of each step here
+    local_vars = {}  # Persistent local namespace across steps
+    for idx, code in enumerate(python_codes, 1):
+        exec(code, globals(), local_vars)
+
+Extract the last printed variable's name
+        print_var_match = re.search(r'print((\w+))$', code)
+        last_output = local_vars[print_var_match.group(1)] if print_var_match else None
+
+        print(f"Executing Step {idx}: {last_output}")
+        step_outputs.append(last_output)
+
+
+    for calc, result in zip(python_codes, step_outputs):
+        print(f"Calculation: {calc} -> Result: {result}")
+
+    return step_outputs  # Return the list of outputs
+
+Store the results from the function in a variable
+results = RegularExpressionExtract()
+print("Results:", results)"
+Fups — 08/24/2023 6:10 AM
+@kapa.ai  I want to add a RCI criotique chain to this code, how would I do it "calculations = read_file("/Users/frederikhandberg/Desktop/MarkPlus/prompt.txt")
+prompt = PromptTemplate(template=calculations, input_variables=["mathquestion", "markscheme"])
+llm_chain = LLMChain(prompt=prompt, llm=llm)
+output =llm_chain.run({"mathquestion": mathquestion, "markscheme": markscheme})
+print (output)
+def RegularExpressionExtract():
+    # Regular expressions to match Text, Calculations, and Python code within each step
+    step_pattern = r'[#Step \d+]\s[#T](.?)[/#T]\s[#C](.?)[/#C]\s[#Py](.?)[/#Py]\s*[/#Step \d+]'
+
+
+    steps = re.findall(step_pattern, output, re.DOTALL)
+
+    # Separate the components into individual lists
+    texts, calculations, python_codes = [], [], []
+    for step in steps:
+        texts.append(step[0].strip())
+        calculations.append(step[1].strip())
+        python_codes.append(step[2].strip())
+
+    print("Texts:", texts)
+    print("Calculations:", calculations)
+    print("Python Codes:", python_codes)
+
+    # Execute each Python code snippet and save the outputs
+    step_outputs = []  # Store the results of each step here
+    local_vars = {}  # Persistent local namespace across steps
+    for idx, code in enumerate(python_codes, 1):
+        exec(code, globals(), local_vars)
+
+Extract the last printed variable's name
+        print_var_match = re.search(r'print((\w+))$', code)
+        last_output = local_vars[print_var_match.group(1)] if print_var_match else None
+
+        print(f"Executing Step {idx}: {last_output}")
+        step_outputs.append(last_output)
+
+
+    for calc, result in zip(python_codes, step_outputs):
+        print(f"Calculation: {calc} -> Result: {result}")
+
+    return step_outputs  # Return the list of outputs
+
+Store the results from the function in a variable
+results = RegularExpressionExtract()
+print("Results:", results)"
+Thread
+I want to add a RCI criotique chain to this code, how would I do it "calculations = read_f
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Tibagi Aventuras — 08/24/2023 6:56 AM
+@kapa.ai how can i write a langchain function equivalent to this?
+def ask_openai2(message, temperature=0.8, max_tokens=200):
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": message},
+        ],
+        temperature=temperature,
+        max_tokens=max_tokens,
+    )
+    answer = response.choices[0].message.content.strip()
+Thread
+how can i write a langchain function equivalent to this?def ask_openai2(message, temperat
+23 Messages ›
+BOT
+kapa.ai
+4d ago
+fringo — 08/24/2023 7:02 AM
+@kapa.ai How do i specify a custom prompt for ConversationalRetrievalChain
+Thread
+How do i specify a custom prompt for ConversationalRetrievalChain
+23 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+3d ago
+Kiloine/ExAvenger — 08/24/2023 7:39 AM
+@kapa.ai make a sample code of PipelinePromptTemplate with ChatOpenAI, the question must be passed from the function parameter
+Thread
+make a sample code of PipelinePromptTemplate with ChatOpenAI, the question must be passed
+24 Messages ›
+BOT
+kapa.ai
+4d ago
+Vikram — 08/24/2023 7:41 AM
+@kapa.ai , when im using input varibale in langchain react application as prop , its returning undefined
+Thread
+, when im using input varibale in langchain react application as prop , its returning unde
+11 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+3d ago
+Tibagi Aventuras — 08/24/2023 7:50 AM
+@kapa.ai my bot doesn't appear to have memory. Can you review my function?
+def ask_langchain(message, temperature=0.7, max_tokens=500):
+    chat = ChatOpenAI(temperature=temperature, max_tokens=max_tokens, model_name="gpt-3.5-turbo-16k")
+    memory = ConversationBufferMemory()
+    messages = [
+        SystemMessage(content="You are a helpful assistant."),
+        HumanMessage(content=message)
+    ]
+    memory.save_context({"input": message}, {"output": ""})
+    response = chat(messages)
+    answer = response.content.strip()
+    memory.save_context({"input": message}, {"output": answer})
+
+    # Contagem de tokens
+    enc = tiktoken.get_encoding("cl100k_base")
+    answer_token_count = len(enc.encode(answer))
+    message_token_count = len(enc.encode(message))
+    total_token_count = answer_token_count + message_token_count
+
+    return answer, total_token_count, memory
+Thread
+my bot doesn't appear to have memory. Can you review my function?def ask_langchain(messag
+9 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+careersskillgroomers123 — 08/24/2023 8:26 AM
+@kapa.ai after loading text document, and creating a faiss vectorstore..How to add a doctran QA metadata to already existing FAISS vectorstore?
+Thread
+after loading text document, and creating a faiss vectorstore..How to add a doctran QA met
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+sanya_kriminal — 08/24/2023 8:36 AM
+@kapa.ai How to create a preexisting memory with system insructions?
+Thread
+How to create a preexisting memory with system insructions?
+10 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+teslageek — 08/24/2023 8:39 AM
+@kapa.ai How do I track and record token usage for my apps that I provide to others?
+Thread
+How do I track and record token usage for my apps that I provide to others?
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+FredL — 08/24/2023 8:44 AM
+@kapa.ai Hi, how can I use RetrievalQAWithSourcesChain to get the metadata from another metadata than source. For example, I want to get the url metadata that I'm storing with each document?
+careersskillgroomers123 — 08/24/2023 8:50 AM
+@kapa.ai  if a text document is loaded and a faiss vectorstore db is created..later if the doctran QA interrogated is done on same document.. is it to be used as a individual vectorstore or to be added to already created vectorstore?
+Thread
+if a text document is loaded and a faiss vectorstore db is created..later if the doctran Q
+11 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Kiloine/ExAvenger — 08/24/2023 9:20 AM
+@kapa.ai python, i want to give the SQLdatabaseSequentialChain 3 options to choose from like 'which of the 3 best fits how to answer this question {prompt}?  a b c -- then only have the answer be one of those
+Thread
+python, i want to give the SQLdatabaseSequentialChain 3 options to choose from like 'which
+9 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+yarbo — 08/24/2023 9:44 AM
+@kapa.ai - please help me modify this to use GPT-4
+from langchain.output_parsers import CommaSeparatedListOutputParser
+from langchain.prompts import PromptTemplate, ChatPromptTemplate, HumanMessagePromptTemplate
+from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
+
+output_parser = CommaSeparatedListOutputParser()
+
+format_instructions = output_parser.get_format_instructions()
+prompt = PromptTemplate(
+    template="""
+    Given the following query and documents, find the ids that are certainly associated with the query.
+    query: {query}
+    documents: {docs}
+    {format_instructions}
+    """,
+    input_variables=["query", "docs"],
+    partial_variables={"format_instructions": format_instructions}
+)
+
+model = OpenAI(temperature=0)
+
+_input = prompt.format(query=query, docs=docs)
+output = model(_input)
+
+output_parser.parse(output)
+Thread
+- please help me modify this to use GPT-4```from langchain.output_parsers import CommaSe
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+vintro — 08/24/2023 10:57 AM
+@kapa.ai is there a way to unpack a list of message objects into a nice user / ai annotated string of messages?
+Thread
+is there a way to unpack a list of message objects into a nice user / ai annotated string
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Kiloine/ExAvenger — 08/24/2023 11:08 AM
+@kapa.ai give me a multipromptchain with a sql
+Thread
+give me a multipromptchain with a sql
+26 Messages ›
+BOT
+kapa.ai
+12h ago
+jaycool — 08/24/2023 11:13 AM
+@kapa.ai How can I use the python sdk to create a multi argument prompt which goes into an llm
+Thread
+How can I use the python sdk to create a multi argument prompt which goes into an llm
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+dr7vn — 08/24/2023 12:04 PM
+@kapa.ai how to return the complete response of agent in case it performs multiple actions
+Thread
+how to return the complete response of agent in case it performs multiple actions
+11 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+vansh — 08/24/2023 12:09 PM
+@kapa.ai hi everyone, I am new to using langchain. can someone help me understand how we can use a proxy open_ai_base amd a proxy key with langchain?, but I can't find the code in the langchain docs for it. i want to create a agent that loads documents using openai and langchain
+
+from langchain.embeddings.openai import OpenAIEmbeddings
+import os
+
+os.environ["OPENAI_API_KEY"] = "my_key"
+os.environ["OPENAI_PROXY"] = "https://.../api/v1"
+
+embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
+
+text = "This is a test document."
+
+query_result = embeddings.embed_query(text)
+
+
+
+error - 
+Retrying langchain.embeddings.openai.embed_with_retry.<locals>._embed_with_retry in 4.0 seconds as it raised APIConnectionError: Error communicating with OpenAI: HTTPSConnectionPool(host='api.openai.com', port=443): Max retries exceeded with url: /v1/engines/text-embedding-ada-002/embeddings (Caused by ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 400 Bad Request'))).
+Thread
+hi everyone, I am new to using langchain. can someone help me understand how we can use a
+22 Messages ›
+BOT
+kapa.ai
+4d ago
+dr7vn — 08/24/2023 12:22 PM
+@kapa.ai why agent is returning not complete response when stream is off
+Thread
+why agent is returning not complete response when stream is off
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+Kiloine/ExAvenger — 08/24/2023 12:23 PM
+@kapa.ai make a sample code for chatbot to check if the question has data manipulation keywords or queries? if yes run a sqlquery
+Thread
+make a sample code for chatbot to check if the question has data manipulation keywords or
+17 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+vansh — 08/24/2023 12:28 PM
+from langchain.document_loaders import UnstructuredPDFLoader
+from langchain.llms import OpenAI
+import os
+import openai
+
+# Set the OpenAI API key and proxy base URL
+os.environ["OPENAI_API_KEY"] = "my key"
+openai.api_base = "https://....cc/api/v1"
+
+# Load the PDF file
+loader = UnstructuredPDFLoader('C:\\Users\\swami\\Desktop\\langchain test\\gpt-4-system-card.pdf')
+data = loader.load()
+
+# Create the language model with gpt-3.5-turbo
+llm = OpenAI(model="gpt-3.5-turbo", temperature=0.9)
+
+# Add your chatbot logic
+prompt = "Hello, how can I assist you?"
+response = llm(prompt)
+print(response)
+
+
+and this is the error - 
+PS C:\Users\swami\Desktop\langchain test> & "C:/Program Files/Python311/python.exe" "c:/Users/swami/Desktop/langchain test/test2.py"
+Retrying langchain.llms.openai.completion_with_retry.<locals>._completion_with_retry in 4.0 seconds as it raised APIError: Invalid response object from API: '{"detail":"Unknown model! Follow list from the models endpoint!"}' (HTTP response code was 404).
+Retrying langchain.llms.openai.completion_with_retry.<locals>._completion_with_retry in 4.0 seconds as it raised APIError: Invalid response object from API: '{"detail":"Unknown model! Follow list from the models endpoint!"}' (HTTP response code was 404).
+
+what is the solution @kapa.ai
+Thread
+```from langchain.document_loaders import UnstructuredPDFLoaderfrom langchain.llms import
+3 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+gsing — 08/24/2023 1:16 PM
+@kapa.ai  how do I get the current summary from ConversationSummaryBufferMemory
+Thread
+how do I get the current summary from ConversationSummaryBufferMemory
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+dr7vn — 08/24/2023 1:23 PM
+@kapa.ai how to parse intermediary step message and return ai messages from Function agent action
+Thread
+how to parse intermediary step message and return ai messages from Function agent action
+4 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+4d ago
+kyle — 08/24/2023 4:51 PM
+@kapa.ai I'm using initialize_agent with agent=AgentType.CHAT_ZERO_REACT_DESCRIPTION, where do i input my input variables? I'm using these 4 'input', 'dialect', 'agent_scratchpad', 'top_k'
+Thread
+I'm using initialize_agent with agent=AgentType.CHAT_ZERO_REACT_DESCRIPTION, where do i in
+7 Messages ›
+BOT
+kapa.ai
+Click to see attachment
+3d ago
+jpalvadev — 08/24/2023 4:51 PM
+@kapa.ai how can i use a huggingface local model with js?
