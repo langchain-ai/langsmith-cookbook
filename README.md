@@ -25,6 +25,7 @@ The following walkthroughs demonstrate ways to evaluate common application scena
 - For examples using LangSmith in your testing framework, such as with pytest, you can reference the following:
     - The [LangSmith in Pytest](./testing-examples/pytest/) recipe shows how to directly evaluate your chain or LLM on a dataset and then define your own pass/fail criteria.
     - The [Unit Testing with Pytest](./testing-examples/pytest-ut/) recipe shows how to write individual unit tests so that feedback and traces are all organized by test suite.
+- The [Evaluating Existing Runs](./testing-examples/adding-feedback/evaluate_runs.ipynb) notebook demonstrates how to evaluate or add automated feedback to existing run traces. This is useful for adding additional evaluation metrics after already conducting a test run, for adding AI-assisted feedback in monitoring projects, and for evaluating runs logged outside of python.
 
 ## Tracing your code
 
