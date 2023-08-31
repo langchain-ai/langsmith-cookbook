@@ -8,6 +8,7 @@ familiar testing harnesses like Jest or Mocha. You can still track your tests in
 with the run traces to easily debug changes in chain behavior.
 
 The basic steps are:
+
 1. Run your chain on example data, capturing the run IDs for each run.
 2. Perform your assertions, catching and logging the result.
 
@@ -20,4 +21,4 @@ LANGCHAIN_PROJECT="UnitTests-$(git rev-parse --short HEAD)" npm test
 
 An example of the resulting project is:
 
-[](img/resulting_project.png)
+![Unit Test Project](img/resulting_project.png)
