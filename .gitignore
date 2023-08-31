@@ -5,3 +5,4 @@ __pycache__
 .ipynb
 .venv
 secrets.toml
+node_modules
