@@ -1,7 +1,9 @@
 import { Client } from "langsmith";
-import { getChain } from "../src/index";
-import { expect } from "./jest_helper";
 import { RunCollectorCallbackHandler } from "./collection_helper";
+import { expect } from "./jest_helper";
+import { getChain } from "../src/index";
+// Supported in versions >= 0.0.139
+// import { RunCollectorCallbackHandler } from "langchain/callbacks";
 
 const client = new Client();
 
