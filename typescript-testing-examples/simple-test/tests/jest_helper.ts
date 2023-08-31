@@ -5,9 +5,12 @@ const client = new Client();
 
 /**
  * A wrapper for jest's expect to include LangSmith logging.
- * @param {string} runId - Run ID from LangSmith
- * @param {any} actual - Actual value to be expected
- * @returns {any} - Returns an object that has all the jest's expect methods
+ * @param actual - Actual value to be expected
+ * @param options - An object containing the following properties:
+ *  - `runId` (string): Run ID from LangSmith
+ *  - `feedbackName` (optional string): A custom name for the feedback
+ * @returns An object that has all the jest's expect methods
+ * @template T - The type of the actual value
  */
 export function expect(
   actual: any,
