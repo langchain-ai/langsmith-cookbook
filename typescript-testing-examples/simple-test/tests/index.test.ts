@@ -72,7 +72,7 @@ describe("Test chain outputs", () => {
       const runId = runCollector.tracedRuns[0].id;
       // If you're not using jest, you can manually catch and log
       parseAndLog(runId, pred);
-      // Or you can use the example jest srapper in this recipe
+      // Or you can use the example jest wrapper in this recipe
       // The name feedback name is optional. An automatic name will be inferred
       // basd on the expectation method and object.
       expect(JSON.parse(pred), { runId, feedbackName: "to_equal_object" }).toEqual(
