@@ -15,6 +15,7 @@ The following walkthroughs show ways to capture and use [feedback](https://docs.
     - The [expression_chain.py](./feedback-examples/streamlit/expression_chain.py) contains an equivalent chat chain defined exclusively with [LangChain expressions](https://python.langchain.com/docs/guides/expression_language/). 
 - The [Next.js Chat App](./feedback-examples/nextjs/README.md) contains a TypeScript tracing and user feedback example.
     - You can [check out a deployed demo version here](https://langsmith-cookbook.vercel.app/).
+- The [Building an Algorithmic Feedback Pipeline](./feedback-examples/algorithmic-feedback/algorithmic_feedback.ipynb) notebook guides you through automating feedback metrics for your LLM deployment, enabling advanced monitoring and performance tuning with LangSmith.
 
 ## Testing & Evaluation
 
