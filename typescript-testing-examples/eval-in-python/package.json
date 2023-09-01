@@ -1,16 +1,16 @@
 {
-  "name": "simple-test",
+  "name": "eval-in-python",
   "version": "0.0.1",
-  "description": "A simple example adding langsmith feedback to an existing Jest test.",
+  "description": "An example running a js chain on a dataset and then running evals in python.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest && python py/evaluate_project.py"
   },
   "keywords": [
     "LangSmith",
     "Jest",
     "Feedback",
-    "Evaluate"
+    "Test"
   ],
   "author": "William Fu-Hinthorn <support@langchain.dev>",
   "license": "MIT",

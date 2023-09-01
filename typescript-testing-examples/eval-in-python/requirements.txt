@@ -1,0 +1,3 @@
+langchain
+langsmith
+rapidfuzz
