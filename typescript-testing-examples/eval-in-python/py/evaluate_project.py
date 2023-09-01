@@ -3,8 +3,8 @@ import json
 import os
 from typing import Optional
 
-from langchain.schema.runnable import RunnableLambda
-from langchain.evaluation import load_evaluator
+from langchain import evaluation
+from langchain.schema import runnable
 from langsmith import Client
 
 from langsmith.evaluation import EvaluationResult, RunEvaluator
@@ -14,7 +14,7 @@ from langsmith.schemas import Example, Run
 class JsonValueDistance(RunEvaluator):
     def __init__(self) -> None:
         super().__init__()
-        self.distance_evaluator = load_evaluator("string_distance")
+        self.distance_evaluator = evaluation.load_evaluator("string_distance")
         self.eval_name = "json_string_similarity"
 
     def evaluate_run(
@@ -51,7 +51,7 @@ def evaluate_existing_project(project_name: str):
     client = Client()
     runs = client.list_runs(project_name=project_name, execution_order=1)
     evaluator = JsonValueDistance()
-    batched_evaluator = RunnableLambda(
+    batched_evaluator = runnable.RunnableLambda(
         lambda run: client.evaluate_run(run, evaluator=evaluator)
     )
     all_feedback = batched_evaluator.batch(list(runs))
