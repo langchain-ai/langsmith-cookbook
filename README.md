@@ -35,6 +35,12 @@ Setting up tracing in LangChain is as simple as setting a couple environment var
 - The [REST API](./tracing-examples/rest/rest.ipynb) notebook walks through logging runs to LangSmith directly using the REST API, covering how to log LLM and chat model runs for token counting, and how to nest runs. The run logging spec can be found in the [LangSmith SDK repository](https://github.com/langchain-ai/langsmith-sdk/blob/main/openapi/openapi.yaml).
 
 
+## LangChain Hub
+
+Managing multiple versions of LLM components can be tough. The [LangChain Hub](https://smith.langchain.com/hub) provides tools to keep everything organized. The following walkthroughs relate how to incporate it in your workflows. For more information, please consult the [docs](https://docs.smith.langchain.com/category/hub).
+
+- The [RetrievalQA Chain](./hub-examples/retrieval-qa-chain/retrieval-qa.ipynb) notebook shows how to version prompts for the RetrievalQA chain.
+
 ## Exporting data for fine-tuning
 
 The [LangSmith docs](https://docs.smith.langchain.com/tracing/use-cases/export-runs/local) contains examples of ways to filter and query the runs database for downstream tasks. The examples below share recipes on how to then use that data for fine-tuning.
