@@ -39,7 +39,7 @@ Setting up tracing in LangChain is as simple as setting a couple environment var
 
 Managing multiple versions of LLM components can be tough. The [LangChain Hub](https://smith.langchain.com/hub) provides tools to keep everything organized. The following walkthroughs relate how to incporate it in your workflows. For more information, please consult the [docs](https://docs.smith.langchain.com/category/hub).
 
-- The [RetrievalQA Chain](./hub-examples/retrieval-qa-chain/retrieval-qa.ipynb) notebook shows how to version prompts for the RetrievalQA chain.
+- The [RetrievalQA Chain](./hub-examples/retrieval-qa-chain/retrieval-qa.ipynb) notebook shows how to version prompts for retrieval QA chain.
 
 ## Exporting data for fine-tuning
 
