@@ -1,9 +1,9 @@
 # Logging Assertions as Feedback
 
-This walkthrough shows a lightweight way to begin using langsmith feedback in TypeScript, without having to change many lines of code
+This walkthrough shows a lightweight way to begin using LangSmith feedback in TypeScript, without having to change many lines of code
 in your existing tests. It does not incorporate LangSmith datasets, and so you do not get the benefits of row-level comparisons, performance and chain tracking over a dataset, or other future analytical functionality. For information on how to evaluate your JS chains over a dataset, check out the [Evaluating JS Chains in Python](../eval-in-python/) walkthrough in this repo.
 
-This recipe orks by wrapping your testing assertions of your existing javascript tests and logging them as evaluation feedback.
+This recipe works by wrapping your testing assertions of your existing JavaScript tests and logging them as evaluation feedback.
 
 We don't (yet) have full benchmarking functionality natively written in TypeScript, and you may already have some tests using
 familiar testing harnesses like Jest or Mocha. You can still track your tests in LangSmith in a lightweight manner using the tactics presented in this recipe.
@@ -52,6 +52,8 @@ jest to define a test suite called "Test chain outputs", which iterates through 
 
 
 ```typescript
+import { expect } from "./jest_helper";
+
 describe("Test chain outputs", () => {
   it.each(examples)(
     "produces expected json for example: %s",
