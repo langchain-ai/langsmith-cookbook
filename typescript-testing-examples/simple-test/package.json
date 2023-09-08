@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "langchain": "^0.0.146",
-    "langsmith": "^0.0.34"
+    "langsmith": "^0.0.35"
   }
 }
