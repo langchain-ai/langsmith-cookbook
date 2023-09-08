@@ -1,0 +1,26 @@
+{
+  "name": "simple-test",
+  "version": "0.0.1",
+  "description": "A simple example adding langsmith feedback to an existing Jest test.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "LangSmith",
+    "Jest",
+    "Feedback",
+    "Evaluate"
+  ],
+  "author": "William Fu-Hinthorn <support@langchain.dev>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.4",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "langchain": "^0.0.146",
+    "langsmith": "^0.0.35"
+  }
+}
