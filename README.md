@@ -19,6 +19,7 @@ The following walkthroughs show ways to capture and use [feedback](https://docs.
 
 ## Testing & Evaluation
 
+### Python Examples
 The following walkthroughs demonstrate ways to evaluate common application scenarios.
 - The [Q&A System Correctness](./testing-examples/qa-correctness/qa-correctness.ipynb) notebook walks through creating a dataset for a retrieval-augmented Q&A pipeline, evaluating the responses for correctness, and using LangSmith to iterate and improve.
 - The [Evaluating Q&A Systems with Dynamic Data](./testing-examples/dynamic-data/testing_dynamic_data.ipynb) notebook shows how to evaluate a Q&A pipeline when the underlying data may change over time by using an evaluator that dereferences a label at evaluation time.
@@ -27,6 +28,13 @@ The following walkthroughs demonstrate ways to evaluate common application scena
     - The [LangSmith in Pytest](./testing-examples/pytest/) recipe shows how to directly evaluate your chain or LLM on a dataset and then define your own pass/fail criteria.
     - The [Unit Testing with Pytest](./testing-examples/pytest-ut/) recipe shows how to write individual unit tests so that feedback and traces are all organized by test suite.
 - The [Evaluating Existing Runs](./testing-examples/evaluate-existing-test-project/evaluate_runs.ipynb) notebook demonstrates how to evaluate or add automated feedback to existing run traces. This is useful for adding additional evaluation metrics after already conducting a test run, for adding AI-assisted feedback in monitoring projects, and for evaluating runs logged outside of python.
+
+### TypeScript / JS Examples
+
+LangSmith supports logging evaluation feedback to any run. The following walkthroughs show how to incorporate LangSmith in your TS/JS testing and evaluation workflows.
+- The [Evaluating JS Chains in Python](./typescript-testing-examples/eval-in-python/) walkthrough shows how to run your JS chain over a LangSmith dataset and then evaluate the resulting traces in python, using a custom evaluator to test the structured results. This applies the technique presented in [Evaluating Existing Runs](./testing-examples/evaluate-existing-test-project/evaluate_runs.ipynb).
+- The [Logging Assertions as Feedback](./typescript-testing-examples/simple-test/) example shows a how to quickly store your existing CI test assertions as LangSmith feedback. This lets you store annotated traces of your test runs in LangSmith without requiring many changes to your existing test system.
+
 
 ## Tracing your code
 

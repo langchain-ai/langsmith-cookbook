@@ -1,0 +1,26 @@
+{
+  "name": "eval-in-python",
+  "version": "0.0.1",
+  "description": "An example running a js chain on a dataset and then running evals in python.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest && python py/evaluate_project.py"
+  },
+  "keywords": [
+    "LangSmith",
+    "Jest",
+    "Feedback",
+    "Test"
+  ],
+  "author": "William Fu-Hinthorn <support@langchain.dev>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.4",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "langchain": "^0.0.146",
+    "langsmith": "^0.0.35"
+  }
+}
