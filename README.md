@@ -28,6 +28,11 @@ The following walkthroughs demonstrate ways to evaluate common application scena
     - The [Unit Testing with Pytest](./testing-examples/pytest-ut/) recipe shows how to write individual unit tests so that feedback and traces are all organized by test suite.
 - The [Evaluating Existing Runs](./testing-examples/evaluate-existing-test-project/evaluate_runs.ipynb) notebook demonstrates how to evaluate or add automated feedback to existing run traces. This is useful for adding additional evaluation metrics after already conducting a test run, for adding AI-assisted feedback in monitoring projects, and for evaluating runs logged outside of python.
 
+#### Testing FAQs
+
+We include some smaller snippets to answer common questions.
+- The [Naming Test Projects](./testing-examples/naming-runs/naming-test-runs.md) example demonstrates how to customize the test run with `run_on_dataset(..., project_name='my-project-name')`
+
 ## Tracing your code
 
 Setting up tracing in LangChain is as simple as setting a couple environment variables. We've also added support through the LangSmith SDK to trace applications that don't rely on LangChain. The following walkthroughs address common questions around tracing your code!
