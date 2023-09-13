@@ -1,7 +1,7 @@
 # Evaluating JS Chains in Python
 
 This walkthrough is directed towards anyone using the LangChainJS package who wants to take advantage of LangSmith's datasets
-and evaluation tooling. It applies the techniques discussed in the [Evaluating Existing Runs](../../testing-examples/adding-feedback/evaluate_runs.ipynb) walkthrough
+and evaluation tooling. It applies the techniques discussed in the [Evaluating Existing Runs](../../testing-examples/evaluate-existing-test-project/evaluate_runs.ipynb) walkthrough
 using a two-step process:
 
 1. Generate chain predictions over the dataset, associating each trace with a dataset example (row).

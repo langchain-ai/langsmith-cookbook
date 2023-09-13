@@ -1,4 +1,4 @@
-## LangSmith Next.js Chat UI Example
+# LangSmith Next.js Chat UI Example
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flangchain-ai%2Flangsmith-cookbook%2Ffeedback-examples%2Fnextjs)
 
