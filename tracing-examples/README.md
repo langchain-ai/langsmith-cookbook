@@ -1,3 +1,7 @@
+---
+sidebar_label: Tracing
+sidebar_position: 2
+---
 # Tracing your code
 
 Setting up tracing in LangChain is as simple as setting a couple environment variables. We've also added support through the LangSmith SDK to trace applications that don't rely on LangChain. The following walkthroughs address common questions around tracing your code!

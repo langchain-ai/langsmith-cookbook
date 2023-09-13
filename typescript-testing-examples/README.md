@@ -1,8 +1,8 @@
 ---
 sidebar_label: TS Evaluation
-sidebar_position: 4
+sidebar_position: 5
 ---
-# JavaScrptr Testing & Evaluation Examples
+# JavaScript Testing & Evaluation Examples
 
 LangSmith supports logging evaluation feedback to any run. The following walkthroughs show how to incorporate LangSmith in your TypeScript or JavaScript testing and evaluation workflows.
 
