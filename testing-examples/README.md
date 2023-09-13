@@ -1,3 +1,7 @@
+---
+sidebar_label: Testing & Evaluation
+sidebar_position: 4 
+---
 # Testing & Evaluation Recipes
 
 The following walkthroughs demonstrate ways to evaluate common application scenarios.

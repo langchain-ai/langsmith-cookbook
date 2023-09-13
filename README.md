@@ -59,6 +59,7 @@ The following walkthroughs show ways to capture and use [feedback](https://docs.
 
 Once you've logged your trace data, there is a wealth of insight you can glean from analyzing the logs. Use them for fine-tuning, to build better eval suites, to drive product insights, and more. The following are some example notebooks showing how you can export the data to other tools for analysis.
 - The [Lilac](./exploratory-data-analysis/lilac/lilac.ipynb) notebook demonstrates how you can enrich a dataset by defining custom patterns, check for PII, and performing near-duplicate detection using the open-source unstructured data analytics tool, [Lilac](https://github.com/lilacai/lilac).
+
 ## Exporting data for fine-tuning
 
 The [LangSmith docs](https://docs.smith.langchain.com/tracing/use-cases/export-runs/local) contains examples of ways to filter and query the runs database for downstream tasks. The examples below share recipes on how to then use that data for fine-tuning.
