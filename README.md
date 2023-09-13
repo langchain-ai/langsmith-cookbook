@@ -1,11 +1,10 @@
 # LangSmith Cookbook
 
-This repository stores code tutorials showing different ways to get more out of [LangSmith](https://smith.langchain.com/). LangSmith is a platform that helps you debug, test, evaluate, and monitor your LLM applications.
+This repository is your practical guide to maximizing [LangSmith](https://smith.langchain.com/). As a tool, LangSmith empowers you to debug, evaluate, test, and improve your LLM applications continuously. These recipes dive deeper than the [standard documentation](https://docs.smith.langchain.com/), presenting real-world scenarios for you to adapt and implement.
 
-These cookbook recipes are meant to complement the [LangSmith Documentation](https://docs.smith.langchain.com/) by showing common use cases and tactics within "end-to-end" examples, which you can take and adapt to your needs.
+**Your Input Matters**
 
-If you have any specific requests or common patterns you'd like to see highlighted, create a GitHub issue or let one of the core LangChain devs know. We also welcome contributions!
-
+We're always evolving. If there's a specific use case or pattern you want to see or if you'd like to contribute, raise a GitHub issue or reach out to the LangChain development team. Your feedback helps everyone!
 
 ## Tracing your code
 
