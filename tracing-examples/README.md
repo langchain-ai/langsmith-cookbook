@@ -4,7 +4,9 @@ sidebar_position: 2
 ---
 # Tracing your code
 
-Setting up tracing in LangChain is as simple as setting a couple environment variables. We've also added support through the LangSmith SDK to trace applications that don't rely on LangChain. The following walkthroughs address common questions around tracing your code!
-- The [Tracing without LangChain](./traceable/tracing_without_langchain.ipynb) notebook uses the python SDK's `@traceable` decorator to trace and tag run in an app that does not use depend on LangChain.
-- The [REST API](./rest/rest.ipynb) notebook walks through logging runs to LangSmith directly using the REST API, covering how to log LLM and chat model runs for token counting, and how to nest runs. The run logging spec can be found in the [LangSmith SDK repository](https://github.com/langchain-ai/langsmith-sdk/blob/main/openapi/openapi.yaml).
-- The [Customing Run Names](./runnable-naming/run-naming.ipynb) notebook demonstrates how to assign custom names to LangSmith chain runs for better traceability and clarity in the UI. It covers custom naming for chains, lambda functions, and agents, offering practical examples for each.
+Tracing allows for seamless debugging and improvement of your LLM applications. Here's how:
+
+
+- [Tracing without LangChain](./traceable/tracing_without_langchain.ipynb): learn to trace applications independent of LangChain using the Python SDK's @traceable decorator.
+- [REST API](./rest/rest.ipynb): get acquainted with the REST API's features for logging LLM and chat model runs, and understand nested runs. The run logging spec can be found in the [LangSmith SDK repository](https://github.com/langchain-ai/langsmith-sdk/blob/main/openapi/openapi.yaml).
+- [Customing Run Names](./runnable-naming/run-naming.ipynb): improve UI clarity by assigning bespoke names to LangSmith chain runs—includes examples for chains, lambda functions, and agents.

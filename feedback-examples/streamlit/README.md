@@ -1,7 +1,8 @@
-## LangSmith Streamlit Chat UI Example
+# Collect User Feedback in Streamlit
 
 In this example, you will create a ChatGPT-like web app in Streamlit that supports streaming, custom instructions, app feedback, and more. The final app will look like the following:
 
+<!-- markdown-link-check-disable -->
 [![Chat UI](img/chat_overview.png)](https://langsmith-chat-feedback.streamlit.app/)
 
 In making this app, you will get to use:

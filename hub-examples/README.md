@@ -4,8 +4,8 @@ sidebar_position: 3
 ---
 # LangChain Hub
 
-Managing multiple versions of LLM components can be tough. The [LangChain Hub](https://smith.langchain.com/hub) provides tools to keep everything organized. The following walkthroughs relate how to incporate it in your workflows. For more information, please consult the [docs](https://docs.smith.langchain.com/category/hub).
+MEfficiently manage your LLM components with the [LangChain Hub](https://smith.langchain.com/hub). For dedicated documenation, please see the [hub docs](https://docs.smith.langchain.com/category/hub).
 
-- The [RetrievalQA Chain](./retrieval-qa-chain/retrieval-qa.ipynb) notebook shows how to version prompts for retrieval QA chain.
-- The [Prompt Versioning](./retrieval-qa-chain-versioned/prompt-versioning.ipynb) notebook whows how to ensure deployment stability by using specific prompt versions from the Hub instead of the 'latest'.
-- The [Runnable PromptTemplate](./runnable-prompt/edit-in-playground.ipynb) notebook explains how to save prompts to the hub directly from the playground. It also reviews how to use these prompts in runnable chains.
+- [RetrievalQA Chain](./retrieval-qa-chain/retrieval-qa.ipynb): use prompts from the hub in an exampe RAG pipeline.
+- [Prompt Versioning](./retrieval-qa-chain-versioned/prompt-versioning.ipynb) ensure deployment stability by selecting specific prompt versions over the 'latest'.
+- [Runnable PromptTemplate](./runnable-prompt/edit-in-playground.ipynb): streamline the process of saving prompts to the hub from the playground and integrating them into runnable chains.
