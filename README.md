@@ -57,6 +57,7 @@ The following walkthroughs show ways to capture and use [feedback](https://docs.
 ## Exploratory Data Analysis
 
 Once you've logged your trace data, there is a wealth of insight you can glean from analyzing the logs. Use them for fine-tuning, to build better eval suites, to drive product insights, and more. The following are some example notebooks showing how you can export the data to other tools for analysis.
+- The [Exporting LLM Runs and Feedback](./exploratory-data-analysis/) guide provides steps on extracting and interpreting LangSmith LLM run data paired with user feedback. Use this to load and prepare LLM data for use within various analytical platforms.
 - The [Lilac](./exploratory-data-analysis/lilac/lilac.ipynb) notebook demonstrates how you can enrich a dataset by defining custom patterns, check for PII, and performing near-duplicate detection using the open-source unstructured data analytics tool, [Lilac](https://github.com/lilacai/lilac).
 
 ## Exporting data for fine-tuning
