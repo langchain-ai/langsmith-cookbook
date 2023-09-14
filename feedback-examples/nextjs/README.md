@@ -224,5 +224,5 @@ Check out the [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Thank You!
 
-Thanks for reading! We hope this clarifies the TypeScript LangSmith feedback flow. If you have any questions or comments, reach out to us on Twitter
-[@LangChainAI](https://twitter.com/langchainai), or [click here to join our Discord server](https://discord.gg/langchain).
+<!-- markdown-link-check-disable -->
+Thanks for reading! We hope this clarifies the TypeScript LangSmith feedback flow. If you have any questions or comments, reach out to us on Twitter [@LangChainAI](https://twitter.com/langchainai), or [click here to join our Discord server](https://discord.gg/langchain).

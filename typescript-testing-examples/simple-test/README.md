@@ -88,8 +88,7 @@ At a high level, the test:
 3. Asserts that the prediction is equivalent to the expected output using the wrapped `expect` statement.
 
 When running the chain, we use the "runCollector" callback to collect each traced run in a list so that we can
-easily recover the run's ID to associate feedback with it. This callback handler is available in langchain versions `>=0.0.139`,
-but we have reproduced the class [here](./tests/collection_helper.ts) in case you haven't upgraded yet.
+easily recover the run's ID to associate feedback with it. This callback handler is available in langchain versions `>=0.0.139`.
 
 We demonstrate two ways to log and assert in one line. The first is the manual `parseAndLog` function, reproduced below:
 
