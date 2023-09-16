@@ -1,8 +1,8 @@
-# Add Traceability to Your Streamlit Chatbot
+# Embedding Trace Links
 
 Debugging LLM apps and agents is difficult. When a bot gives a wrong response, it can be hard to identify the root cause.
 
-Full traceability enables us to inspect the components in each response. With visibility into execution flow, we can identify and fix failure points.
+Full traceability lets us inspect the data flow through component. With visibility into execution flow, we can identify and fix failure points.
 
 In this tutorial, you'll surface the URL of a trace within your Streamlit chatbot by:
 
@@ -10,11 +10,13 @@ In this tutorial, you'll surface the URL of a trace within your Streamlit chatbo
 - Using the client to resolve the trace URL
 - Displaying trace URLs in the UI
 
-This makes it easy to debug your chain or agent, since you can directly interact with the UX your users will face and quickly check traces when the performance is underwhelming.
+This makes it easy to debug your chain or agent, since you can directly interact with the UX your users will face and quickly check traces when the performance is underwhelming. The demo app will look like this:
+
+![streamlit-app](./img/embed-trace-app.gif)
 
 ## Key Code Snppet
 
-he primary code snippet you can incorporate for your development is as follows:
+The primary code snippet you can incorporate for your development is as follows:
 
 
 ```python
