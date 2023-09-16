@@ -2,5 +2,3 @@ langchain>=0.0.292
 streamlit>=1.26
 langsmith>=0.0.37
 anthropic
-tiktoken
-streamlit-feedback
