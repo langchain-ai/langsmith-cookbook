@@ -1,27 +1,29 @@
-"""Example Streamlit chat UI that exposes a Feedback button and link to LangSmith traces."""
+"""Streamlit tutor teaching how to show a trace URL in the app."""
 
 import inspect
 import logging
 import operator
 import os
-import time
 import uuid
 from datetime import datetime
 
 import langsmith
 import streamlit as st
-from langchain import callbacks, chat_models, memory, prompts
+import tenacity
+from langchain import callbacks, chat_models, hub, memory, prompts
 from langchain.schema import runnable
 
 logging.basicConfig(level=logging.INFO)
 
 st.set_page_config(
-    page_title="Chat LangSmith",
+    page_title="LangSmith Trace Tutor",
     page_icon="🦜",
 )
-"""# Displaying 🦜🛠️ Trace URLs
+"""# Embed 🦜🛠️ Trace URLs
 
-Have a chat! After each conversation turn, you should see\
+Have a chat! The bot is instructed to teach about how to embed\
+ LangSmith trace URLs in your web UI.
+After each conversation turn, you should see\
  a "🛠️" button linking to the LangSmith trace for this
  chat bot. Ask the bot how it works!
 """
@@ -46,31 +48,14 @@ def main():
     )
     # Define the prompt for the LLM. The conversation is passed into this
     # template for each conversation turn
-    prompt = prompts.ChatPromptTemplate.from_messages(
-        [
-            (
-                "system",
-                "You are a Socratic CS tutor tasked with teaching the human"
-                " about LangSmith. You areto guide the human through lesson on hw to add a link to a LangSmith trace"
-                " in your LLM app. First introduce what and why this is useful, then walk them through defining te chain,"
-                " using the collect_runs callback manager to capture the trace, and finally how to use the cient to fetch the URL."
-                " This is useful when developing or debugging"
-                " an LLM application, since it traces out the data flow through the Chain's execution graph."
-                " For any give turn, only teach one step of the lesson, giving the human time to pause and ask questions."
-                " The user can click the 🛠️ button in the side bar to see the trace for the conversation at point in time."
-                " Here is the code for the tutorial:\n<CODE_{uuid}>\n{code}\n</CODE_{uuid}>"
-                " \nIt's currently {time}."
-                " Remember to stay on task! The user can't see the code.",
-            ),
-            prompts.MessagesPlaceholder(variable_name="chat_history"),
-            ("human", "{input}"),
-        ]
-    ).partial(
+    prompt: prompts.ChatPromptTemplate = hub.pull("wfh/langsmith-tutor-trace-link")
+    prompt = prompt.partial(
         uuid=lambda: uuid.uuid4(), code=sourcecode, time=lambda: str(datetime.now())
     )
     # The | operator promotes this DAG into a RunnableSequence,
     # which provides streaming, tracing, and other functionality
-    # by default.
+    # by default. Runnables are the composable core of LangChain's expression language
+    # https://python.langchain.com/docs/expression_language/cookbook
     chain = (
         # Data flows right to left within the RunnableMap
         # dict <- (runnables)
@@ -116,37 +101,35 @@ def main():
                     {"input": user_input}, {"output": full_response}
                 )
 
+                run_id = cb.traced_runs[0].id
+
                 # If environment is set to "DEV", incorporate the trace
                 # Useful for debugging. This is useful for when you want
                 # to be annotating runs for eval/training or for when you want
                 # to visualize the execution of you rchain in the browser
                 if os.environ.get("ENVIRONMENT", "DEV"):
+                    client = langsmith.Client()
                     with st.elements.spinner.spinner("Fetching trace"):
-                        client = langsmith.Client()
-                        while True:
-                            try:
-                                url = client.read_run(cb.traced_runs[0]).url
-                                # Convert http://localhost/o/00000000-0000-0000-0000-000000000000/projects/p/5998238e-c46b-424f-af29-2803133bf91e/r/4f3121dc-7798-4bc8-9228-55c6f6c8d1e0
-                                # to http://localhost/o/00000000-0000-0000-0000-000000000000/playground/r/4f3121dc-7798-4bc8-9228-55c6f6c8d1e0
-                                # Stri projects/p/UUID
-                                # Or if you wat to share the run publicly
-                                # url = client.share_run(run.id)
-                                st.sidebar.markdown(
-                                    f'<a href="{playground_url}" target="_blank"><button>'
-                                    "Playground: </button></a>",
-                                    unsafe_allow_html=True,
-                                )
-                                st.sidebar.markdown(
-                                    f'<a href="{url}" target="_blank"><button>'
-                                    "Latest Trace: 🛠️</button></a>",
-                                    unsafe_allow_html=True,
-                                )
-                                break
-                            except Exception as e:
-                                # Currently (20230815) we fetch app path from server
-                                # runs are commited async
-                                logging.info(f"Retrying to read run. {e}")
-                                time.sleep(1)
+                        try:
+                            for attempt in tenacity.Retrying(
+                                wait=tenacity.wait_exponential(
+                                    multiplier=1, min=1, max=10
+                                ),
+                                stop=tenacity.stop_after_attempt(3),
+                            ):
+                                # Currently (20230815) we fetch app path from server.
+                                # Runs are commited async, so there is sometimes a delay
+                                with attempt:
+                                    url = client.read_run(run_id).url
+                            # Or if you wat to share the run publicly
+                            # url = client.share_run(run.id)
+                            st.sidebar.markdown(
+                                f'<a href="{url}" target="_blank"><button>'
+                                "Latest Trace: 🛠️</button></a>",
+                                unsafe_allow_html=True,
+                            )
+                        except Exception as e:
+                            logging.exception(e)
 
 
 main()

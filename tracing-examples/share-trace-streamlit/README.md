@@ -1,20 +1,21 @@
 # Add Traceability to Your Streamlit Chatbot
 
-Debugging conversational AI is difficult. When a bot gives a wrong response, it's hard to understand why. 
+Debugging LLM apps and agents is difficult. When a bot gives a wrong response, it can be hard to identify the root cause.
 
-Full traceability enables us to inspect the step-by-step reasoning behind each reply. With visibility into execution flow, we can identify and fix failure points.
+Full traceability enables us to inspect the components in each response. With visibility into execution flow, we can identify and fix failure points.
 
-In this tutorial, you'll add traceability to a Streamlit chatbot by:
+In this tutorial, you'll surface the URL of a trace within your Streamlit chatbot by:
 
 - Capturing full traces with LangSmith 
+- Using the client to resolve the trace URL
 - Displaying trace URLs in the UI
-- Letting users view reasoning graphs
 
 This makes it easy to debug your chain or agent, since you can directly interact with the UX your users will face and quickly check traces when the performance is underwhelming.
 
-## Key Takeaway
+## Key Code Snppet
 
-The concise snippet you can reuse in your code is as follows:
+he primary code snippet you can incorporate for your development is as follows:
+
 
 ```python
 from langchain import callbacks
@@ -24,28 +25,19 @@ client = langsmith.Client()
 
 # .. define chain ...
 with callbacks.collect_runs() as cb:
-    for tok in chain.strem({"input": "<user-input>"}):
+    for tok in chain.stream({"input": "<user-input>"}):
         print(tok, end="",flush=True)
     url = client.read_run(cb.traced_runs[0].id).url
     print(url)
 ```
 
-Using the collect_runs() context manager, you fetch the trace locally. Then, using the LangSmith client, you fetch the URL of the associated trace. Turn this on whenever you're in your dev environment, and you'll be able to view the trace right there.
+The `collect_runs()` context manager collects the trace as an in-memory run object. Then the LangSmith client fetches the URL of stored trace for easy visibility. Activating this functionality while working in your dev environment allows you to conveniently visit the trace from your UI without having to search through other logs.
 
-Now that we've spoiled the surprise, let's walk through the tutorial!
+Having provided the main focus, let's see how it fits in with the whole demo app!
 
-## Overview
+## Requirements
 
-In this walkthrough, we'll build a simple question answering bot with:
-
-- Chat history tracking 
-- Contextual prompt formatting
-- Claude chat model
-- `collect_runs` callback to save traces
-- Fetch trace URLs with the LangSmith client
-- Display links in the Streamlit sidebar
-
-## Prerequisites 
+First, let's set up by creating a virtual Python environment, activating it, installing requirements, and setting up the key:
 
 ```
 python -m virtualenv .venv
@@ -53,20 +45,20 @@ source .venv/bin/activate
 pip install -r requirements.txt 
 
 # Set API key
-export LANGSMITH_API_KEY=...
+export LANGCHAIN_API_KEY=...
 ```
 
-Then run the app!
+After setup is done, run the application:
 
 ```python
 ENVIRONMENT=dev python -m streamlit run app.py
 ```
 
-## Walkthrough
+## Chat Bot Overview
 
-### Chat Memory
+### Memory
 
-To track state across turns, we use a `ConversationBufferMemory`:
+To track state across turns, a `ConversationBufferMemory` is used:
 
 ```python
 memory = ConversationBufferMemory(
@@ -75,7 +67,7 @@ memory = ConversationBufferMemory(
 )
 ```
 
-This syncs the log with Streamlit session state.
+This small utility bridges the chat log with the Streamlit session state.
 
 ### Prompt
 
@@ -123,7 +115,7 @@ with collect_runs() as collector:
    run_id = collector.runs[0].id
 ```
 
-This saves the full trace data.
+This captures the full trace locally in memory. We will use this to return the run ID.
 
 ### Fetching URLs
 
@@ -144,13 +136,8 @@ st.sidebar.markdown(f"""
 """)
 ```
 
-Enabling users to view reasoning graphs.
+Letting you inspect and experiment with the trace if you want to see how different prompt templates or different models would respond.
 
-## Next Steps
+## Conclusion
 
-- Log annotations on runs  
-- Analyze traces to identify issues
-- Use traces to improve model performance
-- Enable user feedback for fine-tuning
-
-This completes the tutorial! Let me know if you would like me to modify or expand any section.
+This completes the tutorial! Displaying URLs inline is an easy way to avoid having to search through your project to replay or analyze a run. 
