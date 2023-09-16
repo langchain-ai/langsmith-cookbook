@@ -1,6 +1,6 @@
 langchain>=0.0.292
 streamlit>=1.26
 langsmith>=0.0.37
-openai
+anthropic
 tiktoken
 streamlit-feedback
