@@ -52,7 +52,7 @@ Finally, you should be able to run the app!
 Execute the following command:
 
 ```bash
-streamlit run main.py
+python -m streamlit run main.py
 ```
 
 It should spin up the chat app on your localhost. Feel free to chat, rate the runs, and view the linked traces using the appropriate buttons! Once you've traced some interactions and provided feedback, you can try navigating to the `streamlit-demo` project (or whichever `LANGCHAIN_PROJECT` environment variable you have configured for this application), to see all the traces for this project.
@@ -87,13 +87,9 @@ Before saving, feel free to modify the example outputs. This way you can ensure 
 
 The app consists of a main script managed by the `streamlit` event loop. Below are some key code snippets of what you've run.
 
-After importing the required modules, you initialize the streamlit session state with a trace link and run ID, and with a "langchain_messages" key, which is in itialized within the `StreamlitChatMessageHistory`.
+After importing the required modules, you initialize the chat memory as a `StreamlitChatMessageHistory` memory object, which sets a "langchain_messages" key in the streamlit chat state.
 
 ```python
-if "trace_link" not in st.session_state:
-    st.session_state.trace_link = None
-if "run_id" not in st.session_state:
-    st.session_state.run_id = None
 memory = ConversationBufferMemory(
     chat_memory=StreamlitChatMessageHistory(key="langchain_messages"),
     return_messages=True, # Used to use message formats with the chat model
@@ -103,9 +99,9 @@ memory = ConversationBufferMemory(
 
 Then you define the core logic of the chat model. This example lets you select between two equivalent chains: an LLMChain, and a chain built with LangChain's [expression language](https://python.langchain.com/docs/guides/expression_language/).
 
-#### Option 1: Expression Language Chain
+#### Chat Chain
 
-The chain built using the LangChain Expression Language can be found in [expression_chain.py](expression_chain.py). It looks like the following:
+The simple chat bot is built using LangChain runnables and can be found in [expression_chain.py](expression_chain.py). It looks like the following:
 
 ```python
 memory = ConversationBufferMemory(
@@ -138,70 +134,19 @@ chain = ingress | prompt | llm
 
 The expression language lets you compose different `Runnable` objects in a transparent way and provides sync/async, batch, and streaming methods that work end-to-end by default.
 
-#### Optional 2: LLMChain
 
-The second option is to use LangChain's core workhorse, the [LLMChain](https://api.python.langchain.com/en/latest/chains/langchain.chains.llm.LLMChain.html#langchain.chains.llm.LLMChain).
-The chain is defined in [vanilla_chain.py](vanilla_chain.py) and looks like the following code block:
+#### Chat Elements
 
-```python
-memory = ConversationBufferMemory(return_messages=True, memory_key="chat_history")
-prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            "You are a funky parrot pal. You are not an AI. You are a parrot."
-            " You love poetry, reading, funk music, and friendship!"
-            " It's currently {time}.",
-        ),
-        MessagesPlaceholder(variable_name="chat_history"),
-        ("human", "{input}"),
-    ]
-).partial(time=lambda: str(datetime.now()))
-llm = ChatOpenAI(temperature=0.7)
-chain = LLMChain(prompt=prompt, llm=llm, memory=memory)
-```
-
-#### Streamlit State
-
-Once you've defined the chat model, including it's conversational memory, we define another code block to manage the streamlit session state:
+Once you've defined the chat model, we define another code block to render the Streamlit Chat elements.
 
 ```python
-def _get_openai_type(msg):
-    if msg.type == "human":
-        return "user"
-    if msg.type == "ai":
-        return "assistant"
-    if msg.type == "chat":
-        return msg.role
-    return msg.type
-
-for msg in st.session_state.messages:
-    with st.chat_message(_get_openai_type(msg)):
+for msg in st.session_state.langchain_messages:
+    avatar = "🦜" if msg.type == "ai" else None
+    with st.chat_message(msg.type, avatar=avatar):
         st.markdown(msg.content)
-    # Re-hydrate memory on app rerun
-    memory.chat_memory.add_message(msg)
-
 ```
 
-This does two things each time the streamlit event loop is triggered.
-1. Re-renders the chat conversation in the UI 
-2. Re-hydrates the memory so the chain will resume where you left off.
-
-After this, we define a function for logging feedback to LangSmith. It's a simple wrapper around the client:
-
-```python
-# Imported above
-from langsmith import Client
-
-client = Client()
-
-def send_feedback(run_id, score):
-    client.create_feedback(run_id, "user_score", score=score)
-```
-
-This will be used in the `on_click` event for feedback buttons!
-
-The logic for rendering the chat input and streaming the output to the app looks like this:
+The logic for streaming the chain output to the app looks like this:
 
 ```python
 if prompt := st.chat_input(placeholder="Ask me a question!"):
@@ -209,71 +154,68 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
     with st.chat_message("assistant", avatar="🦜"):
         message_placeholder = st.empty()
         full_response = ""
-        for chunk in chain.stream({"input": prompt}, config=runnable_config):
-            full_response += chunk.content
-            message_placeholder.markdown(full_response + "▌")
-        memory.save_context({"input": prompt}, {"output": full_response})
+
+        input_dict = {"input": prompt}
+        with collect_runs() as cb:
+            for chunk in chain.stream(input_dict, config={"tags": ["Streamlit Chat"]}):
+                full_response += chunk.content
+                message_placeholder.markdown(full_response + "▌")
+            memory.save_context(input_dict, {"output": full_response})
+            run_id = cb.traced_runs[0].id
+        message_placeholder.markdown(full_response)
+
 ```
 
-This renders a `chat_input` container, and when the user sends an input, it's converted to a "user" chat message. Then an "assistant" message is created, and tokens are streamed in by updating a full response and rendering it to markdown with a "cursor" icon to simulate typing.
+This renders a `chat_input` container, which the user can type in for the next message. The LLM response is streamed back in the `message_placeholder` container, so it appears as if the bot is typing. Once the response completes, the values are saved to memory via `save_context`.
 
-Once the response completes, the values are saved to memory, which updates the streamlit message state so the conversation can be continued on the next loop.
+To assign feedback to this run, we need the reference the run's ID. We use the `collect_runs` context manager to do this. This captures the trace in memory so you can get the ID and pass it to the LangSmith client.
 
 Finally, you can create feedback for the response directly in the app using the following code:
 
 ```python
-if st.session_state.get("run_id"):
+if run_id:
     feedback = streamlit_feedback(
-        feedback_type="thumbs",
-        key=f"feedback_{st.session_state.run_id}",
+        feedback_type=feedback_option,
+        optional_text_label="[Optional] Please provide an explanation",
+        key=f"feedback_{run_id}",
     )
+
+    # Define score mappings for both "thumbs" and "faces" feedback systems
+    score_mappings = {
+        "thumbs": {"👍": 1, "👎": 0},
+        "faces": {"😀": 1, "🙂": 0.75, "😐": 0.5, "🙁": 0.25, "😞": 0},
+    }
+
+    # Get the score mapping based on the selected feedback option
+    scores = score_mappings[feedback_option]
+
     if feedback:
-        scores = {"👍": 1, "👎": 0}
-        client.create_feedback(
-            st.session_state.run_id, "user_score", score=scores[feedback["score"]]
-        )
-        st.session_state.feedback = {"feedback_id": str(feedback.id), "score": score}
+        # Get the score from the selected feedback option's score mapping
+        score = scores.get(feedback["score"])
+
+        if score is not None:
+            # Formulate feedback type string incorporating the feedback option
+            # and score value
+            feedback_type_str = f"{feedback_option} {feedback['score']}"
+
+            # Record the feedback with the formulated feedback type string
+            # and optional comment
+            feedback_record = client.create_feedback(
+                run_id,
+                feedback_type_str,
+                score=score,
+                comment=feedback.get("text"),
+            )
+            st.session_state.feedback = {
+                "feedback_id": str(feedback_record.id),
+                "score": score,
+            }
+        else:
+            st.warning("Invalid feedback score.")
+
 ```
 
-To add additional comments or corrections via forms, we add the following code blocks:
-
-```python
-# Prompt for more information, if feedback was submitted
-if st.session_state.get("feedback"):
-    feedback = st.session_state.get("feedback")
-    feedback_id = feedback["feedback_id"]
-    score = feedback["score"]
-    if score == 0:
-        # Add text input with a correction box
-        correction = st.text_input(
-            label="What would the correct or preferred response have been?",
-            key=f"correction_{feedback_id}",
-        )
-        if correction:
-            st.session_state.feedback_update = {
-                "correction": {"desired": correction},
-                "feedback_id": feedback_id,
-            }
-    if score == 1:
-        comment = st.text_input(
-            label="Anything else you'd like to add about this response?",
-            key=f"comment_{feedback_id}",
-        )
-        if comment:
-            st.session_state.feedback_update = {
-                "comment": comment,
-                "feedback_id": feedback_id,
-            }
-# Update the feedback if additional information was provided
-if st.session_state.get("feedback_update"):
-    feedback_update = st.session_state.get("feedback_update")
-    feedback_id = feedback_update.pop("feedback_id")
-    client.update_feedback(feedback_id, **feedback_update)
-    # Clear the comments
-    _reset_feedback()
-```
-
-They use the streamlit session state to track the state of the feedback dialog and make sure the original feedback is still logged immediately whether or not the user wants to add additional commentary.
+This uses renders a thumbs up/down modal (or "faces" if the toggle is )
 
 ## Reusable Tactics
 
