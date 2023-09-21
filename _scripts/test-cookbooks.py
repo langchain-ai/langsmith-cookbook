@@ -6,6 +6,7 @@ import re
 
 import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
+from langsmith import Client
 
 filter_list = [
     "llm_run_etl.ipynb",
@@ -55,7 +56,7 @@ def _run_notebook(filename, api_key, endpoint, project, hub_api_key, hub_api_url
                 cell.source = re.sub(
                     HUB_HANDLE_REGEX, hub_handle, cell.source
                 )
-    ep = ExecutePreprocessor(timeout=600, allow_errors=False)
+    ep = ExecutePreprocessor(timeout=1000, allow_errors=False)
 
     nb_out = ep.preprocess(nb_in)
     return nb_out
@@ -91,6 +92,13 @@ new_env = {"LANGCHAIN_TRACING_V2": "true"}
 args = parser.parse_args()
 if not args.api_key:
     raise Exception("No API key provided")
+
+client = Client(api_url=args.endpoint, api_key=args.api_key)
+# Create project if not found
+try:
+    client.read_project(project_name=args.project)
+except Exception as e:
+    client.create_project(args.project)
 
 with set_env(**new_env):
     for file in glob.glob(f"../**/{args.notebook}.ipynb", recursive=True):
