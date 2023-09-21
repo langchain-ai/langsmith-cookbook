@@ -63,16 +63,16 @@ Harness user [feedback](https://docs.smith.langchain.com/evaluation/capturing-fe
     - You can [check out a deployed demo version here](https://langsmith-cookbook.vercel.app/).
 - [Building an Algorithmic Feedback Pipeline](./feedback-examples/algorithmic-feedback/algorithmic_feedback.ipynb): automate feedback metrics for advanced monitoring and performance tuning.
 
+## Exporting data for fine-tuning
+
+Fine-tune an LLM on collected run data using these recipes:
+
+- [OpenAI Fine-Tuning](./fine-tuning-examples/export-to-openai/fine-tuning-on-chat-runs.ipynb): list LLM runs and convert them to OpenAI's fine-tuning format efficiently.
+- [Lilac Dataset Curation](./fine-tuning-examples/lilac/lilac.ipynb): further curate your LangSmith datasets using Lilac to detect near-duplicates, check for PII, and more.
 
 ## Exploratory Data Analysis
 
 Turn your trace data into actionable insights:
 
 - [Exporting LLM Runs and Feedback](./exploratory-data-analysis/exporting-llm-runs-and-feedback/llm_run_etl.ipynb): extract and interpret LangSmith LLM run data, making them ready for various analytical platforms.
-- [Lilac](./exploratory-data-analysis/lilac/lilac.ipynb): enrich datasets using the open-source analytics tool, [Lilac](https://github.com/lilacai/lilac), to detect near-duplicates, check for PII, and more.
-
-## Exporting data for fine-tuning
-
-Fine-tune an LLM on collected run data using these recipes:
-
-- [OpenAI Fine-Tuning](./fine-tuning-examples/export-to-openai/fine-tuning-on-chat-runs.ipynb): list LLM runs and convert them to OpenAI's fine-tuning format efficiently.
+- [Lilac](./exploratory-data-analysis/lilac/lilac.ipynb): enrich datasets using the open-source analytics tool, [Lilac](https://github.com/lilacai/lilac), to better label and organize your data.
