@@ -1,0 +1,12 @@
+nbformat
+nbconvert
+pandas
+langchain
+textstat
+langsmith
+langchainhub
+anthropic
+chromadb
+tiktoken
+html2text
+tabulate
