@@ -203,7 +203,7 @@ if (score === 1) {
 } else {
     correction = { desired: body.comment };
 }
-const feedback = await langsmithClient.updateFeedback(feedbackId, {
+await langsmithClient.updateFeedback(feedbackId, {
     score,
     comment,
     correction,
