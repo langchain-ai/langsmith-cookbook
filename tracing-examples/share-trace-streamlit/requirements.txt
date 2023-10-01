@@ -1,5 +1,5 @@
 langchain>=0.0.292
 streamlit>=1.26
-langsmith>=0.0.37
+langsmith>=0.0.41
 anthropic
-langchaihub>=0.1.13
+langchainhub>=0.1.13

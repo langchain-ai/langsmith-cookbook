@@ -6,12 +6,13 @@ import operator
 import os
 import uuid
 from datetime import datetime
+import webbrowser
 
 import langsmith
 import streamlit as st
-import tenacity
 from langchain import callbacks, chat_models, hub, memory, prompts
 from langchain.schema import runnable
+from functools import partial
 
 logging.basicConfig(level=logging.INFO)
 
@@ -32,6 +33,15 @@ st.sidebar.markdown(
 # Menu
 """
 )
+client = langsmith.Client()
+
+
+def navigate_to_trace_url(run):
+    url = client.get_run_url(run=run)
+    # Or if you wat to share the run publicly
+    # url = client.share_run(run.id)
+    # Navigate to the URL
+    webbrowser.open_new_tab(url)
 
 
 def main():
@@ -90,7 +100,6 @@ def main():
             full_response = ""
             with callbacks.collect_runs() as cb:
                 # All runnables have a .stream() method (as well as .invoke() and .batch())
-                # This
                 for chunk in chain.stream(
                     {"input": user_input}, config={"tags": ["share-trace-url-demo"]}
                 ):
@@ -101,35 +110,22 @@ def main():
                     {"input": user_input}, {"output": full_response}
                 )
 
-                run_id = cb.traced_runs[0].id
-
+                run = cb.traced_runs[0]
                 # If environment is set to "DEV", incorporate the trace
                 # Useful for debugging. This is useful for when you want
                 # to be annotating runs for eval/training or for when you want
                 # to visualize the execution of you rchain in the browser
                 if os.environ.get("ENVIRONMENT", "DEV"):
-                    client = langsmith.Client()
-                    with st.elements.spinner.spinner("Fetching trace"):
-                        try:
-                            for attempt in tenacity.Retrying(
-                                wait=tenacity.wait_exponential(
-                                    multiplier=1, min=1, max=10
-                                ),
-                                stop=tenacity.stop_after_attempt(3),
-                            ):
-                                # Currently (20230815) we fetch app path from server.
-                                # Runs are commited async, so there is sometimes a delay
-                                with attempt:
-                                    url = client.read_run(run_id).url
-                            # Or if you wat to share the run publicly
-                            # url = client.share_run(run.id)
-                            st.sidebar.markdown(
-                                f'<a href="{url}" target="_blank"><button>'
-                                "Latest Trace: 🛠️</button></a>",
-                                unsafe_allow_html=True,
-                            )
-                        except Exception as e:
-                            logging.exception(e)
+                    # st.sidebar.markdown(
+                    #     f'<a href="{url}" target="_blank"><button>'
+                    #     "Latest Trace: 🛠️</button></a>",
+                    #     unsafe_allow_html=True,
+                    # )
+                    st.sidebar.button(
+                        label="🛠️",
+                        help="Navigate to the run trace.",
+                        on_click=partial(navigate_to_trace_url, run),
+                    )
 
 
 main()
