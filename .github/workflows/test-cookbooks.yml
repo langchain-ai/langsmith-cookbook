@@ -46,3 +46,5 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LANGSMITH_API_KEY: ${{ secrets.EKS_API_KEY }}
+          LANGCHAINHUB_API_KEY: ${{ secrets.EKS_API_KEY }}
