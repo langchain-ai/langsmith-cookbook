@@ -54,14 +54,15 @@ Incorporate LangSmith into your TS/JS testing and evaluation workflow:
 
 ## Using Feedback
 
-Harness user [feedback](https://docs.smith.langchain.com/evaluation/capturing-feedback) and other signals to improve, monitor, and personalize your applications:
+Harness user [feedback](https://docs.smith.langchain.com/evaluation/capturing-feedback) and other signals to improve, monitor, and personalize your applications. Feedback can be user-generated or "automated" using functions or even calls to an LLM:
 
 - [Streamlit Chat App](./feedback-examples/streamlit/README.md): a minimal chat app that captures user feedback and shares traces of the chat application.
     - The [vanilla_chain.py](./feedback-examples/streamlit/vanilla_chain.py) contains an LLMChain that powers the chat application.
     - The [expression_chain.py](./feedback-examples/streamlit/expression_chain.py) contains an equivalent chat chain defined exclusively with [LangChain expressions](https://python.langchain.com/docs/guides/expression_language/). 
 - [Next.js Chat App](./feedback-examples/nextjs/README.md): explore a simple TypeScript chat app demonstrating tracing and feedback capture.
     - You can [check out a deployed demo version here](https://langsmith-cookbook.vercel.app/).
-- [Building an Algorithmic Feedback Pipeline](./feedback-examples/algorithmic-feedback/algorithmic_feedback.ipynb): automate feedback metrics for advanced monitoring and performance tuning.
+- [Building an Algorithmic Feedback Pipeline](./feedback-examples/algorithmic-feedback/algorithmic_feedback.ipynb): automate feedback metrics for advanced monitoring and performance tuning. This lets you evaluate production runs as a batch job.
+- [Real-time Automated Feedback](./feedback-examples/algorithmic-feedback/algorithmic_feedback.ipynb): automatically generate feedback metrics for every run using an async callback. This lets you evaluate production runs in real-time.
 
 ## Exporting data for fine-tuning
 
