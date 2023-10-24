@@ -1,0 +1,10 @@
+langchain>=0.0.321
+streamlit>=1.27
+langsmith>=0.0.49
+openai
+anthropic
+# For the retriever
+tiktoken
+html2text
+chromadb
+bs4
