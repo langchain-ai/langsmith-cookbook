@@ -46,6 +46,8 @@ ENVIRONMENT=dev python -m streamlit run app.py
 
 This will spin up the local streamlit application. Try saying hello and clicking the trace URL!
 
+![trace url](./img/trace_url_concise.png)
+
 ## Conclusion
 
 This completes the tutorial! Displaying URLs inline is an easy way to avoid having to search through your project to replay or analyze a run. 
