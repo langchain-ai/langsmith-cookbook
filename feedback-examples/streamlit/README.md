@@ -1,5 +1,8 @@
 # Collect User Feedback in Streamlit
 
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/blob/master/./feedback-examples/streamlit/README.md)
+
+
 In this example, you will create a ChatGPT-like web app in Streamlit that supports streaming, custom instructions, app feedback, and more. The final app will look like the following:
 
 <!-- markdown-link-check-disable -->

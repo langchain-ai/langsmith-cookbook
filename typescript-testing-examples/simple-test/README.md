@@ -1,5 +1,8 @@
 # Logging Assertions as Feedback
 
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/blob/master/./typescript-testing-examples/simple-test/README.md)
+
+
 This walkthrough shows a lightweight way to begin using LangSmith feedback in TypeScript, without having to change many lines of code
 in your existing tests. It does not incorporate LangSmith datasets, and so you do not get the benefits of row-level comparisons, performance and chain tracking over a dataset, or other future analytical functionality. For information on how to evaluate your JS chains over a dataset, check out the [Evaluating JS Chains in Python](../eval-in-python/) walkthrough in this repo.
 

@@ -1,5 +1,8 @@
 # Evaluating JS Chains in Python
 
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/blob/master/./typescript-testing-examples/eval-in-python/README.md)
+
+
 This walkthrough is directed towards anyone using the LangChainJS package who wants to take advantage of LangSmith's datasets
 and evaluation tooling. It applies the techniques discussed in the [Evaluating Existing Runs](../../testing-examples/evaluate-existing-test-project/evaluate_runs.ipynb) walkthrough
 using a two-step process:
