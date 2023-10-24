@@ -38,7 +38,7 @@ Test and benchmark your LLM systems using methods in these evaluation recipes:
 
 - [Q&A System Correctness](./testing-examples/qa-correctness/qa-correctness.ipynb): evaluate your retrieval-augmented Q&A pipeline end-to-end on a dataset. Iterate, improve, and keep testing.
 - [Evaluating Q&A Systems with Dynamic Data](./testing-examples/dynamic-data/testing_dynamic_data.ipynb): use evaluators that dereference a labels to handle data that changes over time.
-- [RAG Evaluation using Fixed Sources](./testing-examples/using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG pipeline by providing retrieved documents in the dataset
+- [RAG Evaluation using Fixed Sources](./testing-examples/using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG  (retrieval-augmented generation) pipeline by providing retrieved documents in the dataset
 - [Comparison Evals](./testing-examples/comparing-runs/comparing-qa.ipynb): use labeled preference scoring to contrast system versions and determine the most optimal outputs.
 - You can incorporate LangSmith in your existing testing framework:
     - [LangSmith in Pytest](./testing-examples/pytest/) benchmark your chain in pytest and assert aggregate metrics meet the quality bar.
@@ -65,6 +65,8 @@ Harness user [feedback](https://docs.smith.langchain.com/evaluation/capturing-fe
     - You can [check out a deployed demo version here](https://langsmith-cookbook.vercel.app/).
 - [Building an Algorithmic Feedback Pipeline](./feedback-examples/algorithmic-feedback/algorithmic_feedback.ipynb): automate feedback metrics for advanced monitoring and performance tuning. This lets you evaluate production runs as a batch job.
 - [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb): automatically generate feedback metrics for every run using an async callback. This lets you evaluate production runs in real-time.
+- [Real-time RAG Chat Bot Evaluation](./feedback-examples/streamlit-realtime-feedback/README.md): This Streamlit walkthrough showcases an advanced application of the concepts from the [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb) tutorial. It demonstrates how to automatically check for hallucinations in your RAG chat bot responses against the retrieved documents. For more information on RAG, [check out the LangChain docs](https://python.langchain.com/docs/use_cases/question_answering/).
+
 
 ## Exporting data for fine-tuning
 
