@@ -19,11 +19,11 @@ The `tracing_v2_enabled` callback collects the latest trace in-memory and return
 
 The demo app will look like this:
 
-![streamlit-app](./img/embed-trace-app.gif)
+![streamlit-app](./img/trace_url.gif)
 
 ## Setup
 
-First, let's set up by creating a virtual Python environment, activating it, installing requirements, and setting up the key:
+First, creating a python virtual environment, activate it, and install the project requirements requirements.
 
 ```
 python -m virtualenv .venv
@@ -31,7 +31,8 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt 
 ```
 
-Next, set your API keys. The demo uses Anthropic.
+Next, set your API keys. The demo uses Anthropic (and LangSmith):
+
 ```bash
 export LANGCHAIN_API_KEY=...
 export ANTHROPIC_API_KEY=...
@@ -43,8 +44,7 @@ After setup is done, run the application!
 ENVIRONMENT=dev python -m streamlit run app.py
 ```
 
-This will spin up the local streamlit application. Try saying hello!
-
+This will spin up the local streamlit application. Try saying hello and clicking the trace URL!
 
 ## Conclusion
 
