@@ -1,5 +1,3 @@
-"""Streamlit tutor teaching how to show a trace URL in the app."""
-
 import logging
 
 import langsmith
@@ -17,11 +15,6 @@ st.set_page_config(
 """# Using 🦜🛠️ Trace URLs
 
 Have a chat! When you're done, click the 🛠️ button to see the trace URL."""
-st.sidebar.markdown(
-    """
-# Menu
-"""
-)
 client = langsmith.Client()
 
 
@@ -33,11 +26,10 @@ chain = (
             ("user", "{input}"),
         ]
     )
-    # You can use another model provider, such as anthropc, openai, etc.
+    # You can use another model provider, such as ollama, openai, etc.
     | chat_models.ChatAnthropic(model="claude-instant-1.2", temperature=1)
 )
 
-#### Run the next conversation turn. This chain lacks memory.
 if user_input := st.chat_input(placeholder="Ask me a question!"):
     st.chat_message("user").write(user_input)
     with st.chat_message("assistant", avatar="🦜"):
@@ -51,11 +43,9 @@ if user_input := st.chat_input(placeholder="Ask me a question!"):
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
             url = cb.get_run_url()
-            cols = st.columns(2)
-            # Useful for when you want to debug or annotating runs
-            # for eval/training while you're developing
-            with cols[0]:
-                st.markdown(
-                    f'<a href="{url}" target="_blank">Latest Trace: 🛠️</a>',
-                    unsafe_allow_html=True,
-                )
+    # Useful for when you want to debug or annotating runs
+    # for eval/training while you're developing
+    st.markdown(
+        f'<a href="{url}" target="_blank">Latest Trace: 🛠️</a>',
+        unsafe_allow_html=True,
+    )
