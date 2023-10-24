@@ -1,6 +1,6 @@
 # Unit Testing with Pytest
 
-[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/blob/master/./testing-examples/pytest-ut/README.md)
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/tree/main/./testing-examples/pytest-ut/README.md)
 
 
 This tutorial shows how to use LangSmith datasets to write unit tests directly in your pytest test suite. This lets you write assertions on the chain output in a familiar pythonic way while still
