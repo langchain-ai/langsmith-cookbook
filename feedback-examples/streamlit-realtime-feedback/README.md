@@ -3,8 +3,9 @@
 This tutorial shows how to catch model hallucinations in production using a custom run evaluator. This is a great way to
 monitor the behavior of your RAG application to make sure the information in the final response is helpful and concordant with the retrieved knowledge. The technique outlined below enables non-blocking, online evaluation. This is appropriate for when you want up-to-date metrics on your application but do not want to further degrade the user experience whenever the bot is receiving low scores.
 
-To do this, we create custom evaluator(s) (in our case, they both wrap [Scoring Evaluators](https://python.langchain.com/docs/guides/evaluation/string/scoring_eval_chain)) and register them as callbacks using the [EvaluatorCallbackHandler](https://api.python.langchain.com/en/latest/callbacks/langchain.callbacks.tracers.evaluation.EvaluatorCallbackHandler.html). The callback handler runs the evaluators in the background whenever your application is triggered to avoid interrupting the main program.
+To do this, we create custom evaluator(s) (in our case, they both wrap [Scoring Evaluators](https://python.langchain.com/docs/guides/evaluation/string/scoring_eval_chain)) and register them as callbacks using the [EvaluatorCallbackHandler](https://api.python.langchain.com/en/latest/callbacks/langchain.callbacks.tracers.evaluation.EvaluatorCallbackHandler.html). The callback handler runs the evaluators in the background whenever your application is triggered to avoid interrupting the main program. You can view the feedback in the resulting run traces, as shown in the followin animation:
 
+![Online Feedback Animation](./img/hallucination_feedback.gif)
 
 Below is a quick walkthrough.
 
@@ -148,3 +149,8 @@ CHAIN.stream(
 ```
 
 The evaluations will be run on an separate thread whenever the execution completes to avoid adding latency to the program and to ensure that any errors that occur during evaluation do not interrupt the program.
+
+
+## Conclusion
+
+Congratulations! Through this tutorial, you've learned how to set up real-time evaluation for your RAG chat bot to monitor its behavior in a production setting. By creating custom evaluators and registering them using the EvaluatorCallbackHandler, you have established a system to catch model hallucinations and ensure the information provided in the responses aligns well with the retrieved knowledge. This is particularly helpful when you want to maintain the quality of user interactions by having continuous, online feedback on your chat bot's performance without interrupting the main program. With the evaluators running in the background, you can now gain insights into the relevance and faithfulness of the chat bot's responses, making it a useful tool for further improvements.
