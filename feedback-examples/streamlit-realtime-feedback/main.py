@@ -71,11 +71,11 @@ class FaithfulnessEvaluator(RunEvaluator):
             "labeled_score_string",
             criteria={
                 "faithfulness": """
-Score 1: The answer directly contradicts the reference docs.
-Score 3: The answer mentions a topic from the reference docs, but veers off-topic or misinterprets the source.
-Score 5: The answer addresses the reference docs but includes some inaccuracies or misconceptions.
-Score 7: The answer aligns with the reference but has minor errors or omissions.
-Score 10: The answer is completely accurate and aligns perfectly with the reference docs."""
+Score 1: The answer directly contradicts the information provided in the reference docs.
+Score 3: The answer contains a mix of correct information from the reference docs and incorrect or unverifiable information not found in the docs.
+Score 5: The answer is mostly aligned with the reference docs but includes extra information that, while not contradictory, is not verified by the docs.
+Score 7: The answer aligns well with the reference docs but includes minor, commonly accepted facts not found in the docs.
+Score 10: The answer perfectly aligns with and is fully entailed by the reference docs, with no extra information."""
             },
             normalize_by=10,
         )
@@ -87,7 +87,7 @@ Score 10: The answer is completely accurate and aligns perfectly with the refere
             retrieve_docs_run = [
                 run for run in run.child_runs if run.name == "RetrieveDocs"
             ][0]
-            docs_string = retrieve_docs_run.outputs["documents"]
+            docs_string = f'Reference docs:\n<DOCS>\n{retrieve_docs_run.outputs["documents"]}</DOCS>'
             input_query = run.inputs["query"]
             prediction = run.outputs["output"]
             result = self.evaluator.evaluate_strings(

@@ -1,4 +1,4 @@
-# Realtime Hallucination Evaluation
+# Realtime Evaluation
 
 This tutorial shows how to catch model hallucinations in production using a custom run evaluator. This is a great way to
 monitor the behavior of your RAG application to make sure the information in the final response is concordant with the retrieved knowledge.
@@ -15,9 +15,9 @@ The requirements for this streamlit application are listed in the [requirements.
 
 (Recommended) First, create and activate virtual environment.
 ```bash
-python -m pip -U virtualenv pip
+python -m pip install -U virtualenv pip
 python -m virtualenv .venv
-. .venv
+. .venv/bin/activate
 ```
 
 Then install the app requirements.
@@ -39,7 +39,9 @@ Finally, start the streamlit application.
 python -m streamlit run main.py
 ```
 
-You can then ask the chat bot questions about LangSmith. Click the "View trace in 🦜🛠️ LangSmith" links after it responds to view the resulting trace. The evaluation feedback will be automatically populated for the run showing the predicted score.
+You can then ask the chat bot questions about LangSmith. Click the "View trace in 🦜🛠️ LangSmith" links after it responds to view the resulting trace. The evaluation feedback will be automatically populated for the run showing the predicted score. An example can be seen below or at [this link](https://smith.langchain.com/public/8e161a04-9a88-4b11-9569-2e627b7835c4/r).
+
+![Full run](./img/full_view.png)
 
 
 ## Evaluator definitions
@@ -76,23 +78,26 @@ class RelevanceEvaluator(RunEvaluator):
 
 The evaluator selects the appropriate keys from the trace inputs and outputs and formats them in a way that is useful for the wrapped evaluator. One situation where this is useful is for when your bot becomes overly influenced by the content in the retrieved documents (e.g., a form of benign prompt injection). Since this evaluator does not consider the retrieved documents in its grade, it is easier for it to detect the shift. 
 
+An example run of this evaluator run can be viewed [here](https://smith.langchain.com/public/e09d1d38-a480-4997-8c71-960c3372e438/r):
+
+![Relevance Evaluator Trace](./img/relevance_trace.png)
+
 The second evaluator is a "faithfulness" evaluator, which penalizes cases where the chat bot includes contradictorhy or off-topic information in its response.
 
 ```python
-
 class FaithfulnessEvaluator(RunEvaluator):
     def __init__(self):
         self.evaluator = load_evaluator(
             "labeled_score_string",
             criteria={
                 "faithfulness": """
-Score 1: The answer directly contradicts the reference docs.
-Score 3: The answer mentions a topic from the reference docs, but veers off-topic or misinterprets the source.
-Score 5: The answer addresses the reference docs but includes some inaccuracies or misconceptions.
-Score 7: The answer aligns with the reference but has minor errors or omissions.
-Score 10: The answer is completely accurate and aligns perfectly with the reference docs."""
+Score 1: The answer directly contradicts the information provided in the reference docs.
+Score 3: The answer contains a mix of correct information from the reference docs and incorrect or unverifiable information not found in the docs.
+Score 5: The answer is mostly aligned with the reference docs but includes extra information that, while not contradictory, is not verified by the docs.
+Score 7: The answer aligns well with the reference docs but includes minor, commonly accepted facts not found in the docs.
+Score 10: The answer perfectly aligns with and is fully entailed by the reference docs, with no extra information."""
             },
-            normalize_by=10, # convert scores to a scale from 0 to 1
+            normalize_by=10,
         )
 
     def evaluate_run(
@@ -102,7 +107,7 @@ Score 10: The answer is completely accurate and aligns perfectly with the refere
             retrieve_docs_run = [
                 run for run in run.child_runs if run.name == "RetrieveDocs"
             ][0]
-            docs_string = retrieve_docs_run.outputs["documents"]
+            docs_string = f'Reference docs:\n<DOCS>\n{retrieve_docs_run.outputs["documents"]}</DOCS>'
             input_query = run.inputs["query"]
             prediction = run.outputs["output"]
             result = self.evaluator.evaluate_strings(
@@ -117,7 +122,13 @@ Score 10: The answer is completely accurate and aligns perfectly with the refere
             return EvaluationResult(key="faithfulness", score=None, comment=repr(e))
 ```
 
-Since the retriever isn't called at the top level of the trace, this evaluator selects the appropriate run (span) by selecting the configured name of that component. It then takes the formatted string containing the documents' page content, user query, and final chat bot response and passes these to the evalutor for grading.
+Since the retriever isn't called at the top level of the trace, this evaluator selects the appropriate run (span) by selecting the configured name of that component (represented by the "RetrieveDocs" chain in the trace image below). It then takes the formatted string containing the documents' page content, user query, and final chat bot response and passes these to the evalutor for grading.
+
+![Retrieve Docs](./img/retrieve_docs.png)
+
+An example run of this evaluator run can be viewed [here](https://smith.langchain.com/public/bf8d4bb8-3021-43a2-8497-126d681d7c2f/r):
+
+![Faithfulness Evaluator Trace](./img/faithfulness_trace.png)
 
 
 ## Use in LangChain
