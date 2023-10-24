@@ -25,10 +25,11 @@ Then install the app requirements.
 python -m pip install -r requirements.txt
 ```
 
-Next, configure your API keys for LangSmith and the LLM provider (we are using OpenAI here).
+Next, configure your API keys for LangSmith and the LLM provider (we are using OpenAI for the evaluator LLM here and Anthropic for the application LLM).
 
 ```bash
 export OPENAI_API_KEY=your-openai-api-key
+export ANTHROPIC_API_KEY=your-anthropic-api-key
 export LANGCHAIN_API_KEY=your-langsmith-api-key
 ```
 
