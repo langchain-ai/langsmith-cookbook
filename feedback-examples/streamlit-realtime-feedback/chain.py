@@ -6,17 +6,16 @@ from langchain.chat_models import ChatAnthropic
 from langchain.document_loaders import RecursiveUrlLoader
 from langchain.document_transformers import Html2TextTransformer
 from langchain.embeddings import OpenAIEmbeddings
-from langchain.memory import (ConversationBufferMemory,
-                              StreamlitChatMessageHistory)
+from langchain.memory import ConversationBufferMemory, StreamlitChatMessageHistory
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.retrievers.multi_vector import MultiVectorRetriever
 from langchain.schema import BaseRetriever
 from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnableParallel
 from langchain.storage import InMemoryStore
-from langchain.text_splitter import (RecursiveCharacterTextSplitter,
-                                     TokenTextSplitter)
+from langchain.text_splitter import RecursiveCharacterTextSplitter, TokenTextSplitter
 from langchain.vectorstores.chroma import Chroma
+from langchain.chains import RetrievalQA
 
 
 @st.cache_resource
@@ -71,29 +70,44 @@ MEMORY = ConversationBufferMemory(
 )
 
 RETRIEVER = get_retriever()
-CHAIN = (
-    RunnableParallel(
-        {
-            "documents": itemgetter("query")
-            | RETRIEVER
-            | (lambda docs: "\n\n".join(doc.page_content for doc in docs)),
-            "query": itemgetter("query"),
-            "chat_history": itemgetter("chat_history"),
-        }
-    ).with_config(run_name="RetrieveDocs")
-    | ChatPromptTemplate.from_messages(
-        [
-            (
-                "system",
-                "You are a helpful assistant. Respond to the user question using the"
-                " following retrieved documents:\n<DOCUMENTS>\n{documents}</DOCUMENTS>\n"
-                "If you do not know the answer, you can say 'I don't know'"
-                " or 'I'm not sure",
-            ),
-            MessagesPlaceholder(variable_name="chat_history"),
-            ("user", "{query}"),
-        ]
-    )
-    | ChatAnthropic(model="claude-instant-1.2", temperature=1)
-    | StrOutputParser()
-)
+
+
+def get_chain(chain_type: str):
+    if chain_type == "runnable":
+        return (
+            RunnableParallel(
+                {
+                    "documents": itemgetter("query")
+                    | RETRIEVER
+                    | (lambda docs: "\n\n".join(doc.page_content for doc in docs)),
+                    "query": itemgetter("query"),
+                    "chat_history": itemgetter("chat_history"),
+                }
+            ).with_config(run_name="RetrieveDocs")
+            | ChatPromptTemplate.from_messages(
+                [
+                    (
+                        "system",
+                        "You are a helpful assistant. Respond to the user question using the"
+                        " following retrieved documents:\n<DOCUMENTS>\n{documents}</DOCUMENTS>\n"
+                        "If you do not know the answer, you can say 'I don't know'"
+                        " or 'I'm not sure",
+                    ),
+                    MessagesPlaceholder(variable_name="chat_history"),
+                    ("user", "{query}"),
+                ]
+            )
+            | ChatAnthropic(model="claude-instant-1.2", temperature=1)
+            | StrOutputParser()
+        )
+    elif chain_type == "RetrievalQA":
+        return RetrievalQA.from_chain_type(
+            llm=ChatAnthropic(model="claude-instant-1.2", temperature=1),
+            chain_type="stuff",
+            retriever=RETRIEVER,
+            memory=MEMORY,
+        ) | (lambda x: x["result"])
+    else:
+        raise NotImplementedError(
+            f"Chain type {chain_type} not implemented. Try 'runnable' or 'RetrievalQA'"
+        )
