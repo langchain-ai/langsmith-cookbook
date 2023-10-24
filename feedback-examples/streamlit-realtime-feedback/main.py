@@ -6,10 +6,9 @@ import streamlit as st
 st.set_page_config(
     page_title="Realtime Evaluation of Production Runs",
     page_icon="🦜️️🛠️",
-    initial_sidebar_state="collapsed",
 )
 
-from chain import CHAIN, MEMORY
+from chain import MEMORY, get_chain
 from langchain.callbacks import tracing_v2_enabled
 from langchain.callbacks.tracers.evaluation import EvaluatorCallbackHandler
 from langchain.evaluation import load_evaluator
@@ -33,6 +32,13 @@ st.subheader(
 
 if st.sidebar.button("Clear message history"):
     MEMORY.clear()
+chain_type = st.sidebar.radio(
+    "Chain Type",
+    ["runnable", "RetrievalQA"],
+    help="Choose between a runnable chain and an older RetrievalQA chain.",
+)
+
+CHAIN = get_chain(chain_type)
 
 messages = st.session_state.get("langchain_messages", [])
 for msg in messages:
@@ -80,14 +86,27 @@ Score 10: The answer perfectly aligns with and is fully entailed by the referenc
             normalize_by=10,
         )
 
+    @staticmethod
+    def _get_retrieved_docs(run: Run) -> str:
+        # This assumes there is only one retriver in your chain.
+        # To select more precisely, name your retrieval chain
+        # using with_config(name="my_unique_name") and look up
+        # by run.name
+        runs = [run]
+        while runs:
+            run = runs.pop()
+            if run.run_type == "retriever":
+                return run.outputs["documents"]
+            if run.child_runs:
+                runs.extend(run.child_runs)
+        return ""
+
     def evaluate_run(
         self, run: Run, example: Optional[Example] = None
     ) -> EvaluationResult:
         try:
-            retrieve_docs_run = [
-                run for run in run.child_runs if run.name == "RetrieveDocs"
-            ][0]
-            docs_string = f'Reference docs:\n<DOCS>\n{retrieve_docs_run.outputs["documents"]}</DOCS>'
+            docs_string = self._get_retrieved_docs(run)
+            docs_string = f"Reference docs:\n<DOCS>\n{docs_string}\n</DOCS>\n\n"
             input_query = run.inputs["query"]
             prediction = run.outputs["output"]
             result = self.evaluator.evaluate_strings(
@@ -124,6 +143,7 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
                     "callbacks": [evaluation_callback],
                 },
             ):
+                print(chunk)
                 full_response += chunk
                 message_placeholder.markdown(full_response + "▌")
             MEMORY.save_context(input_dict, {"output": full_response})
