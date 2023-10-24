@@ -1,4 +1,4 @@
-# Adding Trace Links
+# Display Trace Links
 
 When developing, adding a trace link in your UI can help you save time debugging.
 
