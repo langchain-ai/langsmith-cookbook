@@ -1,5 +1,8 @@
 # Display Trace Links
 
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/blob/master/./tracing-examples/show-trace-url-streamlit/README.md)
+
+
 When developing, adding a trace link in your UI can help you save time debugging.
 
 In this walkthrough, you will share a link to your LangSmith trace using the following pattern:
