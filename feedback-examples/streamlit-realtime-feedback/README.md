@@ -1,6 +1,6 @@
 # Real-time RAG Chat Bot Evaluation
 
-[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/blob/master/./feedback-examples/streamlit-realtime-feedback/README.md)
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/tree/main/./feedback-examples/streamlit-realtime-feedback/README.md)
 
 
 This tutorial shows how to catch model hallucinations in production using a custom run evaluator. This is a great way to

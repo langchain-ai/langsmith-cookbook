@@ -1,6 +1,6 @@
 # Evaluating JS Chains in Python
 
-[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/blob/master/./typescript-testing-examples/eval-in-python/README.md)
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/tree/main/./typescript-testing-examples/eval-in-python/README.md)
 
 
 This walkthrough is directed towards anyone using the LangChainJS package who wants to take advantage of LangSmith's datasets

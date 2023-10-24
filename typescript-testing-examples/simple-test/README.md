@@ -1,6 +1,6 @@
 # Logging Assertions as Feedback
 
-[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/blob/master/./typescript-testing-examples/simple-test/README.md)
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/tree/main/./typescript-testing-examples/simple-test/README.md)
 
 
 This walkthrough shows a lightweight way to begin using LangSmith feedback in TypeScript, without having to change many lines of code
