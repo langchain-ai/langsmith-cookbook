@@ -9,6 +9,7 @@ sidebar_position: 4
 - [RAG Evaluation using Fixed Sources](./using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG pipeline by providing retrieved documents in the dataset.
 - [Evaluating an Agent's intermediate steps](./agent_steps/evaluating_agents.ipynb): compare the sequence of actions taken by an agent to an expected trajectory to grade effective tool use.
 - [Evaluating a Conversational Chat Bot](./chat-single-turn/chat_evaluation_single_turn.ipynb): Evaluate chatbots within multi-turn conversations by treating each data point as an individual dialogue turn. This guide shows how to set up a multi-turn conversation dataset and evaluate a simple chat bot on it.
+- [Evaluating an Extraction Chain](./data-extraction/contract-extraction.ipynb): measure the similarity between the extracted structured content and structured labels using LangChain's json evaluators.
 - [Comparison Evals](./comparing-runs/comparing-qa.ipynb): use labeled preference scoring to contrast system versions and determine the most optimal outputs.
 - You can incorporate LangSmith in your existing testing framework:
     - [LangSmith in Pytest](./pytest/) benchmark your chain in pytest and assert aggregate metrics meet the quality bar.
