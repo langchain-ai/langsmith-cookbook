@@ -1,5 +1,8 @@
 # LangSmith in Pytest
 
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/tree/main/./testing-examples/pytest/README.md)
+
+
 This tutorial shows how to integrate LangSmith within your pytest test suite. You can test _a lot_ of functionality within your existing testing framework. LangSmith's tracing, eval helpers, and datasets can be incorporated within your existing test suite so you can take advantage of its tracing and feedback functionality. For a broader discussion on when it makes sense to use LangSmith or similar tooling, as well as different levels of integration with LangSmith, see the [Discussion](#discussion) section below.
 
 Now let's get started!

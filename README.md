@@ -18,6 +18,7 @@ Tracing allows for seamless debugging and improvement of your LLM applications. 
 - [REST API](./tracing-examples/rest/rest.ipynb): get acquainted with the REST API's features for logging LLM and chat model runs, and understand nested runs. The run logging spec can be found in the [LangSmith SDK repository](https://github.com/langchain-ai/langsmith-sdk/blob/main/openapi/openapi.yaml).
 - [Customizing Run Names](./tracing-examples/runnable-naming/run-naming.ipynb): improve UI clarity by assigning bespoke names to LangSmith chain runs—includes examples for chains, lambda functions, and agents.
 - [Tracing Nested Calls within Tools](./tracing-examples/nesting-tools/nest_runs_within_tools.ipynb): include all nested tool subcalls in a single trace by using `run_manager.get_child()` and passing to the child `callbacks`
+- [Display Trace Links](./tracing-examples/show-trace-url-streamlit/README.md): add trace links to your app to speed up development. This is useful when prototyping your application in its unique UI, since it lets you quickly see its execution flow, add feedback to a run, or add the run to a dataset.
 
 ## LangChain Hub
 
@@ -37,7 +38,9 @@ Test and benchmark your LLM systems using methods in these evaluation recipes:
 
 - [Q&A System Correctness](./testing-examples/qa-correctness/qa-correctness.ipynb): evaluate your retrieval-augmented Q&A pipeline end-to-end on a dataset. Iterate, improve, and keep testing.
 - [Evaluating Q&A Systems with Dynamic Data](./testing-examples/dynamic-data/testing_dynamic_data.ipynb): use evaluators that dereference a labels to handle data that changes over time.
-- [RAG Evaluation using Fixed Sources](./testing-examples/using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG pipeline by providing retrieved documents in the dataset
+- [RAG Evaluation using Fixed Sources](./testing-examples/using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG  (retrieval-augmented generation) pipeline by providing retrieved documents in the dataset
+- [Evaluating an Agent's intermediate steps](./testing-examples/agent_steps/evaluating_agents.ipynb): compare the sequence of actions taken by an agent to an expected trajectory to grade effective tool use.
+- [Evaluating a Conversational Chat Bot](./testing-examples/chat-single-turn/chat_evaluation_single_turn.ipynb): Evaluate chatbots within multi-turn conversations by treating each data point as an individual dialogue turn. This guide shows how to set up a multi-turn conversation dataset and evaluate a simple chat bot on it.
 - [Evaluating an Extraction Chain](./testing-examples/data-extraction/contract-extraction.ipynb): measure the similarity between the extracted structured content and structured labels using LangChain's json evaluators.
 - [Comparison Evals](./testing-examples/comparing-runs/comparing-qa.ipynb): use labeled preference scoring to contrast system versions and determine the most optimal outputs.
 - You can incorporate LangSmith in your existing testing framework:
@@ -65,6 +68,8 @@ Harness user [feedback](https://docs.smith.langchain.com/evaluation/capturing-fe
     - You can [check out a deployed demo version here](https://langsmith-cookbook.vercel.app/).
 - [Building an Algorithmic Feedback Pipeline](./feedback-examples/algorithmic-feedback/algorithmic_feedback.ipynb): automate feedback metrics for advanced monitoring and performance tuning. This lets you evaluate production runs as a batch job.
 - [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb): automatically generate feedback metrics for every run using an async callback. This lets you evaluate production runs in real-time.
+- [Real-time RAG Chat Bot Evaluation](./feedback-examples/streamlit-realtime-feedback/README.md): This Streamlit walkthrough showcases an advanced application of the concepts from the [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb) tutorial. It demonstrates how to automatically check for hallucinations in your RAG chat bot responses against the retrieved documents. For more information on RAG, [check out the LangChain docs](https://python.langchain.com/docs/use_cases/question_answering/).
+
 
 ## Exporting data for fine-tuning
 
