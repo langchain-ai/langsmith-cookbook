@@ -1,0 +1,7 @@
+langchain>=0.0.331
+streamlit>=1.27
+langsmith>=0.0.60
+streamlit-feedback==0.1.2
+openai
+# For the retriever
+duckduckgo-search
