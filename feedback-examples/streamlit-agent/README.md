@@ -1,5 +1,8 @@
 # LangChain Agents with LangSmith
 
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/tree/main/./feedback-examples/streamlit-agent/README.md)
+
+
 This streamlit walkthrough shows how to instrument a LangChain agent with tracing and feedback. It highlights the following functionality:
 - Implementing an agent with a web search tool (Duck Duck Go)
 - Capturing explicit user feedback in LangSmith
