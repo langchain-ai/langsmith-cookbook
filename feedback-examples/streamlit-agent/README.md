@@ -5,6 +5,10 @@ This streamlit walkthrough shows how to instrument a LangChain agent with tracin
 - Capturing explicit user feedback in LangSmith
 - Linking to the run trace for debugging
 
+Below is an example:
+
+[![Demo Video of Agent](./img/streamlit-agent.gif)](https://smith.langchain.com/public/78a96d44-2b76-48a5-8fda-e434ea504046/r)
+
 
 ## Prerequisites
 
