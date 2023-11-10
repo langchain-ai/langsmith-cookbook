@@ -13,6 +13,7 @@ from langchain.callbacks.streamlit import StreamlitCallbackHandler
 from langchain.memory import (ConversationBufferMemory,
                               StreamlitChatMessageHistory)
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.pydantic_v1 import BaseModel, Field
 from langchain.tools.ddg_search.tool import DuckDuckGoSearchResults
 from langchain.tools.render import format_tool_to_openai_function
 from langsmith import Client
@@ -32,9 +33,13 @@ st.subheader("🦜🛠️ Ask the bot some questions")
 
 llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
 
+class DDGInput(BaseModel):
+    query: str = Field(description="search query to look up")
+
 tools = [
     DuckDuckGoSearchResults(
-        name="duck_duck_go"
+        name="duck_duck_go",
+        args_schema=DDGInput
     ),  # General internet search using DuckDuckGo
 ]
 
