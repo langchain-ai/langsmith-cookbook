@@ -26,10 +26,11 @@ jobs:
         run: |
           cd langsmith-docs/subdirectories/langsmith-cookbook
           git pull origin main
+          cd ../../../ 
           
       - name: Commit changes
         run: |
-          cd ../..
+          cd langsmith-docs 
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add subdirectories/langsmith-cookbook
