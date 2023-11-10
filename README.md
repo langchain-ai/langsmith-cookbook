@@ -69,6 +69,7 @@ Harness user [feedback](https://docs.smith.langchain.com/evaluation/capturing-fe
 - [Building an Algorithmic Feedback Pipeline](./feedback-examples/algorithmic-feedback/algorithmic_feedback.ipynb): automate feedback metrics for advanced monitoring and performance tuning. This lets you evaluate production runs as a batch job.
 - [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb): automatically generate feedback metrics for every run using an async callback. This lets you evaluate production runs in real-time.
 - [Real-time RAG Chat Bot Evaluation](./feedback-examples/streamlit-realtime-feedback/README.md): This Streamlit walkthrough showcases an advanced application of the concepts from the [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb) tutorial. It demonstrates how to automatically check for hallucinations in your RAG chat bot responses against the retrieved documents. For more information on RAG, [check out the LangChain docs](https://python.langchain.com/docs/use_cases/question_answering/).
+- [LangChain Agents with LangSmith](./feedback-examples/streamlit-agent/README.md) instrument a LangChain web-search agent with tracing and human feedback.
 
 
 ## Exporting data for fine-tuning

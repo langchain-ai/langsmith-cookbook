@@ -1,3 +1,4 @@
+"""Example implementation of a LangChain Agent."""
 import logging
 from datetime import datetime
 from functools import partial
@@ -5,13 +6,13 @@ from functools import partial
 import streamlit as st
 from langchain.agents import AgentExecutor
 from langchain.agents.format_scratchpad import format_to_openai_functions
-from langchain.agents.output_parsers.openai_functions import \
-    OpenAIFunctionsAgentOutputParser
+from langchain.agents.output_parsers.openai_functions import (
+    OpenAIFunctionsAgentOutputParser,
+)
 from langchain.callbacks.manager import tracing_v2_enabled
 from langchain.chat_models import ChatOpenAI
 from langchain.callbacks.streamlit import StreamlitCallbackHandler
-from langchain.memory import (ConversationBufferMemory,
-                              StreamlitChatMessageHistory)
+from langchain.memory import ConversationBufferMemory, StreamlitChatMessageHistory
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.pydantic_v1 import BaseModel, Field
 from langchain.tools.ddg_search.tool import DuckDuckGoSearchResults
@@ -33,13 +34,14 @@ st.subheader("🦜🛠️ Ask the bot some questions")
 
 llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
 
+
 class DDGInput(BaseModel):
     query: str = Field(description="search query to look up")
 
+
 tools = [
     DuckDuckGoSearchResults(
-        name="duck_duck_go",
-        args_schema=DDGInput
+        name="duck_duck_go", args_schema=DDGInput
     ),  # General internet search using DuckDuckGo
 ]
 
@@ -90,7 +92,7 @@ if st.sidebar.button("Clear message history"):
 
 feedback_kwargs = {
     "feedback_type": "thumbs",
-    "optional_text_label": "Rate this response in LangSmiths",
+    "optional_text_label": "Rate this response in LangSmith",
 }
 if "feedback_key" not in st.session_state:
     st.session_state.feedback_key = 0
@@ -141,10 +143,7 @@ if prompt := st.chat_input(placeholder="Ask me a question!"):
         with tracing_v2_enabled("langsmith-streamlit-agent") as cb:
             for chunk in agent_executor.stream(
                 input_dict,
-                config={
-                    "tags": ["Streamlit Agent"],
-                    "callbacks": [st_callback]
-                },
+                config={"tags": ["Streamlit Agent"], "callbacks": [st_callback]},
             ):
                 full_response += chunk["output"]
                 message_placeholder.markdown(full_response + "▌")
