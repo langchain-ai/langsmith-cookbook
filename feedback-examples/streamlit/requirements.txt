@@ -3,3 +3,4 @@ streamlit>=1.27
 langsmith>=0.0.49
 openai
 anthropic
+streamlit-feedback
