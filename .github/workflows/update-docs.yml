@@ -26,6 +26,7 @@ jobs:
         run: |
           cd langsmith-docs/subdirectories/langsmith-cookbook
           git pull origin main
+          git rev-parse HEAD
           cd ../../../ 
           
       - name: Commit changes
