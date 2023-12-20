@@ -1,5 +1,5 @@
 ---
-sidebar_label: EDA
+sidebar_label: Exploratory Data Analysis
 sidebar_position: 7 
 ---
 
