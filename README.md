@@ -54,8 +54,14 @@ Test and benchmark your LLM systems using methods in these evaluation recipes:
 
 Incorporate LangSmith into your TS/JS testing and evaluation workflow:
 
-- [Evaluating JS Chains in Python](./typescript-testing-examples/eval-in-python/): evaluate JS chains using custom python evaluators, adapting methods from the "[Evaluating Existing Runs](./testing-examples/evaluate-existing-test-project/evaluate_runs.ipynb)" guide.
-- [Logging Assertions as Feedback](./typescript-testing-examples/simple-test/): convert CI test assertions into LangSmith feedback, enhancing trace visibility with minimal modifications.
+- [Vision-based Evals in JavaScript](./typescript-testing-examples/vision-evals/vision-evals.ipynb): evaluate AI-generated UIs using GPT-4V
+
+
+We are working to add more JS examples soon. In the meantime, check out the JS eval quickstart the following guides:
+
+- [JS LangSmith walkthrough](https://js.langchain.com/docs/guides/langsmith_evaluation)
+- [Evaluation quickstart](https://docs.smith.langchain.com/evaluation/quickstart)
+
 
 ## Using Feedback
 
