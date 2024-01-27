@@ -6,5 +6,11 @@ sidebar_position: 5
 
 Incorporate LangSmith into your TS/JS testing and evaluation workflow:
 
-- [Evaluating JS Chains in Python](./eval-in-python/): evaluate JS chains using custom python evaluators, adapting methods from the "[Evaluating Existing Runs](../testing-examples/evaluate-existing-test-project/evaluate_runs.ipynb)" guide.
-- [Logging Assertions as Feedback](./simple-test/): convert CI test assertions into LangSmith feedback, enhancing trace visibility with minimal modifications.
+- [Vision-based Evals in JavaScript](./vision-evals/): evaluate AI-generated UIs using GPT-4V
+
+
+We are working to add more JS examples soon. In the meantime, check out the JS eval quickstart the following guides:
+
+- [JS LangSmith walkthrough](https://js.langchain.com/docs/guides/langsmith_evaluation)
+- [Evaluation quickstart](https://docs.smith.langchain.com/evaluation/quickstart)
+
