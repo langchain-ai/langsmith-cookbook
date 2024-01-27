@@ -31,11 +31,12 @@ jobs:
           
       - name: Commit changes
         run: |
-          cd langsmith-docs 
+          cd langsmith-docs
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add subdirectories/langsmith-cookbook
-          git commit -m "Update langsmith-cookbook submodule to latest commit"
+          git diff --staged --quiet || git commit -m "Update langsmith-cookbook submodule to latest commit"
+        
 
       - name: Push changes to a new branch
         run: |
