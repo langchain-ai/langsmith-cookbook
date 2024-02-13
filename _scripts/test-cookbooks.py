@@ -8,11 +8,12 @@ import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
 from langsmith import Client
 
-filter_list = [
+filter_list = {
     "llm_run_etl.ipynb",
     "lilac.ipynb",
     "fine-tuning-on-chat-runs.ipynb",
-]
+    "vision-evals.ipynb",
+}
 API_KEY_REGEX = r'os\.environ\["LANGCHAIN_API_KEY"\] = [\"\']([^\"\']+)["\']'
 HUB_API_KEY_REGEX = r'os\.environ\["LANGCHAIN_HUB_API_KEY"\] = [\"\']([^\"\']+)["\']'
 ENDPOINT_REGEX = r'os\.environ\["LANGCHAIN_ENDPOINT"\] = [\"\']([^\"\']+)["\']'
@@ -20,9 +21,10 @@ HUB_API_URL_REGEX = r'os\.environ\["LANGCHAIN_HUB_API_URL"\] = [\"\']([^\"\']+)[
 PROJECT_ENV_REGEX = r'os\.environ\["LANGCHAIN_PROJECT"\] = [\"\']([^\"\']+)["\']'
 PROJECT_NAME_REGEX = r'YOUR PROJECT NAME'
 HUB_HANDLE_REGEX = r'YOUR HUB HANDLE'
+OPENAI_API_KEY_REGEX = r'os\.environ\["OPENAI_API_KEY"\] = [\"\']([^\"\']+)["\']'
 
 
-def _run_notebook(filename, api_key, endpoint, project, hub_api_key, hub_api_url, hub_handle):
+def _run_notebook(filename, api_key, endpoint, project, hub_api_key, hub_api_url, hub_handle, openai_api_key):
     """
     Execute a notebook via nbconvert and collect output. Also replace important env variables
     """
@@ -56,6 +58,10 @@ def _run_notebook(filename, api_key, endpoint, project, hub_api_key, hub_api_url
                 cell.source = re.sub(
                     HUB_HANDLE_REGEX, hub_handle, cell.source
                 )
+            if re.search(OPENAI_API_KEY_REGEX, cell.source):
+                cell.source = re.sub(
+                    OPENAI_API_KEY_REGEX, f"os.environ[\"OPENAI_API_KEY\"] = '{openai_api_key}'", cell.source
+                )
     ep = ExecutePreprocessor(timeout=1000, allow_errors=False)
 
     nb_out = ep.preprocess(nb_in)
@@ -87,6 +93,7 @@ parser.add_argument("-a", "--api-key", help="API key to use")
 parser.add_argument("-ha", "--hub-api-key", help="Hub API key to use", default="")
 parser.add_argument("-n", "--notebook", help="Notebook to run", default="*")
 parser.add_argument("-hh", "--hub-handle", help="Hub handle", default="")
+parser.add_argument("-oai", "--openai-api-key", help="OpenAI API key", default=os.environ.get("OPENAI_API_KEY", ""))
 
 new_env = {"LANGCHAIN_TRACING_V2": "true"}
 args = parser.parse_args()
@@ -105,5 +112,5 @@ with set_env(**new_env):
         if file.split("/")[-1] in filter_list:
             print(f"Skipping {file}")
             continue
-        print(f'Running notebook {file.split("/")[-1]}')
-        output = _run_notebook(file, args.api_key, args.endpoint, args.project, args.hub_api_key, args.hub_endpoint, args.hub_handle)
+        print(f'Running notebook {file}')
+        output = _run_notebook(file, args.api_key, args.endpoint, args.project, args.api_key, args.hub_endpoint, args.hub_handle, args.openai_api_key)
