@@ -74,6 +74,8 @@ def _run_notebook(filename, api_key, endpoint, project, hub_api_key, hub_api_url
             print(f"Failed to run notebook {filename} with error {e}. Retrying in {backoff} seconds")
             time.sleep(backoff)
             backoff *= 2
+            if backoff >= 10:
+                raise
 
 
 @contextlib.contextmanager
