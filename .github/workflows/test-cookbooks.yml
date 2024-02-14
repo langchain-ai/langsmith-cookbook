@@ -26,6 +26,7 @@ jobs:
           LANGCHAINHUB_API_KEY: ${{ secrets.LANGCHAINHUB_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYDEVD_DISABLE_FILE_VALIDATION: 1
 
   test-cookbooks-self-hosted:
     runs-on: ubuntu-latest
@@ -48,3 +49,4 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           LANGSMITH_API_KEY: ${{ secrets.EKS_API_KEY }}
           LANGCHAINHUB_API_KEY: ${{ secrets.EKS_API_KEY }}
+          PYDEVD_DISABLE_FILE_VALIDATION: 1
