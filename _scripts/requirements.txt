@@ -2,6 +2,8 @@ nbformat
 nbconvert
 pandas
 langchain
+langchain_experimental
+langchain_openai
 textstat
 langsmith
 langchainhub
@@ -12,3 +14,5 @@ html2text
 tabulate
 jupyter
 openai
+duckduckgo-search
+rapidfuzz
