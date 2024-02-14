@@ -43,7 +43,7 @@ jobs:
         run: jupyter kernelspec list
       - name: Test nbs
         working-directory: _scripts
-        run: python test-cookbooks.py --api-key $LANGSMITH_API_KEY --hub-handle default --project SYSTEM-TEST-$(date +'%Y-%m-%d') --endpoint https://eks.smith.langchain.dev/api --hub-endpoint https://eks.smith.langchain.dev/api-hub
+        run: python test-cookbooks.py --api-key $LANGSMITH_API_KEY --hub-handle langchain --project SYSTEM-TEST-$(date +'%Y-%m-%d') --endpoint https://eks.smith.langchain.dev/api --hub-endpoint https://eks.smith.langchain.dev/api-hub
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
