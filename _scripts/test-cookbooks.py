@@ -3,6 +3,7 @@ import contextlib
 import os
 import glob
 import re
+import time
 
 import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
@@ -62,10 +63,17 @@ def _run_notebook(filename, api_key, endpoint, project, hub_api_key, hub_api_url
                 cell.source = re.sub(
                     OPENAI_API_KEY_REGEX, f"os.environ[\"OPENAI_API_KEY\"] = '{openai_api_key}'", cell.source
                 )
-    ep = ExecutePreprocessor(timeout=1000, allow_errors=False)
 
-    nb_out = ep.preprocess(nb_in)
-    return nb_out
+    ep = ExecutePreprocessor(timeout=1000, allow_errors=False)
+    backoff = 1
+    while backoff < 10:
+        try:
+            nb_out = ep.preprocess(nb_in)
+            return nb_out
+        except Exception as e:
+            print(f"Failed to run notebook {filename} with error {e}. Retrying in {backoff} seconds")
+            time.sleep(backoff)
+            backoff *= 2
 
 
 @contextlib.contextmanager
