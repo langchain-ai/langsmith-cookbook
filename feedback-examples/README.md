@@ -4,7 +4,7 @@ sidebar_position: 6
 ---
 # Feedback
 
-Harness user [feedback](https://docs.smith.langchain.com/evaluation/capturing-feedback), ai-assisted feedback, and other signals to improve, monitor, and personalize your applications:
+Harness user [feedback](https://docs.smith.langchain.com/tracing/faq/logging_feedback), ai-assisted feedback, and other signals to improve, monitor, and personalize your applications:
 
 - [Streamlit Chat App](./streamlit/README.md): a minimal chat app that captures user feedback and shares traces of the chat application.
     - The [vanilla_chain.py](./streamlit/vanilla_chain.py) contains an LLMChain that powers the chat application.
