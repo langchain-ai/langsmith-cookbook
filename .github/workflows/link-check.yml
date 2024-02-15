@@ -36,4 +36,4 @@ jobs:
       - name: Check links in notebooks
         env:
           LANGCHAIN_API_KEY: test
-        run: pytest --check-links --ignore="*.py" -k .ipynb --check-links-ignore "https://(api|web)\.smith\.langchain\.com/.*" .
+        run: pytest -o python_files=non_python_only --check-links --ignore="*.py" -k .ipynb --check-links-ignore "https://(api|web)\.smith\.langchain\.com/.*" .
