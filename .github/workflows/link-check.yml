@@ -34,4 +34,4 @@ jobs:
           python -m pip install --upgrade pip
           pip install -U pytest pytest-check-links langsmith langchain GitPython
       - name: Check links in notebooks
-        run: pytest --check-links -k .ipynb --check-links-ignore "https://(api|web)\.smith\.langchain\.com/.*" .
+        run: pytest --check-links --ignore="*.py" -k .ipynb --check-links-ignore "https://(api|web)\.smith\.langchain\.com/.*" .
