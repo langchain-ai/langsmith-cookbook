@@ -32,7 +32,6 @@ def classification_chain() -> runnable.Runnable:
     )
 
 
-
 # The decorator parametrizes the test function with an example and callback config for
 # each example in the dataset
 @langsmith_unit_test("ORG Entities")

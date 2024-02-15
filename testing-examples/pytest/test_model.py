@@ -4,7 +4,6 @@ from langchain import chat_models, prompts, smith
 from langchain.schema import output_parser, runnable
 
 
-
 @pytest.fixture
 def classification_chain() -> runnable.Runnable:
     # Defines the chain you want to run.

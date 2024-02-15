@@ -22,7 +22,7 @@ Tracing allows for seamless debugging and improvement of your LLM applications. 
 
 ## LangChain Hub
 
-Efficiently manage your LLM components with the [LangChain Hub](https://smith.langchain.com/hub). For dedicated documentation, please see the [hub docs](https://docs.smith.langchain.com/category/hub).
+Efficiently manage your LLM components with the [LangChain Hub](https://smith.langchain.com/hub). For dedicated documentation, please see the [hub docs](https://docs.smith.langchain.com/hub/quickstart).
 
 - [RetrievalQA Chain](./hub-examples/retrieval-qa-chain/retrieval-qa.ipynb): use prompts from the hub in an example RAG pipeline.
 - [Prompt Versioning](./hub-examples/retrieval-qa-chain-versioned/prompt-versioning.ipynb): ensure deployment stability by selecting specific prompt versions over the 'latest'.
@@ -65,7 +65,7 @@ We are working to add more JS examples soon. In the meantime, check out the JS e
 
 ## Using Feedback
 
-Harness user [feedback](https://docs.smith.langchain.com/evaluation/capturing-feedback), "ai-assisted" feedback, and other signals to improve, monitor, and personalize your applications. Feedback can be user-generated or "automated" using functions or even calls to an LLM:
+Harness user [feedback](https://docs.smith.langchain.com/tracing/faq/logging_feedback), "ai-assisted" feedback, and other signals to improve, monitor, and personalize your applications. Feedback can be user-generated or "automated" using functions or even calls to an LLM:
 
 - [Streamlit Chat App](./feedback-examples/streamlit/README.md): a minimal chat app that captures user feedback and shares traces of the chat application.
     - The [vanilla_chain.py](./feedback-examples/streamlit/vanilla_chain.py) contains an LLMChain that powers the chat application.
