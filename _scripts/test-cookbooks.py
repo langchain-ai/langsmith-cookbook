@@ -18,11 +18,13 @@ HUB_API_KEY_REGEX = r'os\.environ\["LANGCHAIN_HUB_API_KEY"\] = [\"\']([^\"\']+)[
 ENDPOINT_REGEX = r'os\.environ\["LANGCHAIN_ENDPOINT"\] = [\"\']([^\"\']+)["\']'
 HUB_API_URL_REGEX = r'os\.environ\["LANGCHAIN_HUB_API_URL"\] = [\"\']([^\"\']+)["\']'
 PROJECT_ENV_REGEX = r'os\.environ\["LANGCHAIN_PROJECT"\] = [\"\']([^\"\']+)["\']'
-PROJECT_NAME_REGEX = r'YOUR PROJECT NAME'
-HUB_HANDLE_REGEX = r'YOUR HUB HANDLE'
+PROJECT_NAME_REGEX = r"YOUR PROJECT NAME"
+HUB_HANDLE_REGEX = r"YOUR HUB HANDLE"
 
 
-def _run_notebook(filename, api_key, endpoint, project, hub_api_key, hub_api_url, hub_handle):
+def _run_notebook(
+    filename, api_key, endpoint, project, hub_api_key, hub_api_url, hub_handle
+):
     """
     Execute a notebook via nbconvert and collect output. Also replace important env variables
     """
@@ -32,30 +34,38 @@ def _run_notebook(filename, api_key, endpoint, project, hub_api_key, hub_api_url
         if cell.cell_type == "code":
             if re.search(API_KEY_REGEX, cell.source):
                 cell.source = re.sub(
-                    API_KEY_REGEX, f"os.environ[\"LANGCHAIN_API_KEY\"] = '{api_key}'", cell.source
+                    API_KEY_REGEX,
+                    f"os.environ[\"LANGCHAIN_API_KEY\"] = '{api_key}'",
+                    cell.source,
                 )
             if re.search(ENDPOINT_REGEX, cell.source):
                 cell.source = re.sub(
-                    ENDPOINT_REGEX, f"os.environ[\"LANGCHAIN_ENDPOINT\"] = \"{endpoint}\"", cell.source
+                    ENDPOINT_REGEX,
+                    f'os.environ["LANGCHAIN_ENDPOINT"] = "{endpoint}"',
+                    cell.source,
                 )
             if re.search(PROJECT_ENV_REGEX, cell.source):
                 cell.source = re.sub(
-                    PROJECT_ENV_REGEX, f"os.environ[\"LANGCHAIN_PROJECT\"] = '{project}'", cell.source
+                    PROJECT_ENV_REGEX,
+                    f"os.environ[\"LANGCHAIN_PROJECT\"] = '{project}'",
+                    cell.source,
                 )
             if re.search(PROJECT_NAME_REGEX, cell.source):
                 cell.source = re.sub(PROJECT_NAME_REGEX, project, cell.source)
             if re.search(HUB_API_KEY_REGEX, cell.source):
                 cell.source = re.sub(
-                    HUB_API_KEY_REGEX, f"os.environ[\"LANGCHAIN_HUB_API_KEY\"] = '{hub_api_key}'", cell.source
+                    HUB_API_KEY_REGEX,
+                    f"os.environ[\"LANGCHAIN_HUB_API_KEY\"] = '{hub_api_key}'",
+                    cell.source,
                 )
             if re.search(HUB_API_URL_REGEX, cell.source):
                 cell.source = re.sub(
-                    HUB_API_URL_REGEX, f"os.environ[\"LANGCHAIN_HUB_API_URL\"] = '{hub_api_url}'", cell.source
+                    HUB_API_URL_REGEX,
+                    f"os.environ[\"LANGCHAIN_HUB_API_URL\"] = '{hub_api_url}'",
+                    cell.source,
                 )
             if re.search(HUB_HANDLE_REGEX, cell.source):
-                cell.source = re.sub(
-                    HUB_HANDLE_REGEX, hub_handle, cell.source
-                )
+                cell.source = re.sub(HUB_HANDLE_REGEX, hub_handle, cell.source)
     ep = ExecutePreprocessor(timeout=1000, allow_errors=False)
 
     nb_out = ep.preprocess(nb_in)
@@ -78,11 +88,27 @@ def set_env(**environ):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-e", "--endpoint", required=False, help="Langsmith host to connect to",
-                    default="https://api.smith.langchain.com")
-parser.add_argument("-he", "--hub-endpoint", required=False, help="Langsmith host to connect to",
-                    default="https://api.hub.langchain.com")
-parser.add_argument("-p", "--project", required=False, help="Project to use for your notebook", default="default")
+parser.add_argument(
+    "-e",
+    "--endpoint",
+    required=False,
+    help="Langsmith host to connect to",
+    default="https://api.smith.langchain.com",
+)
+parser.add_argument(
+    "-he",
+    "--hub-endpoint",
+    required=False,
+    help="Langsmith host to connect to",
+    default="https://api.hub.langchain.com",
+)
+parser.add_argument(
+    "-p",
+    "--project",
+    required=False,
+    help="Project to use for your notebook",
+    default="default",
+)
 parser.add_argument("-a", "--api-key", help="API key to use")
 parser.add_argument("-ha", "--hub-api-key", help="Hub API key to use", default="")
 parser.add_argument("-n", "--notebook", help="Notebook to run", default="*")
@@ -106,4 +132,12 @@ with set_env(**new_env):
             print(f"Skipping {file}")
             continue
         print(f'Running notebook {file.split("/")[-1]}')
-        output = _run_notebook(file, args.api_key, args.endpoint, args.project, args.hub_api_key, args.hub_endpoint, args.hub_handle)
+        output = _run_notebook(
+            file,
+            args.api_key,
+            args.endpoint,
+            args.project,
+            args.hub_api_key,
+            args.hub_endpoint,
+            args.hub_handle,
+        )
