@@ -1,10 +1,10 @@
 {
   "imports": {
     "dotenv/config": "npm:/dotenv/config",
-    "langchain": "npm:/langchain@0.1.19-rc.1",
-    "langchain/": "npm:/langchain@0.1.19-rc.1/",
-    "langsmith": "npm:/langsmith@0.1.1",
-    "langsmith/": "npm:/langsmith@0.1.1/",
+    "langchain": "npm:/langchain@0.1.19-rc.2",
+    "langchain/": "npm:/langchain@0.1.19-rc.2/",
+    "langsmith": "npm:/langsmith@0.1.2",
+    "langsmith/": "npm:/langsmith@0.1.2/",
     "openai": "https://deno.land/x/openai@v4.26.1/mod.ts",
     "openai/": "https://deno.land/x/openai@v4.26.1/"
   }
