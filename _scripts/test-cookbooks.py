@@ -15,6 +15,7 @@ filter_list = {
     "fine-tuning-on-chat-runs.ipynb",
     "vision-evals.ipynb",
     "contract-extraction.ipynb",
+    "LangSmith_TS_Demo-Traceable.ipynb"
 }
 API_KEY_REGEX = r'os\.environ\["LANGCHAIN_API_KEY"\] = [\"\']([^\"\']+)["\']'
 HUB_API_KEY_REGEX = r'os\.environ\["LANGCHAIN_HUB_API_KEY"\] = [\"\']([^\"\']+)["\']'
