@@ -100,7 +100,7 @@ memory = ConversationBufferMemory(
 )
 ```
 
-Then you define the core logic of the chat model. This example lets you select between two equivalent chains: an LLMChain, and a chain built with LangChain's [expression language](https://python.langchain.com/docs/guides/expression_language/).
+Then you define the core logic of the chat model. This example lets you select between two equivalent chains: an LLMChain, and a chain built with LangChain's [expression language](https://python.langchain.com/docs/expression_language/).
 
 #### Chat Chain
 
@@ -230,7 +230,7 @@ Below are some 'tactics' used in this example that you could reuse in other situ
 
 3. **Accessing URLs from saved runs:** The client also retrieves URLs for saved runs. It allows users to inspect their interactions, providing a direct link to LangSmith traces.
 
-4. **LangChain Expression Language:** This example optionally uses LangChain's [expression language](https://python.langchain.com/docs/guides/expression_language/) to create the chain and provide streaming support by default. It also gives more visibility in the resulting traces.
+4. **LangChain Expression Language:** This example optionally uses LangChain's [expression language](https://python.langchain.com/docs/expression_language/) to create the chain and provide streaming support by default. It also gives more visibility in the resulting traces.
 
 ## Conclusion
 

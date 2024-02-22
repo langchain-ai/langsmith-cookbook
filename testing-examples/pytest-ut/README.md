@@ -105,7 +105,7 @@ def classification_chain() -> runnable.Runnable:
     )
 ```
 
-In this case, we are using LangChain's [runnables](https://python.langchain.com/docs/guides/expression_language/)
+In this case, we are using LangChain's [runnables](https://python.langchain.com/docs/expression_language/)
 to compose the prompt and a Claude-2 model from Anthropic. Since this is a pytest fixture, it will be called for each unit test by default.
 
 Now it's time to define the tests!
