@@ -4,6 +4,7 @@ sidebar_position: 4
 ---
 # Testing & Evaluation Recipes
 
+- [Exact Match](./exact-match/exact_match.ipynb): deterministic comparison of your system output against a reference label.
 - [Q&A System Correctness](./qa-correctness/qa-correctness.ipynb): evaluate your retrieval-augmented Q&A pipeline on a dataset. Iterate, improve, and keep testing.
 - [Evaluating Q&A Systems with Dynamic Data](./dynamic-data/testing_dynamic_data.ipynb): use evaluators that dereference a labels to handle data that changes over time.
 - [RAG Evaluation using Fixed Sources](./using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG pipeline by providing retrieved documents in the dataset.

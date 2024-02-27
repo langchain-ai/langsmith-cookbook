@@ -35,7 +35,7 @@ Test and benchmark your LLM systems using methods in these evaluation recipes:
 
 ### Python Examples
 
-
+- [Exact Match](./testing-examples/exact-match/exact_match.ipynb): deterministic comparison of your system output against a reference label.
 - [Q&A System Correctness](./testing-examples/qa-correctness/qa-correctness.ipynb): evaluate your retrieval-augmented Q&A pipeline end-to-end on a dataset. Iterate, improve, and keep testing.
 - [Evaluating Q&A Systems with Dynamic Data](./testing-examples/dynamic-data/testing_dynamic_data.ipynb): use evaluators that dereference a labels to handle data that changes over time.
 - [RAG Evaluation using Fixed Sources](./testing-examples/using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG  (retrieval-augmented generation) pipeline by providing retrieved documents in the dataset
