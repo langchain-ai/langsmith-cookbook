@@ -48,6 +48,7 @@ Test and benchmark your LLM systems using methods in these evaluation recipes:
     - [Unit Testing with Pytest](./testing-examples/pytest-ut/): write individual unit tests and log assertions as feedback.
 - [Tool Selection](./testing-examples/tool-selection/tool-selection.ipynb): Evaluate the precision of selected tools. Include an automated prompt writer to improve the tool descriptions based on failure cases.
 - [Evaluating Existing Runs](./testing-examples/evaluate-existing-test-project/evaluate_runs.ipynb): add ai-assisted feedback and evaluation metrics to existing run traces.
+- [Evaluating Multimodal Models](./testing-examples/multimodal/multimodal.ipynb): benchmark a multimodal image classification chain
 - [Naming Test Projects](./testing-examples/naming-test-projects/naming-test-projects.md): manually name your tests with `run_on_dataset(..., project_name='my-project-name')`
 - [How to download feedback and examples from a test project](./testing-examples/download-feedback-and-examples/download_example.ipynb): export the predictions, evaluation results, and other information to programmatically add to your reports.
 
