@@ -15,6 +15,8 @@ sidebar_position: 4
 - You can incorporate LangSmith in your existing testing framework:
     - [LangSmith in Pytest](./pytest/) benchmark your chain in pytest and assert aggregate metrics meet the quality bar.
     - [Unit Testing with Pytest](./pytest-ut/): write individual unit tests and log assertions as feedback.
+- [Tool Selection](./tool-selection/tool-selection.ipynb): Evaluate the precision of selected tools. Include an automated prompt writer to improve the tool descriptions based on failure cases.
 - [Evaluating Existing Runs](./evaluate-existing-test-project/evaluate_runs.ipynb): add ai-assisted feedback and evaluation metrics to existing run traces.
+- [Evaluating Multimodal Models](./multimodal/multimodal.ipynb): benchmark a multimodal image classification chain
 - [Naming Test Projects](./naming-test-projects/naming-test-projects.md): manually name your tests with `run_on_dataset(..., project_name='my-project-name')`
 - [How to download feedback and examples from a test project](./download-feedback-and-examples/download_example.ipynb): export the predictions, evaluation results, and other information to programmatically add to your reports.
