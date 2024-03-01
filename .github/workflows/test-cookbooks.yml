@@ -73,6 +73,5 @@ jobs:
           LANGSMITH_API_KEY: ${{ secrets.LANGSMITH_API_KEY }}
           LANGCHAINHUB_API_KEY: ${{ secrets.LANGCHAINHUB_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_API_BASE: https://eks.smith.langchain.dev/proxy
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           PYDEVD_DISABLE_FILE_VALIDATION: 1
