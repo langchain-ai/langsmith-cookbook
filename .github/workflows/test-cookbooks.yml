@@ -46,7 +46,7 @@ jobs:
         run: python test-cookbooks.py --api-key $LANGSMITH_API_KEY --hub-handle langchain --project SYSTEM-TEST-$(date +'%Y-%m-%d') --endpoint https://eks.smith.langchain.dev/api --hub-endpoint https://eks.smith.langchain.dev/api-hub
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_API_BASE: https://eks.smith.langchain.dev/api
+          OPENAI_API_BASE: https://eks.smith.langchain.dev/proxy
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           LANGSMITH_API_KEY: ${{ secrets.EKS_API_KEY }}
           LANGCHAINHUB_API_KEY: ${{ secrets.EKS_API_KEY }}
