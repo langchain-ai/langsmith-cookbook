@@ -50,3 +50,50 @@ jobs:
           LANGSMITH_API_KEY: ${{ secrets.EKS_API_KEY }}
           LANGCHAINHUB_API_KEY: ${{ secrets.EKS_API_KEY }}
           PYDEVD_DISABLE_FILE_VALIDATION: 1
+
+  test-optimization-no-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        working-directory: _scripts
+        run: pip install -r requirements.txt
+      - name: List kernels
+        working-directory: _scripts
+        run: jupyter kernelspec list
+      - name: Test nbs
+        working-directory: _scripts
+        run: python test-cookbooks.py --api-key $LANGSMITH_API_KEY --hub-handle langchain --project SYSTEM-TEST-$(date +'%Y-%m-%d') --endpoint https://eks.smith.langchain.dev/api --hub-endpoint https://eks.smith.langchain.dev/api-hub -n few-shot-prompting
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LANGSMITH_API_KEY: ${{ secrets.EKS_API_KEY }}
+          LANGCHAINHUB_API_KEY: ${{ secrets.EKS_API_KEY }}
+          PYDEVD_DISABLE_FILE_VALIDATION: 1
+
+  test-optimization-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        working-directory: _scripts
+        run: pip install -r requirements.txt
+      - name: List kernels
+        working-directory: _scripts
+        run: jupyter kernelspec list
+      - name: Test nbs
+        working-directory: _scripts
+        run: python test-cookbooks.py --api-key $LANGSMITH_API_KEY --hub-handle langchain --project SYSTEM-TEST-$(date +'%Y-%m-%d') --endpoint https://eks.smith.langchain.dev/api --hub-endpoint https://eks.smith.langchain.dev/api-hub -n few-shot-prompting
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: https://eks.smith.langchain.dev/proxy
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LANGSMITH_API_KEY: ${{ secrets.EKS_API_KEY }}
+          LANGCHAINHUB_API_KEY: ${{ secrets.EKS_API_KEY }}
+          PYDEVD_DISABLE_FILE_VALIDATION: 1
