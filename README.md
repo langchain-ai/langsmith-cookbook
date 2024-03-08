@@ -1,5 +1,8 @@
 # LangSmith Cookbook
 
+[![Release Notes](https://img.shields.io/github/release/langchain-ai/langsmith-sdk?logo=python)](https://github.com/langchain-ai/langsmith-sdk/releases)
+ [![Python Downloads](https://static.pepy.tech/badge/langsmith/month)](https://pepy.tech/project/langsmith) ![NPM Version](https://img.shields.io/npm/v/langsmith?logo=npm) [![JS Downloads](https://img.shields.io/npm/dm/langsmith)](https://www.npmjs.com/package/langsmith)
+
 Welcome to the LangSmith Cookbook — your practical guide to mastering [LangSmith](https://smith.langchain.com/). While our [standard documentation](https://docs.smith.langchain.com/) covers the basics, this repository delves into common patterns and some real-world use-cases, empowering you to optimize your LLM applications further.
 
 This repository is your practical guide to maximizing [LangSmith](https://smith.langchain.com/). As a tool, LangSmith empowers you to debug, evaluate, test, and improve your LLM applications continuously. These recipes present real-world scenarios for you to adapt and implement.
