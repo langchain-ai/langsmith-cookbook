@@ -32,6 +32,9 @@ Test and benchmark your LLM systems using methods in these evaluation recipes:
 
 ### Python Examples
 
+
+- [Prompt Iteration Walkthrough](./testing-examples/movie-demo/prompt_iteration.ipynb): run regression tests to compare multiple prompts on 3 datasets
+
 **Retrieval Augmented Generation (RAG)**
 
 - [Q&A System Correctness](./testing-examples/qa-correctness/qa-correctness.ipynb): evaluate your retrieval-augmented Q&A pipeline end-to-end on a dataset. Iterate, improve, and keep testing.
@@ -94,6 +97,13 @@ Fine-tune an LLM on collected run data using these recipes:
 
 - [OpenAI Fine-Tuning](./fine-tuning-examples/export-to-openai/fine-tuning-on-chat-runs.ipynb): list LLM runs and convert them to OpenAI's fine-tuning format efficiently.
 - [Lilac Dataset Curation](./fine-tuning-examples/lilac/lilac.ipynb): further curate your LangSmith datasets using Lilac to detect near-duplicates, check for PII, and more.
+
+
+## Optimization
+
+These examples show how to use langsmith to optimize and continuously improve your LLM system.
+
+- [Optimization](./testing-examples/movie-demo/optimization.ipynb) Configure online evaluators to add good examples to a dataset. Review, then use them as few-shot examples to boost performance.
 
 ## Exploratory Data Analysis
 
