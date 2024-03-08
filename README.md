@@ -2,7 +2,6 @@
 
 Welcome to the LangSmith Cookbook — your practical guide to mastering [LangSmith](https://smith.langchain.com/). While our [standard documentation](https://docs.smith.langchain.com/) covers the basics, this repository delves into common patterns and some real-world use-cases, empowering you to optimize your LLM applications further.
 
-
 This repository is your practical guide to maximizing [LangSmith](https://smith.langchain.com/). As a tool, LangSmith empowers you to debug, evaluate, test, and improve your LLM applications continuously. These recipes present real-world scenarios for you to adapt and implement.
 
 **Your Input Matters**
@@ -12,7 +11,6 @@ Help us make the cookbook better! If there's a use-case we missed, or if you hav
 ## Tracing your code
 
 Tracing allows for seamless debugging and improvement of your LLM applications. Here's how:
-
 
 - [Tracing without LangChain](./tracing-examples/traceable/tracing_without_langchain.ipynb): learn to trace applications independent of LangChain using the Python SDK's @traceable decorator.
 - [REST API](./tracing-examples/rest/rest.ipynb): get acquainted with the REST API's features for logging LLM and chat model runs, and understand nested runs. The run logging spec can be found in the [LangSmith SDK repository](https://github.com/langchain-ai/langsmith-sdk/blob/main/openapi/openapi.yaml).
@@ -28,35 +26,39 @@ Efficiently manage your LLM components with the [LangChain Hub](https://smith.la
 - [Prompt Versioning](./hub-examples/retrieval-qa-chain-versioned/prompt-versioning.ipynb): ensure deployment stability by selecting specific prompt versions over the 'latest'.
 - [Runnable PromptTemplate](./hub-examples/runnable-prompt/edit-in-playground.ipynb): streamline the process of saving prompts to the hub from the playground and integrating them into runnable chains.
 
-
 ## Testing & Evaluation
 
 Test and benchmark your LLM systems using methods in these evaluation recipes:
 
 ### Python Examples
 
-
 **Retrieval Augmented Generation (RAG)**
+
 - [Q&A System Correctness](./testing-examples/qa-correctness/qa-correctness.ipynb): evaluate your retrieval-augmented Q&A pipeline end-to-end on a dataset. Iterate, improve, and keep testing.
 - [Evaluating Q&A Systems with Dynamic Data](./testing-examples/dynamic-data/testing_dynamic_data.ipynb): use evaluators that dereference a labels to handle data that changes over time.
-- [RAG Evaluation using Fixed Sources](./testing-examples/using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG  (retrieval-augmented generation) pipeline by providing retrieved documents in the dataset
+- [RAG Evaluation using Fixed Sources](./testing-examples/using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG (retrieval-augmented generation) pipeline by providing retrieved documents in the dataset
 
 **Chat Bots**
+
 - [Chat Bot Evals using Simulated Users](./testing-examples/chatbot-simulation/chatbot-simulation.ipynb): evaluate your chat bot using a simulated user. The user is given a task, and you score your assistant based on how well it helps without being breaking its instructions.
 - [Single-turn evals](./testing-examples/chat-single-turn/chat_evaluation_single_turn.ipynb): Evaluate chatbots within multi-turn conversations by treating each data point as an individual dialogue turn. This guide shows how to set up a multi-turn conversation dataset and evaluate a simple chat bot on it.
 
 **Extraction**
+
 - [Evaluating an Extraction Chain](./testing-examples/data-extraction/contract-extraction.ipynb): measure the similarity between the extracted structured content and structured labels using LangChain's json evaluators.
 - [Exact Match](./testing-examples/exact-match/exact_match.ipynb): deterministic comparison of your system output against a reference label.
 
 **Agents**
+
 - [Evaluating an Agent's intermediate steps](./testing-examples/agent_steps/evaluating_agents.ipynb): compare the sequence of actions taken by an agent to an expected trajectory to grade effective tool use.
 - [Tool Selection](./testing-examples/tool-selection/tool-selection.ipynb): Evaluate the precision of selected tools. Include an automated prompt writer to improve the tool descriptions based on failure cases.
 
 **Multimodel**
+
 - [Evaluating Multimodal Models](./testing-examples/multimodal/multimodal.ipynb): benchmark a multimodal image classification chain
 
 **Fundamentals**
+
 - [Evaluating Existing Runs](./testing-examples/evaluate-existing-test-project/evaluate_runs.ipynb): add ai-assisted feedback and evaluation metrics to existing run traces.
 - [Naming Test Projects](./testing-examples/naming-test-projects/naming-test-projects.md): manually name your tests with `run_on_dataset(..., project_name='my-project-name')`
 - [How to download feedback and examples from a test project](./testing-examples/download-feedback-and-examples/download_example.ipynb): export the predictions, evaluation results, and other information to programmatically add to your reports.
@@ -67,27 +69,24 @@ Incorporate LangSmith into your TS/JS testing and evaluation workflow:
 
 - [Vision-based Evals in JavaScript](./typescript-testing-examples/vision-evals/vision-evals.ipynb): evaluate AI-generated UIs using GPT-4V
 
-
 We are working to add more JS examples soon. In the meantime, check out the JS eval quickstart the following guides:
 
 - [JS LangSmith walkthrough](https://js.langchain.com/docs/guides/langsmith_evaluation)
 - [Evaluation quickstart](https://docs.smith.langchain.com/evaluation/quickstart)
-
 
 ## Using Feedback
 
 Harness user [feedback](https://docs.smith.langchain.com/tracing/faq/logging_feedback), "ai-assisted" feedback, and other signals to improve, monitor, and personalize your applications. Feedback can be user-generated or "automated" using functions or even calls to an LLM:
 
 - [Streamlit Chat App](./feedback-examples/streamlit/README.md): a minimal chat app that captures user feedback and shares traces of the chat application.
-    - The [vanilla_chain.py](./feedback-examples/streamlit/vanilla_chain.py) contains an LLMChain that powers the chat application.
-    - The [expression_chain.py](./feedback-examples/streamlit/expression_chain.py) contains an equivalent chat chain defined exclusively with [LangChain expressions](https://python.langchain.com/docs/expression_language/). 
+  - The [vanilla_chain.py](./feedback-examples/streamlit/vanilla_chain.py) contains an LLMChain that powers the chat application.
+  - The [expression_chain.py](./feedback-examples/streamlit/expression_chain.py) contains an equivalent chat chain defined exclusively with [LangChain expressions](https://python.langchain.com/docs/expression_language/).
 - [Next.js Chat App](./feedback-examples/nextjs/README.md): explore a simple TypeScript chat app demonstrating tracing and feedback capture.
-    - You can [check out a deployed demo version here](https://langsmith-cookbook.vercel.app/).
+  - You can [check out a deployed demo version here](https://langsmith-cookbook.vercel.app/).
 - [Building an Algorithmic Feedback Pipeline](./feedback-examples/algorithmic-feedback/algorithmic_feedback.ipynb): automate feedback metrics for advanced monitoring and performance tuning. This lets you evaluate production runs as a batch job.
 - [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb): automatically generate feedback metrics for every run using an async callback. This lets you evaluate production runs in real-time.
 - [Real-time RAG Chat Bot Evaluation](./feedback-examples/streamlit-realtime-feedback/README.md): This Streamlit walkthrough showcases an advanced application of the concepts from the [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb) tutorial. It demonstrates how to automatically check for hallucinations in your RAG chat bot responses against the retrieved documents. For more information on RAG, [check out the LangChain docs](https://python.langchain.com/docs/use_cases/question_answering/).
 - [LangChain Agents with LangSmith](./feedback-examples/streamlit-agent/README.md) instrument a LangChain web-search agent with tracing and human feedback.
-
 
 ## Exporting data for fine-tuning
 
