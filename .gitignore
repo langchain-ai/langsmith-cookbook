@@ -7,3 +7,4 @@ __pycache__
 secrets.toml
 .env
 .idea
+_scratch
