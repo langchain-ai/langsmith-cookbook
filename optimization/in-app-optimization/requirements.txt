@@ -1,0 +1,6 @@
+streamlit>=1.32.2
+langsmith>=0.1.26
+langchain_anthropic>=0.1.4
+langchain>=0.1.12
+langchainhub>=0.1.15
+streamlit-feedback
