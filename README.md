@@ -94,6 +94,13 @@ Harness user [feedback](https://docs.smith.langchain.com/tracing/faq/logging_fee
 - [Real-time RAG Chat Bot Evaluation](./feedback-examples/streamlit-realtime-feedback/README.md): This Streamlit walkthrough showcases an advanced application of the concepts from the [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb) tutorial. It demonstrates how to automatically check for hallucinations in your RAG chat bot responses against the retrieved documents. For more information on RAG, [check out the LangChain docs](https://python.langchain.com/docs/use_cases/question_answering/).
 - [LangChain Agents with LangSmith](./feedback-examples/streamlit-agent/README.md) instrument a LangChain web-search agent with tracing and human feedback.
 
+## Optimization
+
+Use LangSmith to help optimize your LLM systems, so they can continuously learn and improve.
+
+- [Prompt Bootstrapping](./optimization/assisted-prompt-bootstrapping/assisted-prompt-engineering.ipynb): Optimize your prompt over a set of examples by incorporating human feedback and an LLM prompt optimizer.
+- [Online Few-shot Examples](./testing-examples/movie-demo/optimization.ipynb) Configure online evaluators to add good examples to a dataset. Review, then use them as few-shot examples to boost performance.
+
 ## Exporting data for fine-tuning
 
 Fine-tune an LLM on collected run data using these recipes:
@@ -101,12 +108,6 @@ Fine-tune an LLM on collected run data using these recipes:
 - [OpenAI Fine-Tuning](./fine-tuning-examples/export-to-openai/fine-tuning-on-chat-runs.ipynb): list LLM runs and convert them to OpenAI's fine-tuning format efficiently.
 - [Lilac Dataset Curation](./fine-tuning-examples/lilac/lilac.ipynb): further curate your LangSmith datasets using Lilac to detect near-duplicates, check for PII, and more.
 
-
-## Optimization
-
-These examples show how to use langsmith to optimize and continuously improve your LLM system.
-
-- [Optimization](./testing-examples/movie-demo/optimization.ipynb) Configure online evaluators to add good examples to a dataset. Review, then use them as few-shot examples to boost performance.
 
 ## Exploratory Data Analysis
 
