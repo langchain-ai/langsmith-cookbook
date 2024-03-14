@@ -79,6 +79,11 @@ Harness user [feedback](https://docs.smith.langchain.com/tracing/faq/logging_fee
 - [Real-time RAG Chat Bot Evaluation](./feedback-examples/streamlit-realtime-feedback/README.md): This Streamlit walkthrough showcases an advanced application of the concepts from the [Real-time Automated Feedback](./feedback-examples/realtime-algorithmic-feedback/realtime_feedback.ipynb) tutorial. It demonstrates how to automatically check for hallucinations in your RAG chat bot responses against the retrieved documents. For more information on RAG, [check out the LangChain docs](https://python.langchain.com/docs/use_cases/question_answering/).
 - [LangChain Agents with LangSmith](./feedback-examples/streamlit-agent/README.md) instrument a LangChain web-search agent with tracing and human feedback.
 
+## Optimization
+
+Use LangSmith to help optimize your LLM systems, so they can continuously learn and improve.
+
+- [Prompt Bootstrapping](./optimization/assisted-prompt-bootstrapping/assisted-prompt-engineering.ipynb): Optimize your prompt over a set of examples by incorporating human feedback and an LLM prompt optimizer.
 
 ## Exporting data for fine-tuning
 
