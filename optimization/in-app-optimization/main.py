@@ -22,25 +22,23 @@ st.set_page_config(
 
 
 def _format_example(example):
-    f"""<examples>
-<original>
-{example.inputs['input']}
-</original>
-<tweet>
-{example.outputs['output']}
-</tweet>
-</example>
-"""
+    return f"""<example>
+    <original>
+    {example.inputs['input']}
+    </original>
+    <tweet>
+    {example.outputs['output']}
+    </tweet>
+</example>"""
 
 
-@st.cache_data
 def few_shot_examples():
     if client.has_dataset(dataset_name=DATASET_NAME):
         # TODO: Update to randomize
         examples = list(client.list_examples(dataset_name=DATASET_NAME))
         if not examples:
             return ""
-        examples = random.sample(examples, min(len(examples, 10)))
+        examples = random.sample(examples, min(len(examples), 10))
         e_str = "\n".join([_format_example(e) for e in examples])
 
         return f"""
@@ -51,9 +49,16 @@ Approved Examples:
     return ""
 
 
+if st.session_state.get("few_shots"):
+    few_shots = st.session_state.get("few_shots")
+else:
+    few_shots = few_shot_examples()
+    st.session_state["few_shots"] = few_shots
+
+
 # Create the chat bot
 prompt = hub.pull("wfh/tweet-critic-fewshot")
-prompt = prompt.partial(examples=few_shot_examples())
+prompt = prompt.partial(examples=few_shots)
 llm = ChatAnthropic(model="claude-3-haiku-20240307", temperature=1)
 
 tweet_critic = prompt | llm | StrOutputParser()
@@ -72,6 +77,7 @@ def parse_tweet(response: str, turn: int, box=None):
             "Edit this to save your refined tweet",
             tweet,
             key=f"tweet_{turn}",
+            height=500,
         )
     if post:
         box.markdown(post)
@@ -108,7 +114,7 @@ def log_feedback(
 
 
 messages = st.session_state.get("langchain_messages", [])
-original_tweet = messages[0] if messages else None
+original_tweet = messages[0][1] if messages else None
 for i, msg in enumerate(messages):
     with st.chat_message(msg[0]):
         if len(msg) == 3:
@@ -152,6 +158,7 @@ if prompt := st.chat_input(placeholder="What's the tweet about?"):
         for chunk in write_stream:
             full_response += chunk
             message_placeholder.markdown(full_response + "▌")
+        message_placeholder.markdown("")
         tweet_txt = parse_tweet(full_response, len(messages), message_placeholder)
         messages.append(("assistant", full_response, presigned.url))
     st.session_state["langchain_messages"] = messages
