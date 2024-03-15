@@ -28,6 +28,7 @@ logger = logging.getLogger(__name__)
 
 DATASET_NAME = "Tweet Critic"
 PROMPT_NAME = "wfh/tweet-critic-fewshot"
+OPTIMIZER_PROMPT_NAME = "wfh/convo-optimizer"
 st.sidebar.title("Session Information")
 version_input = st.sidebar.text_input("Prompt Version", value="latest")
 if version_input:
@@ -36,6 +37,8 @@ prompt_url = f"https://smith.langchain.com/hub/{PROMPT_NAME}"
 if prompt_version and prompt_version != "latest":
     prompt_url = f"{prompt_url}/{prompt_version}"
 st.sidebar.markdown(f"[See Prompt in Hub]({prompt_url})")
+optimizer_prompt_url = f"https://smith.langchain.com/hub/{OPTIMIZER_PROMPT_NAME}"
+st.sidebar.markdown(f"[See Optimizer Prompt in Hub]({optimizer_prompt_url})")
 client = Client()
 
 
@@ -153,7 +156,7 @@ def log_feedback(
 
     if original_tweet and txt:
         # Generate a new prompt
-        optimizer_prompt = hub.pull("wfh/convo-optimizer")
+        optimizer_prompt = hub.pull(OPTIMIZER_PROMPT_NAME)
         optimizer = optimizer_prompt | llm | StrOutputParser() | parse_updated_prompt
         try:
             updated_sys_prompt = optimizer.invoke(
@@ -184,7 +187,7 @@ messages = st.session_state.get("langchain_messages", [])
 original_tweet = messages[0][1] if messages else None
 for i, msg in enumerate(messages):
     with st.chat_message(msg[0]):
-        if i == len(messages) - 1:
+        if i == len(messages) - 1 and len(msg) == 3:
             updated = parse_tweet(msg[1], i)
             presigned_url = msg[2]
             feedback = streamlit_feedback(
@@ -214,7 +217,7 @@ if st.session_state.get("session_ended"):
     )
     if st.button("Reset"):
         st.session_state.clear()
-        st.experimental_rerun()
+        st.rerun()
 else:
     if prompt := st.chat_input(placeholder="Paste your initial tweet."):
         st.chat_message("user").write(prompt)
