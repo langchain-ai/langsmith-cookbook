@@ -21,6 +21,7 @@ st.set_page_config(
 )
 
 
+## Get few-shot examples from 👍 examples
 def _format_example(example):
     return f"""<example>
     <original>
@@ -137,12 +138,11 @@ for i, msg in enumerate(messages):
             presigned_url = None
 
 
+# Run the chat conversation
 run_id = uuid.uuid4()
-
 presigned = client.create_presigned_feedback_token(
     run_id, feedback_key="tweet_critique_quality"
 )
-
 
 if prompt := st.chat_input(placeholder="What's the tweet about?"):
     st.chat_message("user").write(prompt)
