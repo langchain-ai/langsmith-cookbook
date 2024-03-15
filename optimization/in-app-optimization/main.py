@@ -14,7 +14,9 @@ from langchain_core.output_parsers import StrOutputParser
 import re
 import random
 from langchain import hub
+from langchainhub import Client as HubClient
 import logging
+import concurrent.futures
 
 st.set_page_config(
     page_title="Prompt Optimization with Feedback",
@@ -22,14 +24,27 @@ st.set_page_config(
 )
 
 
-# Add a sidebar
-
 logger = logging.getLogger(__name__)
-
+# Configurable bits
 DATASET_NAME = "Tweet Critic"
 PROMPT_NAME = "wfh/tweet-critic-fewshot"
 OPTIMIZER_PROMPT_NAME = "wfh/convo-optimizer"
+
+chat_llm = ChatAnthropic(model="claude-3-haiku-20240307", temperature=1)
+optimizer_llm = ChatAnthropic(model="claude-3-opus-20240229", temperature=1)
+
+# Add a sidebar
 st.sidebar.title("Session Information")
+st.sidebar.text(
+    """Below are the prompts used for the
+chat bot and "optimizer"
+respectively.
+
+The optimizer updates the LLM's
+prompt at the end of the session
+based on the conversation flow
+and final edited tweet."""
+)
 version_input = st.sidebar.text_input("Prompt Version", value="latest")
 if version_input:
     prompt_version = version_input
@@ -39,10 +54,11 @@ if prompt_version and prompt_version != "latest":
 st.sidebar.markdown(f"[See Prompt in Hub]({prompt_url})")
 optimizer_prompt_url = f"https://smith.langchain.com/hub/{OPTIMIZER_PROMPT_NAME}"
 st.sidebar.markdown(f"[See Optimizer Prompt in Hub]({optimizer_prompt_url})")
+
+## Get few-shot examples from 👍 examples
 client = Client()
 
 
-## Get few-shot examples from 👍 examples
 def _format_example(example):
     return f"""<example>
     <original>
@@ -86,9 +102,9 @@ prompt: ChatPromptTemplate = hub.pull(
 )
 
 prompt = prompt.partial(examples=few_shots)
-llm = ChatAnthropic(model="claude-3-haiku-20240307", temperature=1)
 
-tweet_critic = prompt | llm | StrOutputParser()
+
+tweet_critic = prompt | chat_llm | StrOutputParser()
 
 
 def parse_tweet(response: str, turn: int, box=None):
@@ -100,7 +116,7 @@ def parse_tweet(response: str, turn: int, box=None):
     if tweet is not None:
         tweet = st.text_area(
             "Edit this to save your refined tweet.",
-            tweet,
+            tweet.strip(),
             key=f"tweet_{turn}",
             height=500,
         )
@@ -118,69 +134,106 @@ def log_feedback(
     **kwargs,
 ):
     st.session_state["session_ended"] = True
-    score = {"👍": 1, "👎": 0}.get(value["score"]) or 0
-    comment = value.get("text")
-    client.create_feedback_from_token(presigned_url, score=int(score), comment=comment)
-
-    if score and original_tweet and txt:
-        # If the input/output pairs are provided, you can log them to a few-shot dataset.
-        try:
-            client.create_example(
-                inputs={"input": original_tweet},
-                outputs={"output": txt},
-                dataset_name=DATASET_NAME,
-            )
-        except:  # noqa: E722
-            client.create_dataset(dataset_name=DATASET_NAME)
-            client.create_example(
-                inputs={"input": original_tweet},
-                outputs={"output": txt},
-                dataset_name=DATASET_NAME,
-            )
-
-    def parse_updated_prompt(system_prompt_txt: str):
-        return (
-            system_prompt_txt.split("<improved_prompt>")[1]
-            .split("</improved_prompt>")[0]
-            .strip()
+    st.write(
+        "Thank you for your feedback! We are updating our bot based on your input."
+    )
+    with st.spinner("Updating bot..."):
+        score = {"👍": 1, "👎": 0}.get(value["score"]) or 0
+        comment = value.get("text")
+        client.create_feedback_from_token(
+            presigned_url, score=int(score), comment=comment
         )
 
-    def format_conversation(messages: list):
-        tmpl = """<turn idx={i}>
-{role}: {txt}
-</turn idx={i}>
-"""
-        return "\n".join(
-            tmpl.format(i=i, role=msg[0], txt=msg[1]) for i, msg in enumerate(messages)
-        )
+        if score and original_tweet and txt:
+            # If the input/output pairs are provided, you can log them to a few-shot dataset.
+            try:
+                client.create_example(
+                    inputs={"input": original_tweet},
+                    outputs={"output": txt},
+                    dataset_name=DATASET_NAME,
+                )
+            except:  # noqa: E722
+                client.create_dataset(dataset_name=DATASET_NAME)
+                client.create_example(
+                    inputs={"input": original_tweet},
+                    outputs={"output": txt},
+                    dataset_name=DATASET_NAME,
+                )
 
-    if original_tweet and txt:
-        # Generate a new prompt
-        optimizer_prompt = hub.pull(OPTIMIZER_PROMPT_NAME)
-        optimizer = optimizer_prompt | llm | StrOutputParser() | parse_updated_prompt
-        try:
-            updated_sys_prompt = optimizer.invoke(
-                {
-                    # current system prompt
-                    "current_prompt": cast(
-                        SystemMessagePromptTemplate, prompt.messages[0]
-                    ).prompt.template,
-                    "conversation": format_conversation(
-                        st.session_state.get("langchain_messages", [])
-                    ),
-                    "final_value": txt,
-                }
+        def parse_updated_prompt(system_prompt_txt: str):
+            return (
+                system_prompt_txt.split("<improved_prompt>")[1]
+                .split("</improved_prompt>")[0]
+                .strip()
             )
-            updated_prompt = ChatPromptTemplate.from_messages(
-                [
-                    ("system", updated_sys_prompt),
-                    MessagesPlaceholder(variable_name="messages"),
+
+        def format_conversation(messages: list):
+            tmpl = """<turn idx={i}>
+        {role}: {txt}
+        </turn idx={i}>
+        """
+            return "\n".join(
+                tmpl.format(i=i, role=msg[0], txt=msg[1])
+                for i, msg in enumerate(messages)
+            )
+
+        if original_tweet and txt:
+            # Generate a new prompt
+            optimizer_prompt = hub.pull(OPTIMIZER_PROMPT_NAME)
+            hub_client = HubClient()
+            list_response = hub_client.list_commits(PROMPT_NAME)
+            latest_commits = list_response["commits"][:3]
+            hashes = [commit["commit_hash"] for commit in latest_commits]
+
+            def pull_prompt(hash_):
+                return hub.pull(f"{PROMPT_NAME}:{hash_}")
+
+            def get_prompt_template(prompt):
+                return cast(
+                    SystemMessagePromptTemplate, prompt.messages[0]
+                ).prompt.template
+
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                prompt_futures = [
+                    executor.submit(pull_prompt, hash_) for hash_ in hashes
                 ]
+                updated_prompts = [future.result() for future in prompt_futures]
+            optimizer = (
+                optimizer_prompt
+                | optimizer_llm
+                | StrOutputParser()
+                | parse_updated_prompt
             )
-            hub.push(PROMPT_NAME, updated_prompt)
-        except Exception as e:
-            logger.warning(f"Failed to update prompt: {e}")
-            pass
+            try:
+                updated_sys_prompt = optimizer.invoke(
+                    {
+                        "prompt_versions": "\n\n".join(
+                            [
+                                f"<prompt version={hash_}>\n{get_prompt_template(updated_prompt)}\n</prompt>"
+                                for hash_, updated_prompt in zip(
+                                    hashes, updated_prompts
+                                )
+                            ]
+                        ),
+                        # current system prompt
+                        "current_prompt": get_prompt_template(prompt),
+                        "conversation": format_conversation(
+                            st.session_state.get("langchain_messages", [])
+                        ),
+                        "final_value": txt,
+                    }
+                )
+                updated_prompt = ChatPromptTemplate.from_messages(
+                    [
+                        ("system", updated_sys_prompt),
+                        MessagesPlaceholder(variable_name="messages"),
+                    ]
+                )
+                hub.push(PROMPT_NAME, updated_prompt)
+                st.success("Bot updated successfully!")
+            except Exception as e:
+                logger.warning(f"Failed to update prompt: {e}")
+                pass
 
 
 messages = st.session_state.get("langchain_messages", [])
@@ -219,7 +272,15 @@ if st.session_state.get("session_ended"):
         st.session_state.clear()
         st.rerun()
 else:
-    if prompt := st.chat_input(placeholder="Paste your initial tweet."):
+    placeholder = (
+        "Paste your initial tweet."
+        if not messages
+        else (
+            "Provide feedback to the bot on how it can improve OR"
+            " edit the generated tweet inline. When satisfied, click the 👍 button to end the session."
+        )
+    )
+    if prompt := st.chat_input(placeholder=placeholder):
         st.chat_message("user").write(prompt)
         original_tweet = prompt
         messages.append(("user", prompt))
