@@ -100,8 +100,9 @@ Harness user [feedback](https://docs.smith.langchain.com/tracing/faq/logging_fee
 
 Use LangSmith to help optimize your LLM systems, so they can continuously learn and improve.
 
-- [Prompt Bootstrapping](./optimization/assisted-prompt-bootstrapping/assisted-prompt-engineering.ipynb): Optimize your prompt over a set of examples by incorporating human feedback and an LLM prompt optimizer.
-- [Prompt Bootstrapping for style transfer: Elvis-Bot](./optimization/assisted-prompt-bootstrapping/elvis-bot.ipynb): Extend prompt bootstrapping to generate outputs in the style of a specific persona. This notebook demonstrates how to create an "Elvis-bot" that mimics the tweet style of @omarsar0 by iteratively refining a prompt using Claude's exceptional prompt engineering capabilities and feedback collected through LangSmith's annotation queue.
+- [Prompt Bootstrapping](./optimization/assisted-prompt-bootstrapping/assisted-prompt-engineering.ipynb): Optimize your prompt over a set of examples by incorporating human feedback and an LLM prompt optimizer. Works by rewriting an optimized system prompt based on feedback.
+  - [Prompt Bootstrapping for style transfer: Elvis-Bot](./optimization/assisted-prompt-bootstrapping/elvis-bot.ipynb): Extend prompt bootstrapping to generate outputs in the style of a specific persona. This notebook demonstrates how to create an "Elvis-bot" that mimics the tweet style of @omarsar0 by iteratively refining a prompt using Claude's exceptional prompt engineering capabilities and feedback collected through LangSmith's annotation queue.
+- [Automated Few-shot Prompt Bootstrapping](./bootstrap-fewshot/bootstrap-few-shot.ipynb): Automatically curate the most informative few-shot examples based on performance metrics, removing the need for manual example engineering. Applied to an entailment task on the SCONE dataset.
 - [Online Few-shot Examples](./testing-examples/movie-demo/optimization.ipynb) Configure online evaluators to add good examples to a dataset. Review, then use them as few-shot examples to boost performance.
 
 ## Exporting data for fine-tuning
