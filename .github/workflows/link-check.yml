@@ -16,7 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Check links in Markdown files
         uses: gaurav-nelson/github-action-markdown-link-check@v1
 
@@ -24,7 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
