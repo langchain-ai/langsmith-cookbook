@@ -1,6 +1,6 @@
 ---
 sidebar_label: Exploratory Data Analysis
-sidebar_position: 7 
+sidebar_position: 8 
 ---
 
 # Exploratory Data Analysis
