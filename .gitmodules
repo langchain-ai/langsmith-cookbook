@@ -1,0 +1,3 @@
+[submodule "optimization/tweet-critic"]
+	path = optimization/tweet-critic
+	url = git@github.com:langchain-ai/tweet-critic.git
