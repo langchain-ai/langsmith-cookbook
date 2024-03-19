@@ -33,5 +33,6 @@ sidebar_position: 4
 **Fundamentals**
 
 - [Evaluating Existing Runs](./evaluate-existing-test-project/evaluate_runs.ipynb): add ai-assisted feedback and evaluation metrics to existing run traces.
+- [Production Candidate Testing](./prod-candidate-testing/prod-candidate-testing.ipynb): benchmark new versions of your production app using real inputs. Convert production runs to a test dataset, then compare your new system's performance against the baseline.
 - [Naming Test Projects](./naming-test-projects/naming-test-projects.md): manually name your tests with `run_on_dataset(..., project_name='my-project-name')`
 - [How to download feedback and examples from a test project](./download-feedback-and-examples/download_example.ipynb): export the predictions, evaluation results, and other information to programmatically add to your reports.
