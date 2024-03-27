@@ -10,6 +10,7 @@ sidebar_position: 4
 - [Q&A System Correctness](./qa-correctness/qa-correctness.ipynb): evaluate your retrieval-augmented Q&A pipeline end-to-end on a dataset. Iterate, improve, and keep testing.
 - [Evaluating Q&A Systems with Dynamic Data](./dynamic-data/testing_dynamic_data.ipynb): use evaluators that dereference a labels to handle data that changes over time.
 - [RAG Evaluation using Fixed Sources](./using-fixed-sources/using_fixed_sources.ipynb): evaluate the response component of a RAG (retrieval-augmented generation) pipeline by providing retrieved documents in the dataset
+- [RAG evaluation with RAGAS](./ragas/ragas.ipynb): evaluate RAG pipelines using the [RAGAS](https://docs.ragas.io/en/stable/) framework. Covers metrics for both the generator AND retriever in both labeled and reference-free contexts (answer correctness, faithfulness, context relevancy, recall and precision).
 
 **Chat Bots**
 
