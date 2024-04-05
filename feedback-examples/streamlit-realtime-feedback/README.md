@@ -6,7 +6,7 @@
 This tutorial shows how to catch model hallucinations in production using a custom run evaluator. This is a great way to
 monitor the behavior of your RAG application to make sure the information in the final response is helpful and concordant with the retrieved knowledge. The technique outlined below enables non-blocking, online evaluation. This is appropriate for when you want up-to-date metrics on your application but do not want to further degrade the user experience whenever the bot is receiving low scores.
 
-To do this, we create custom evaluator(s) (in our case, they both wrap [Scoring Evaluators](https://python.langchain.com/docs/guides/evaluation/string/scoring_eval_chain)) and register them as callbacks using the [EvaluatorCallbackHandler](https://api.python.langchain.com/en/latest/tracers/langchain_core.tracers.evaluation.EvaluatorCallbackHandler.html). The callback handler runs the evaluators in the background whenever your application is triggered to avoid interrupting the main program. You can view the feedback in the resulting run traces, as shown in the followin animation:
+To do this, we create custom evaluator(s) (in our case, they both wrap [Scoring Evaluators](https://python.langchain.com/docs/guides/productionization/evaluation/string/scoring_eval_chain)) and register them as callbacks using the [EvaluatorCallbackHandler](https://api.python.langchain.com/en/latest/tracers/langchain_core.tracers.evaluation.EvaluatorCallbackHandler.html). The callback handler runs the evaluators in the background whenever your application is triggered to avoid interrupting the main program. You can view the feedback in the resulting run traces, as shown in the followin animation:
 
 ![Online Feedback Animation](./img/hallucination_feedback.gif)
 
