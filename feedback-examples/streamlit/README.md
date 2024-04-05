@@ -224,13 +224,11 @@ This uses renders a thumbs up/down modal (or "faces" if the toggle is )
 
 Below are some 'tactics' used in this example that you could reuse in other situations:
 
-1. **Using the Run Collector:** One way to fetch the run ID is by using the `RunCollectorCallbackHandler`, which stores all run objects in a simple python list. The collected run IDs are used to associate logged feedback and for accessing the trace URLs.
+1. **Logging feedback with LangSmith client:** The LangSmith client is used to create and update feedback for each run. A simple form is thumbs up/down, but it also supports other `value`'s, `comment`'s, `correction`'s, and other input. This way, users and annotators alike can share explicit feedback on a run.
 
-2. **Logging feedback with LangSmith client:** The LangSmith client is used to create and update feedback for each run. A simple form is thumbs up/down, but it also supports other `value`'s, `comment`'s, `correction`'s, and other input. This way, users and annotators alike can share explicit feedback on a run.
+2. **Accessing URLs from saved runs:** The client also retrieves URLs for saved runs. It allows users to inspect their interactions, providing a direct link to LangSmith traces.
 
-3. **Accessing URLs from saved runs:** The client also retrieves URLs for saved runs. It allows users to inspect their interactions, providing a direct link to LangSmith traces.
-
-4. **LangChain Expression Language:** This example optionally uses LangChain's [expression language](https://python.langchain.com/docs/expression_language/) to create the chain and provide streaming support by default. It also gives more visibility in the resulting traces.
+3. **LangChain Expression Language:** This example optionally uses LangChain's [expression language](https://python.langchain.com/docs/expression_language/) to create the chain and provide streaming support by default. It also gives more visibility in the resulting traces.
 
 ## Conclusion
 
