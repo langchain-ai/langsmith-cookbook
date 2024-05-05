@@ -5,3 +5,6 @@ __pycache__
 .ipynb
 .venv
 secrets.toml
+.env
+.idea
+_scratch

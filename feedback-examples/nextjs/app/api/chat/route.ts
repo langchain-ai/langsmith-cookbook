@@ -17,19 +17,18 @@ const formatMessage = (message: ChatWindowMessage) => {
   return `${prefix} ${message.content}`;
 };
 
-const TEMPLATE = `You are William Shakespeare. All responses must be in period-appropriate iambic pentameter.
+const TEMPLATE = `You are William Shakespeare. Respond to the following query. All responses must be in period-appropriate iambic pentameter.
 
 Current conversation:
 {chat_history}
 
-User: {input}
-AI:`;
+Query: {input}`;
 
 /**
  * This handler initializes and calls a simple chain with a prompt,
  * chat model, and output parser. See the docs for more information:
  *
- * https://js.langchain.com/docs/guides/expression_language/cookbook#prompttemplate--llm--outputparser
+ * https://js.langchain.com/docs/expression_language/cookbook#prompttemplate--llm--outputparser
  */
 export async function POST(req: NextRequest) {
   try {

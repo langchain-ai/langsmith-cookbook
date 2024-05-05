@@ -1,4 +1,7 @@
-## LangSmith Next.js Chat UI Example
+# LangSmith Next.js Chat UI Example
+
+[![Open In GitHub](https://img.shields.io/badge/GitHub-View%20source-green.svg)](https://github.com/langchain-ai/langsmith-cookbook/tree/main/./feedback-examples/nextjs/README.md)
+
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flangchain-ai%2Flangsmith-cookbook%2Ffeedback-examples%2Fnextjs)
 
@@ -203,7 +206,7 @@ if (score === 1) {
 } else {
     correction = { desired: body.comment };
 }
-const feedback = await langsmithClient.updateFeedback(feedbackId, {
+await langsmithClient.updateFeedback(feedbackId, {
     score,
     comment,
     correction,
@@ -224,5 +227,5 @@ Check out the [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Thank You!
 
-Thanks for reading! We hope this clarifies the TypeScript LangSmith feedback flow. If you have any questions or comments, reach out to us on Twitter
-[@LangChainAI](https://twitter.com/langchainai), or [click here to join our Discord server](https://discord.gg/langchain).
+<!-- markdown-link-check-disable -->
+Thanks for reading! We hope this clarifies the TypeScript LangSmith feedback flow. If you have any questions or comments, reach out to us on Twitter [@LangChainAI](https://twitter.com/langchainai), or [click here to join our Discord server](https://discord.gg/langchain).

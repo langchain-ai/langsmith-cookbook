@@ -1,0 +1,52 @@
+name: Test Cookbooks
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 13 * * *'
+jobs:
+  test-cookbooks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        working-directory: _scripts
+        run: pip install -r requirements.txt
+      - name: List kernels
+        working-directory: _scripts
+        run: jupyter kernelspec list
+      - name: Test nbs
+        working-directory: _scripts
+        run: python test-cookbooks.py --api-key $LANGSMITH_API_KEY --hub-api-key $LANGCHAINHUB_API_KEY --hub-handle infra-guy --project SYSTEM-TEST-$(date +'%Y-%m-%d')
+        env:
+          LANGSMITH_API_KEY: ${{ secrets.LANGSMITH_API_KEY }}
+          LANGCHAINHUB_API_KEY: ${{ secrets.LANGCHAINHUB_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYDEVD_DISABLE_FILE_VALIDATION: 1
+
+  test-cookbooks-self-hosted:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        working-directory: _scripts
+        run: pip install -r requirements.txt
+      - name: List kernels
+        working-directory: _scripts
+        run: jupyter kernelspec list
+      - name: Test nbs
+        working-directory: _scripts
+        run: python test-cookbooks.py --api-key $LANGSMITH_API_KEY --hub-handle langchain --project SYSTEM-TEST-$(date +'%Y-%m-%d') --endpoint https://eks.smith.langchain.dev/api --hub-endpoint https://eks.smith.langchain.dev/api-hub
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LANGSMITH_API_KEY: ${{ secrets.EKS_API_KEY }}
+          LANGCHAINHUB_API_KEY: ${{ secrets.EKS_API_KEY }}
+          PYDEVD_DISABLE_FILE_VALIDATION: 1

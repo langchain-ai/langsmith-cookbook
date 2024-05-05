@@ -1,0 +1,14 @@
+{
+  "imports": {
+    "langchain": "npm:/langchain@0.1.9",
+    "langchain/": "npm:/langchain@0.1.9/",
+    "langsmith": "npm:/langsmith@0.0.63",
+    "langsmith/": "npm:/langsmith@0.0.63/",
+    "@langchain/core": "npm:/@langchain/core@0.1.18",
+    "@langchain/core/": "npm:/@langchain/core@0.1.18/",
+    "@langchain/openai": "npm:/@langchain/openai@0.0.13",
+    "@langchain/openai/": "npm:/@langchain/openai@0.0.13/",
+    "dotenv/config": "npm:/dotenv/config",
+    "puppeteer": "https://deno.land/x/puppeteer@16.2.0/mod.ts"
+  }
+}

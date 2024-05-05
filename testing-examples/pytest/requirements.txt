@@ -1,0 +1,7 @@
+pytest
+pytest-asyncio
+anthropic
+openai
+langchain
+langsmith
+GitPython

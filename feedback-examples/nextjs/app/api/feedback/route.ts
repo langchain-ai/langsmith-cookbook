@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     if (!runId || isNaN(score)) {
       return NextResponse.json(
         { error: "You must provide a run id and a score." },
-        { status: 400 },
+        { status: 400 }
       );
     }
     const feedback = await langsmithClient.createFeedback(runId, "user_score", {
@@ -40,7 +40,7 @@ export async function PUT(req: NextRequest) {
     if (!feedbackId) {
       return NextResponse.json(
         { error: "You must provide a feedback id" },
-        { status: 400 },
+        { status: 400 }
       );
     }
     let correction;
@@ -50,12 +50,12 @@ export async function PUT(req: NextRequest) {
     } else {
       correction = { desired: body.comment };
     }
-    const feedback = await langsmithClient.updateFeedback(feedbackId, {
+    await langsmithClient.updateFeedback(feedbackId, {
       score,
       comment,
       correction,
     });
-    return NextResponse.json({ feedback }, { status: 200 });
+    return NextResponse.json({}, { status: 200 });
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
