@@ -1,3 +1,3 @@
 # Unit Testing with Pytest
 
-This doc has moved! Check out [Langsmith's Unit Testing wrapper](https://docs.smith.langchain.com/evaluation/faq/unit-testing) to get started integrating LangSmith in your pytest setup!
+This doc has moved! To learn more about [Unit Testing with LangSmith's `@unit1 decorator](https://docs.smith.langchain.com/evaluation/faq/unit-testing) check out the linked doc! We run this on every PR.
