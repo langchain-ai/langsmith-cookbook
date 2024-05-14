@@ -1,9 +1,8 @@
 from datetime import datetime
 from langchain import LLMChain
-
-from langchain.chat_models import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.memory import ConversationBufferMemory
+from langchain_community.chat_models import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 
 def get_llm_chain(system_prompt: str, memory: ConversationBufferMemory) -> LLMChain:

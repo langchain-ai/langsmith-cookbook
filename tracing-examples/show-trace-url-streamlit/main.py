@@ -3,7 +3,7 @@ import logging
 import langsmith
 import streamlit as st
 from langchain import callbacks, chat_models
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 
 logging.basicConfig(level=logging.INFO)
 

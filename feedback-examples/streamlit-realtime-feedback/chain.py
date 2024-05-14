@@ -2,20 +2,21 @@ import uuid
 from operator import itemgetter
 
 import streamlit as st
-from langchain.chat_models import ChatAnthropic
-from langchain.document_loaders import RecursiveUrlLoader
-from langchain.document_transformers import Html2TextTransformer
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.memory import ConversationBufferMemory, StreamlitChatMessageHistory
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.memory import ConversationBufferMemory
 from langchain.retrievers.multi_vector import MultiVectorRetriever
-from langchain.schema import BaseRetriever
-from langchain.schema.output_parser import StrOutputParser
-from langchain.schema.runnable import RunnableParallel
 from langchain.storage import InMemoryStore
-from langchain.text_splitter import RecursiveCharacterTextSplitter, TokenTextSplitter
-from langchain.vectorstores.chroma import Chroma
 from langchain.chains import RetrievalQA
+from langchain_community.chat_message_histories import StreamlitChatMessageHistory
+from langchain_community.chat_models import ChatAnthropic
+from langchain_community.document_loaders import RecursiveUrlLoader
+from langchain_community.document_transformers import Html2TextTransformer
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.retrievers import BaseRetriever
+from langchain_core.runnables import RunnableParallel
+from langchain_text_splitters import RecursiveCharacterTextSplitter, TokenTextSplitter
 
 
 @st.cache_resource

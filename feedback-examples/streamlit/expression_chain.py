@@ -1,9 +1,8 @@
 from datetime import datetime
-
-from langchain.chat_models import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.schema.runnable import Runnable, RunnableMap
 from langchain.memory import ConversationBufferMemory
+from langchain_community.chat_models import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.runnables import Runnable, RunnableMap
 
 
 def get_expression_chain(
