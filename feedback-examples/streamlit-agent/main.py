@@ -15,11 +15,11 @@ from langchain.pydantic_v1 import BaseModel, Field
 from langsmith import Client
 from streamlit_feedback import streamlit_feedback
 from langchain_community.chat_message_histories import StreamlitChatMessageHistory
-from langchain_community.chat_models import ChatOpenAI
 from langchain_community.tools import DuckDuckGoSearchResults
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.tracers.context import tracing_v2_enabled
 from langchain_core.utils.function_calling import format_tool_to_openai_function
+from langchain_openai import ChatOpenAI
 
 st.set_page_config(
     page_title="Streamlit Agent with LangSmith",

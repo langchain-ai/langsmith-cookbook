@@ -7,16 +7,16 @@ from langchain.retrievers.multi_vector import MultiVectorRetriever
 from langchain.storage import InMemoryStore
 from langchain.chains import RetrievalQA
 from langchain_community.chat_message_histories import StreamlitChatMessageHistory
-from langchain_community.chat_models import ChatAnthropic
 from langchain_community.document_loaders import RecursiveUrlLoader
 from langchain_community.document_transformers import Html2TextTransformer
-from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.runnables import RunnableParallel
 from langchain_text_splitters import RecursiveCharacterTextSplitter, TokenTextSplitter
+from langchain_anthropic import ChatAnthropic
+from langchain_openai import OpenAIEmbeddings
 
 
 @st.cache_resource
