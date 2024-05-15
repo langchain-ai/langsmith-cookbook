@@ -9,16 +9,17 @@ from langchain.agents.format_scratchpad import format_to_openai_functions
 from langchain.agents.output_parsers.openai_functions import (
     OpenAIFunctionsAgentOutputParser,
 )
-from langchain.callbacks.manager import tracing_v2_enabled
-from langchain.chat_models import ChatOpenAI
 from langchain.callbacks.streamlit import StreamlitCallbackHandler
-from langchain.memory import ConversationBufferMemory, StreamlitChatMessageHistory
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.memory import ConversationBufferMemory
 from langchain.pydantic_v1 import BaseModel, Field
-from langchain.tools.ddg_search.tool import DuckDuckGoSearchResults
-from langchain.tools.render import format_tool_to_openai_function
 from langsmith import Client
 from streamlit_feedback import streamlit_feedback
+from langchain_community.chat_message_histories import StreamlitChatMessageHistory
+from langchain_community.tools import DuckDuckGoSearchResults
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.tracers.context import tracing_v2_enabled
+from langchain_core.utils.function_calling import format_tool_to_openai_function
+from langchain_openai import ChatOpenAI
 
 st.set_page_config(
     page_title="Streamlit Agent with LangSmith",

@@ -1,9 +1,9 @@
 import streamlit as st
-from langchain.callbacks.manager import collect_runs
 from langchain import memory as lc_memory
 from langsmith import Client
 from streamlit_feedback import streamlit_feedback
 from expression_chain import get_expression_chain
+from langchain_core.tracers.context import collect_runs
 
 client = Client()
 
