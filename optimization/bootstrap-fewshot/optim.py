@@ -10,13 +10,41 @@ from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langsmith.evaluation import EvaluationResult, EvaluationResults
 from langsmith.evaluation._runner import ExperimentResultRow
 from langsmith.schemas import Example, Run
-from pydantic.v1 import BaseModel, Field, root_validator
+from pydantic.v1 import BaseModel, Field, root_validator, ValidationError
+from langchain_core.prompt_values import PromptValue
+from langchain_core.messages import ToolMessage, AIMessage
+from langchain_core.language_models import BaseChatModel
 from rich.jupyter import print as richprint
 from rich.panel import Panel
-from trustcall import create_extractor
 
 
-def run_optimizer(current_prompt: str, annotated_predictions: str, meta_prompt: str):
+@ls.traceable
+async def invoke_with_retries(
+    prompt_value: PromptValue, model: BaseChatModel, schema: BaseModel
+) -> BaseModel:
+    model = model.with_structured_output(schema, include_raw=True)
+    messages = prompt_value.to_messages()
+    for _ in range(3):
+
+        res = await model.ainvoke(messages)
+        if res.get("parsing_error"):
+            err = res.get("parsing_error")
+            raw_message: AIMessage = res["raw"]
+            messages = messages + [
+                ToolMessage(
+                    f"{repr(err)}\nRespond after fixing all validation errors.",
+                    status="error",
+                    tool_call_id=raw_message.tool_calls[0]["id"],
+                )
+            ]
+        else:
+            return res["parsed"]
+    raise ValueError("Could not extract in sufficient steps")
+
+
+async def run_optimizer(
+    current_prompt: str, annotated_predictions: str, meta_prompt: str
+):
     # Lazy way to get input variables
     input_variables = list(PromptTemplate.from_template(current_prompt).input_variables)
 
@@ -66,18 +94,14 @@ Remember to first brainstorm, then plan, and finally generate the optimized prom
         ]
     )
 
-    meta_optimizer = optim_prompt | create_extractor(
-        ChatAnthropic(model="claude-3-5-sonnet-20240620"),
-        tools=[OptimizerOutput],
-        tool_choice=OptimizerOutput.__name__,
-    )
-    results = meta_optimizer.invoke(
+    model = ChatAnthropic(model="claude-3-5-sonnet-20240620")
+    val = optim_prompt.invoke(
         {
             "annotated_predictions": annotated_predictions,
             "current_prompt": current_prompt,
         }
     )
-    return results["responses"][0]
+    return await invoke_with_retries(val, model, OptimizerOutput)
 
 
 def format_evaluation_results(results: Iterable[ExperimentResultRow]):
@@ -94,7 +118,8 @@ def format_evaluation_results(results: Iterable[ExperimentResultRow]):
     return formatted
 
 
-def run_optimizer_over_project(
+@ls.traceable
+async def run_optimizer_over_project(
     prompt: str, experiment_name: str, meta_prompt: str
 ) -> str:
     client = ls.Client()
@@ -119,7 +144,7 @@ def run_optimizer_over_project(
         for run in runs
     ]
     formatted = format_evaluation_results(joined)
-    updated = run_optimizer(
+    updated = await run_optimizer(
         current_prompt=prompt,
         annotated_predictions="\n".join(formatted),
         meta_prompt=meta_prompt,
