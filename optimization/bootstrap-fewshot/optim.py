@@ -64,7 +64,7 @@ async def run_optimizer(
             description=f"The full text of the optimized prompt. Ensure that all the curly bracket {{variable_name}}'s are retained in the new prompt. These are: {input_variables}."
         )
 
-        @root_validator
+        @root_validator(pre=True, skip_on_failure=True)
         def check_prompt_strings(cls, values):
             predicted_input_variables = list(
                 PromptTemplate.from_template(
