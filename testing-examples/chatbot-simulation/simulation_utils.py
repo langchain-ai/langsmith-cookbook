@@ -30,27 +30,29 @@ def langchain_to_openai_messages(messages: List[BaseMessage]):
 
 
 def create_simulated_user(
-    system_prompt: str, llm: Runnable | None = None
+    system_prompt: str, 
+    llm: Optional[Runnable] = None
 ) -> Runnable[Dict, AIMessage]:
     """
     Creates a simulated user for chatbot simulation.
 
     Args:
         system_prompt (str): The system prompt to be used by the simulated user.
-        llm (Runnable | None, optional): The language model to be used for the simulation.
-            Defaults to gpt-3.5-turbo.
+        llm (Optional[Runnable], optional): The language model to be used for the simulation.
+            Defaults to None, in which case gpt-3.5-turbo will be used.
 
     Returns:
         Runnable[Dict, AIMessage]: The simulated user for chatbot simulation.
     """
-    return ChatPromptTemplate.from_messages(
+    prompt = ChatPromptTemplate.from_messages(
         [
             ("system", system_prompt),
             MessagesPlaceholder(variable_name="messages"),
         ]
-    ) | (llm or ChatOpenAI(model="gpt-3.5-turbo")).with_config(
-        run_name="simulated_user"
     )
+    model = llm if llm is not None else ChatOpenAI(model="gpt-3.5-turbo")
+    chain = prompt | model
+    return chain.with_config(run_name="simulated_user")
 
 
 Messages = Union[list[AnyMessage], AnyMessage]
@@ -78,10 +80,10 @@ class SimulationState(TypedDict):
 
 
 def create_chat_simulator(
-    assistant: (
-        Callable[[List[AnyMessage]], str | AIMessage]
-        | Runnable[List[AnyMessage], str | AIMessage]
-    ),
+    assistant: Union[
+        Callable[[List[AnyMessage]], Union[str, AIMessage]],
+        Runnable[List[AnyMessage], Union[str, AIMessage]]
+    ],
     simulated_user: Runnable[Dict, AIMessage],
     *,
     input_key: str,
@@ -185,7 +187,7 @@ def _create_simulated_user_node(simulated_user: Runnable):
     )
 
 
-def _coerce_to_message(assistant_output: str | BaseMessage):
+def _coerce_to_message(assistant_output: Union[str, BaseMessage]):
     if isinstance(assistant_output, str):
         return {"messages": [AIMessage(content=assistant_output)]}
     else:
