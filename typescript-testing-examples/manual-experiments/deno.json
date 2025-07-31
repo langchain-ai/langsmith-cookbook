@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "dotenv/config": "npm:/dotenv/config",
+    "langsmith": "npm:/langsmith@0.1.14",
+    "langsmith/": "npm:/langsmith@0.1.14/",
+    "uuid": "npm:/uuid",
+    "openai": "https://deno.land/x/openai@v4.26.1/mod.ts",
+    "openai/": "https://deno.land/x/openai@v4.26.1/"
+  }
+}
