@@ -5,7 +5,8 @@ sidebar_position: 10
 
 # Insights Examples
 
-LangSmith Insights is a feature that helps you analyze and understand patterns in your LLM application data. These examples demonstrate how to use the Insights API to gain actionable insights from real-world data sources.
+LangSmith's Insights Agent helps you analyze and understand patterns in your LLM application data. These examples show how to use the Insights API to gain actionable insights from data sources outside LangSmith - like customer support tickets, emails, call transcripts and more.
+
 
 ## Examples
 
